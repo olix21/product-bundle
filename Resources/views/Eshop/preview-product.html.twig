@@ -1,0 +1,20 @@
+<a href="{{ path('dywee_product_view', {data: product.url}) }}" class="product">
+    {% set img = product.images|first %}
+    <img src="{{ img.src }}" alt="{{ product.name }}" class="img-responsive"/>
+    <h3>{{ product.name }}</h3>
+    <div class="shortDescription">
+        <p>{{ product.shortDescription|striptags|raw }}
+        </p>
+    </div>
+    <p class="lead text-center product-price">{{ product.displayPrice|raw }}</p>
+    <div class="product-footer row">
+        {#<div class="col-md-4">
+            <a href="{{ path('dywee_product_addModal') }}" class="btn btn-block"><i class="fa fa-2x fa-cart-plus"></i> </a>
+        </div>#}
+        <div class="col-md-12">
+
+                <div class="btn btn-block">{{ 'Plus d\'infos'|trans }}</div>
+
+        </div>
+    </div>
+</a>

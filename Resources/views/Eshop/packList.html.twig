@@ -1,0 +1,19 @@
+{# Dywee\EshopBundle\Resources\View\Eshop\packList.html.twig #}
+
+{%  extends "DyweeEshopBundle::layout.html.twig" %}
+
+{% block title %}
+    Nos Colis Dégustation {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Nos Colis Dégustation</h1>
+    <p class="text-center">Pour vous faire plaisir ou pour offrir.<br>
+        Une sélection de bières belges de qualité.</p>
+
+    <div class="row">
+        {% for productLang in productLangList %}
+            {% include 'DyweeEshopBundle:Eshop:preview-pack.html.twig' %}
+        {% endfor %}
+    </div> <!-- /row -->
+{% endblock %}

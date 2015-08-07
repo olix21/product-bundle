@@ -1,0 +1,38 @@
+{% block collection_widget %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('collection_item_widget') }) %}
+        {% endif %}
+        {{ form_errors(form) }}
+        <div{{ block('widget_container_attributes') }}>
+            <thead>
+            <tr>
+                <td>Produit</td>
+                <td>Quantité</td>
+                <td>Remise</td>
+                <td>Actions</td>
+            </tr>
+            </thead>
+            <tbody id="offerElementsContainer">
+                {% for rows in form %}
+                    <tr>
+                        <td>{{ form_widget(rows.product, { 'attr': { 'class': 'form-control' }}) }}</td>
+                        <td>{{ form_widget(rows.quantity, { 'attr': { 'class': 'form-control' }}) }}</td>
+                        <td>{{ form_widget(rows.discountRate, { 'attr': { 'class': 'form-control' }}) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </div>
+    {{ form_rest(form) }}
+    {% endspaceless %}
+{% endblock collection_widget %}
+
+{% block collection_item_widget %}
+    {% spaceless %}
+        <tr>
+            <td>{{ form_widget(prototype.product, { 'attr': { 'class': 'form-control' }, 'value': 1}) }}</td>
+            <td>{{ form_widget(prototype.quantity, { 'attr': { 'class': 'form-control' }}) }}</td>
+            <td>{{ form_widget(prototype.discountRate, { 'attr': { 'class': 'form-control' }, 'value': 0}) }}</td>
+        </tr>
+    {% endspaceless %}
+{% endblock collection_item_widget %}

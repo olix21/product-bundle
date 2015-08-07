@@ -1,0 +1,12 @@
+{# Dywee\EshopBundle\Resources\View\Brand\add.html.twig #}
+
+{%  extends "DyweeProductBundle::admin.html.twig" %}
+
+{% block title %} Creation d'une marque produit - {{ parent() }} {% endblock %}
+
+{% block body %}
+    <h1>Nouvelle marque</h1>
+
+    {% include "DyweeProductBundle:Brand:form.html.twig" %}
+
+{% endblock %}

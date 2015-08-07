@@ -1,0 +1,26 @@
+{# Dywee\ProductBundle\Resources\View\Product\list.html.twig #}
+{% if productList is not empty %}
+    <ul class="products-list product-list-in-box">
+        {% for product in productList %}
+        <!-- item -->
+        <li class="item">
+            <div class="product-img">
+                {% if product.images is not empty %}
+                    {% set image = product.images|first %}
+                    <img src="{{ image.src }}" alt="{{ image.alt }}"/>
+                {% else %}
+                    image indisponible
+                {% endif %}
+            </div>
+            <div class="product-info">
+                <a href="javascript::;" class="product-title">{{ product.name }} <span class="label label-warning pull-right">{{ product.price }}€</span></a>
+                            <span class="product-description">
+                              {{ product.shortDescription|raw }}
+                            </span>
+            </div>
+        </li><!-- /.item -->
+        {% endfor %}
+    </ul>
+{% else %}
+    Aucun produit récent
+{% endif %}

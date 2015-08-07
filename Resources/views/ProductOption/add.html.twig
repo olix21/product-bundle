@@ -1,0 +1,23 @@
+{# Dywee\EshopBundle\Resources\View\ProductOption\add.html.twig #}
+
+{% extends "DyweeProductBundle::admin.html.twig" %}
+
+{% block title %} Nouveau critère de variation de produit - {{ parent() }} {% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('dywee_product_table') }}"><i class="fa fa-beer"></i> Produits</a></li>
+    <li class="active"><i class="fa fa-list-alt"></i> Options de variation de produits</li>
+    <li>Nouvelle option</li>
+{% endblock %}
+
+{% block body %}
+
+    <div class="title-heading">
+        <h1 class="text-center">Nouveau critère de variation de produit</h1>
+    </div>
+
+    <div class="col-md-12">
+        {% include "DyweeProductBundle:ProductOption:form.html.twig" %}
+    </div>
+
+{% endblock %}

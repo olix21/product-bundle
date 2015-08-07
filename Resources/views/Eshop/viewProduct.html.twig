@@ -1,0 +1,131 @@
+{# Dywee\EshopBundle\Resources\View\Eshop\viewProduct.html.twig #}
+
+{%  extends "DyweeProductBundle:Eshop:view.html.twig" %}
+
+{% block title %}
+    {{ product.name }} {{ parent() }}
+{% endblock %}
+
+{% block metaDescription %}
+    {{ product.metaDescription }}
+{% endblock %}
+
+{% block metaKeywords %}
+    {{ product.metaKeywords }}
+{% endblock %}
+
+{% block translate %}
+{% endblock %}
+
+{% block sidebarContent %}
+    {% if category is defined %}
+        {% render(controller('DyweeEshopBundle:Eshop:sidebar', {activeCategory: category})) %}
+    {% else %}
+        {% render(controller('DyweeEshopBundle:Eshop:sidebar')) %}
+    {% endif %}
+{% endblock %}
+
+{% block bodyProduct %}
+
+    <div itemscope itemtype="http://schema.org/Product" id="content">
+        <h1 itemprop="name">{{ product.name }}</h1>
+
+        <div class="row">
+            <div class="col-md-4">
+                {% for image in product.images %}
+                <img src="{{ image.src }}" alt="{{ product.name }}" class="img-responsive" />
+                {% endfor %}
+                <p>Le prix comprend les consignes et les taxes</p>
+                <p><a href="{{ path('dywee_cms_view_content', {data: 15})}} }}"  data-toggle="modal" data-target="#lb1xModal">{{ 'Voir nos tarifs de livraison'|trans }}</a></p>
+                <ul class="list-unstyled">
+                    <li><div class="fb-like" data-href="{{ path('dywee_product_view', {data: product.url}) }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-md-8">
+                <div class="row h3">
+                    <div class="col-md-6">
+                        Type:
+                    </div>
+                    <div class="col-md-6">
+                        {{ product.category(2).name }}
+                    </div>
+                </div>
+                <div class="row h3">
+                    <div class="col-md-6">
+                        Couleur:
+                    </div>
+                    <div class="col-md-6">
+                        {{ product.category(3).name }}
+                    </div>
+                </div>
+                <div class="row h3">
+                    <div class="col-md-6">
+                        Degré d'alcool:
+                    </div>
+                    <div class="col-md-6">
+                        {% if strong is not empty %}
+                            {{ strong.customValue }}°
+                        {% else %}
+                            Non Communiqué
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+                <div itemprop="description" class="h4">
+                    {{ product.mediumDescription|raw }}
+                </div>
+            </div>
+            <hr>
+
+        </div>
+        <hr>
+        <div class="row">
+            <p>&nbsp;</p>
+            {% if form is defined %}
+                {{ form_start(form) }}
+
+                {{ form_errors(form) }}
+
+                <div class="col-xs-12 col-sm-2 col-md-3">
+                    <div class="form-group">
+                        {{ form_label(form.quantity, "Quantité") }}
+
+                        {{ form_errors(form.quantity) }}
+
+                        {{ form_widget(form.quantity, {"attr": {"class": "form-control"}}) }}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <p>&nbsp;</p>
+                    {% if product.isPromotion %}
+                        <strike>{{ product.price|number_format(2) }}€</strike>
+                    {% endif %}
+                    <p itemprop="offers" itemscope itemtype="http://schema.org/Offer"><span class="lead" itemprop="price">
+                            {% if product.isPromotion %}
+                                {{ product.promotionPrice|number_format(2) }}€
+                            {% else %}
+                                {{ product.price|number_format(2) }}€
+                            {% endif %}
+                            </span></p>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-5">
+                    {{ form_widget(form["Ajouter au panier"], {"attr": {"class": "btn btn-lg btn-success"}}) }}
+                </div>
+
+                {{ form_rest(form) }}
+
+                {{ form_end(form) }}
+            {% elseif message is defined %}
+                {{ message|raw }}
+            {% else %}
+                Erreur
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block tabs %}
+{% endblock %}

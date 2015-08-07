@@ -1,0 +1,179 @@
+dywee_product_homepage:
+    path:     /products/
+    defaults: { _controller: DyweeProductBundle:Product:index }
+
+dywee_product_list:
+    path:     /products/list/{page}
+    defaults: { _controller: DyweeProductBundle:Product:list, page:1 }
+    requirements:
+        page: \d*
+
+dywee_product_only_list:
+    path:     /product/list/{page}
+    defaults: { _controller: DyweeProductBundle:Product:productList, page:1 }
+    requirements:
+        page: \d*
+
+dywee_product_pack_only_list:
+    path:     /packs/{page}
+    defaults: { _controller: DyweeProductBundle:Product:packList, page:1 }
+    requirements:
+        page: \d*
+
+dywee_product_abonnement_only_list:
+    path:     /abonnements/{page}
+    defaults: { _controller: DyweeProductBundle:Product:abonnementList, page:1 }
+    requirements:
+        page: \d*
+
+dywee_product_table:
+    path:     /admin6833/products/table/{type}/{page}
+    defaults: { _controller: DyweeProductBundle:Product:table, page:1, type: 1 }
+    requirements:
+        page: \d*
+        type: \d{1}
+
+dywee_product_view:
+    path:     /product/{data}
+    defaults: { _controller: DyweeProductBundle:Product:view}
+
+dywee_product_admin_view:
+    path:     /admin6933/product/{id}
+    defaults: { _controller: DyweeProductBundle:Product:adminView}
+
+dywee_product_add:
+    path:     /admin6833/product/add/{type}
+    defaults: { _controller: DyweeProductBundle:Product:add }
+    requirements:
+        type: \d{1}
+
+dywee_product_update:
+    path:     /admin6833/product/update/{id}
+    defaults: { _controller: DyweeProductBundle:Product:update }
+    requirements:
+        id: \d+
+
+dywee_product_delete:
+    path:     /admin6833/product/delete/{id}
+    defaults: { _controller: DyweeProductBundle:Product:delete }
+    requirements:
+        id: \d+
+
+dywee_product_category_table:
+    path:     /admin6833/product/categories/table/{page}
+    defaults: { _controller: DyweeProductBundle:Category:table, page:1 }
+    requirements:
+        page: \d*
+
+dywee_product_parentCategory_table:
+    path:     /admin6833/product/categories/{id}/table/{page}
+    defaults: { _controller: DyweeProductBundle:Category:table, page:1 }
+    requirements:
+        page: \d*
+        id: \d*
+
+dywee_product_category_add:
+    path:     /admin6833/product/category/add
+    defaults: { _controller: DyweeProductBundle:Category:add }
+
+dywee_product_category_update:
+    path:     /admin6833/product/category/update/{id}
+    defaults: { _controller: DyweeProductBundle:Category:update }
+    requirements:
+        id: \d+
+
+dywee_product_category_delete:
+    path:     /admin6833/product/category/delete/{id}
+    defaults: { _controller: DyweeProductBundle:Category:delete }
+    requirements:
+        id: \d+
+
+dywee_product_category_view:
+    path:     /eshop/category/{data}
+    defaults: { _controller: DyweeProductBundle:Category:view }
+
+dywee_product_category_filterAjax:
+    path:     /eshop/categoryFilter
+    defaults: { _controller: DyweeProductBundle:Category:filterAjax }
+    requirements:
+        _methods: POST
+
+dywee_product_category_view_brandFilter:
+    path:     /eshop/category/{data}/{category}
+    defaults: { _controller: DyweeProductBundle:Category:viewByBrand }
+
+dywee_product_brand_table:
+    path:     /admin6833/product/brand/table/{page}
+    defaults: { _controller: DyweeProductBundle:Brand:table, page:1 }
+    requirements:
+        page: \d*
+
+dywee_product_brand_add:
+    path:     /admin6833/product/brand/add
+    defaults: { _controller: DyweeProductBundle:Brand:add }
+
+dywee_product_brand_update:
+    path:     /admin6833/product/brand/update/{id}
+    defaults: { _controller: DyweeProductBundle:Brand:update }
+    requirements:
+        id: \d+
+
+dywee_product_brand_delete:
+    path:     /admin6833/product/brand/delete/{id}
+    defaults: { _controller: DyweeProductBundle:Brand:delete }
+    requirements:
+        id: \d+
+
+dywee_product_brand_viewProducts:
+    path:     /eshop/brand/{data}/products
+    defaults: { _controller: DyweeProductBundle:Brand:viewProducts }
+
+dywee_product_feature_table:
+    path:     /admin6833/product/feature/table/{page}
+    defaults: { _controller: DyweeProductBundle:Feature:table, page:1 }
+    requirements:
+        page: \d*
+
+dywee_product_feature_add:
+    path:     /admin6833/product/feature/add
+    defaults: { _controller: DyweeProductBundle:Feature:add }
+
+dywee_product_feature_update:
+    path:     /admin6833/product/feature/update/{id}
+    defaults: { _controller: DyweeProductBundle:Feature:update }
+    requirements:
+        id: \d+
+
+dywee_product_feature_delete:
+    path:     /admin6833/product/feature/delete/{id}
+    defaults: { _controller: DyweeProductBundle:Feature:delete }
+    requirements:
+        id: \d+
+
+dywee_product_option_table:
+    path:     /admin6833/product/option/table/{page}
+    defaults: { _controller: DyweeProductBundle:ProductOption:table, page:1 }
+    requirements:
+        page: \d*
+
+dywee_product_option_view:
+    path:     /admin6833/product/option/view/{id}
+    defaults: { _controller: DyweeProductBundle:ProductOption:table }
+    requirements:
+        id: \d*
+
+dywee_product_option_add:
+    path:     /admin6833/product/option/add
+    defaults: { _controller: DyweeProductBundle:ProductOption:add }
+
+dywee_product_option_update:
+    path:     /admin6833/product/option/update/{id}
+    defaults: { _controller: DyweeProductBundle:ProductOption:update }
+    requirements:
+        id: \d+
+
+dywee_product_option_delete:
+    path:     /admin6833/product/option/delete/{id}
+    defaults: { _controller: DyweeProductBundle:ProductOption:delete }
+    requirements:
+        id: \d+

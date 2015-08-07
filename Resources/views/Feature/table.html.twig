@@ -1,0 +1,34 @@
+{# Dywee\ProductBundle\Resources\View\Feature\table.html.twig #}
+
+{%  extends "DyweeProductBundle::admin.html.twig" %}
+
+{% block viewBody %}
+    <a href="{{ path('dywee_product_feature_add') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Ajouter</a>
+
+    <div class="title-heading">
+        <h1 class="text-center">Liste des Caractéristiques de produit</h1>
+    </div>
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%  for feature in featureList %}
+            <tr>
+                <td><small>{{ feature.id }}</small></td>
+                <td><small>{{ feature.name }}</small></td>
+                <td><small>
+                        <a href="{{ path('dywee_product_feature_update', {id: feature.id}) }}" class="link-unstyled"><i class="fa fa-pencil"></i> </a>
+                        <a href="{{ path('dywee_product_feature_delete', {id: feature.id}) }}" class="link-unstyled"><i class="fa fa-trash-o"></i> </a>
+                    </small>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

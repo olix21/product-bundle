@@ -1,0 +1,31 @@
+{# Dywee\EshopBundle\Resources\View\ProductVariant\admin_table.html.twig #}
+
+{% if productVariants|length > 0 %}
+    <table class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>Variante</th>
+                <th>Stock</th>
+                <th>Prix</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for productVariant in productVariants %}
+            <tr>
+                <td>
+                    {% for productOptionValue in productVariant.productOptionValues %}{% if loop.index > 1 %}, {% endif %}{{ productOptionValue.name }}{% endfor %}
+                </td>
+                <td>{{ productVariant.stock }}</td>
+                <td>{{ productVariant.price }}€</td>
+                <td class="actions">
+                    <a href="#" class="link-unstyled"><i class="fa fa-eye"></i> </a>
+                    <a href="#" class="link-unstyled"><i class="fa fa-pencil"></i> </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    aucune variante définie
+{% endif %}

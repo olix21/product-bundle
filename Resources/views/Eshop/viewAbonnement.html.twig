@@ -1,0 +1,96 @@
+{# Dywee\EshopBundle\Resources\View\Eshop\viewAbonnement.html.twig #}
+
+{%  extends "DyweeProductBundle:Eshop:view.html.twig" %}
+
+{% block title %}
+    {{ product.name }} {{ parent() }}
+{% endblock %}
+
+{% block metaDescription %}
+    {{ product.metaDescription }}
+{% endblock %}
+
+{% block metaKeywords %}
+    {{ product.metaKeywords }}
+{% endblock %}
+
+{% block translate %}
+{% endblock %}
+
+{% block bodyProduct %}
+
+<h1 itemprop="name" class="little-title">{{ product.name }} <small>- {{ product.recurrence }} {{ 'mois'|trans }}</small></h1>
+<div class="spacer"></div>
+<div class="row">
+    <div class="col-sm-4">
+        {% for image in product.images %}
+            <img src="{{ image.src }}" alt="{{ image.alt }}" title="{{ product.name }}" class="img-responsive" itemprop="image" />
+        {% endfor %}
+        <p>{{ 'Le prix comprend les consignes et les taxes'|trans }}</p>
+        <p><a href="{{ path('dywee_cms_view_content', {data: 17})}} }}"  data-toggle="modal" data-target="#lb1xModal">{{ 'Voir nos tarifs de livraison'|trans }}</a></p>
+
+        <div class="fb-spacer"></div>
+
+        <div class="fb-like" data-href="{{ path('dywee_product_view', {data: product.seoUrl}) }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+
+    </div>
+    <div class="col-sm-8" >
+<span itemprop="description">
+{{ product.mediumDescription|raw }}
+</span>
+        <p><a href="#productMoreInfos" class="btn btn-info"><i class="fa fa-plus"></i> {{ 'Plus d\'infos'|trans }}</a></p>
+
+        <hR />
+
+        <div class="row">
+
+            {% if form is defined %}
+                {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+                {{ form_start(form) }}
+
+                {{ form_errors(form) }}
+                {{ form_errors(form.quantity) }}
+
+                <div class="col-xs-6 col-sm-2 col-md-3">
+                    <div class="form-group">
+                        {{ form_label(form.quantity, "Quantité") }}
+
+                        {{ form_widget(form.quantity) }}
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-4">
+                    <p>&nbsp;</p>
+                    <p itemprop="offers" itemscope itemtype="http://schema.org/Offer"><span class="lead" itemprop="price">{{ product.price }}€</span></p>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-5">
+                    {{ form_widget(form["Ajouter au panier"], {"attr": {"class": "btn btn-lg btn-success"}}) }}
+                </div>
+
+                {{ form_rest(form) }}
+
+                {{ form_end(form) }}
+            {% elseif message is defined %}
+                {{ message|raw }}
+            {% else %}
+                Erreur
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tabsMenu %}
+    <li role="presentation" class="active">
+        <a href="#more_info_tab" aria-controls="more_info_tab" role="tab" data-toggle="tab">{{ 'Bières sélectionnées'|trans }}</a>
+    </li>
+    {{ parent() }}
+{% endblock %}
+
+{% block tabsContent %}
+    <div id="more_info_tab" class="tab-pane fade in active" role="tabpanel">
+        {{ product.longDescription|raw }}
+    </div>
+    {{ parent() }}
+{% endblock %}

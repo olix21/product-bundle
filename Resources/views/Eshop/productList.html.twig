@@ -1,0 +1,30 @@
+{# Dywee\EshopBundle\Resources\View\Eshop\productList.html.twig #}
+
+{%  extends "DyweeEshopBundle::index.html.twig" %}
+
+{% block title %}
+    {{ 'Nos produits'|trans }} {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <p>{{ 'Votre choix: choisissez une bière ou une catégorie'|trans }}</p>
+
+    <div class="row">
+    {% for productLang in productLangList %}
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <div class="product product-product">
+                <h4 class="text-center">{{ productLang.name }}</h4>
+
+                <img class="img-responsive" src="{{ productLang.product.img }}" />
+                <div class="text">
+                    <h4 class="text-center">{{ productLang.shortDescription|raw }}</h4>
+                </div>
+
+                <p><a href="{{ path('dywee_eshop_product_view', {data: productLang.seoUrl}) }}" class="btn btn-info btn-block">{{ 'Plus d\'infos'|trans }}</a></p>
+                <p class="text-center lead">{{ productLang.product.price }}</p>
+                </div>
+            </div>
+
+    {% endfor %}
+    </div>
+{% endblock %}

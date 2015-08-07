@@ -1,0 +1,28 @@
+<a href="{{ path('dywee_product_view', {data: product.url}) }}" class="product product-abonnement" xmlns="http://www.w3.org/1999/html">
+    <div class="product-heading">
+        <h3 class="product-title">{{ product.name }}</h3>
+    </div>
+    <div class="recurrence">{{ product.recurrence }} mois</div>
+        {% set img = product.images|first %}
+    <div class="imgLiquidFill imgLiquid product-img">
+
+            <img src="{{ img.src }}" alt="{{ product.name }}" class="img-responsive"/>
+
+    </div>
+
+    <div class="shortDescription">{{ product.shortDescription|raw }}</div>
+
+    <p class="lead text-center product-price">{{ product.displayPrice|raw }}</p>
+    <div class="product-footer row">
+        {#<div class="col-md-4">
+            <a href="{{ path('dywee_product_addModal') }}" class="btn btn-block"><i class="fa fa-2x fa-cart-plus"></i> </a>
+        </div>#}
+        <div class="col-md-12">
+            {% if product.state == 1 %}
+                <div class="btn btn-block">{{ 'Plus d\'infos'|trans }}</div>
+            {% elseif product.state == 2 %}
+                <span class="label label-warning">{{ 'Bientot disponible'|trans }}</span>
+            {% endif %}
+        </div>
+    </div>
+</a>

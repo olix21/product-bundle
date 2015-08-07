@@ -1,0 +1,18 @@
+{# Dywee\EshopBundle\Resources\View\Eshop\abonnementList.html.twig #}
+
+{%  extends "DyweeEshopBundle::layout.html.twig" %}
+
+{% block title %}
+    Nos abonnements bières {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Nos abonnements bières</h1>
+    <p class="text-center">Chaque mois recevez à domicile une sélection des meilleures bières belges.</p>
+
+    <div class="row">
+        {% for productLang in productLangList %}
+            {% include 'DyweeEshopBundle:Eshop:preview-abonnement.html.twig' %}
+        {% endfor %}
+    </div> <!-- /row -->
+{% endblock %}

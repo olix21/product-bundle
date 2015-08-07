@@ -1,0 +1,18 @@
+{# Dywee\EshopBundle\Resources\View\Eshop\add.html.twig #}
+
+{%  extends "DyweeProductBundle::admin.html.twig" %}
+
+{% block title %} Creation d'un produit - {{ parent() }} {% endblock %}
+
+{% block body %}
+    <h1>Nouveau produit</h1>
+
+    {% include "DyweeProductBundle:Eshop:product_form.html.twig" %}
+
+{% endblock %}
+
+{% block footerJavascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/dyweeproduct/js/form.js') }}"></script>
+    {{ form_js(form) }}
+{% endblock %}

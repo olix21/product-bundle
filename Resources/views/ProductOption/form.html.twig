@@ -1,0 +1,91 @@
+{# Dywee\EshopBundle\Resources\View\ProductOption\form.html.twig #}
+
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>1. Nom de l'option de variation</h2>
+        {{ form_errors(form.name) }}
+        {{ form_widget(form.name) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h2>2. Valeurs possibles</h2>
+        {{ form_errors(form.productOptionValues) }}
+        {{ form_widget(form.productOptionValues) }}
+    </div>
+</div>
+
+{{ form_end(form) }}
+
+{% block footerJavascript %}
+    <script type="text/javascript">
+
+        var productPrice = 0;
+
+        $(document).ready(function() {
+            // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+            var $container = $('div#dywee_productbundle_productoption_productOptionValues');
+
+            // On ajoute un lien pour ajouter une nouvelle catégorie
+            var $addLink = $('<div class="row"><div class="col-md-8 col-md-offset-4"><a href="#" id="add_category" class="btn btn-block btn-default">Ajouter une valeur possible</a></div></div><p>&nbsp;</p>');
+
+            // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+            $addLink.click(function(e) {
+                addCategory($container);
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                return false;
+            });
+
+            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+            var index = $container.find(':input').length;
+
+            // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+            if (index == 0) {
+                addCategory($container);
+            } else {
+                // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
+                $container.children('div').each(function() {
+                    addDeleteLink($(this));
+                });
+            }
+
+            $container.after($addLink);
+
+            // La fonction qui ajoute un formulaire Categorie
+            function addCategory($container) {
+                // Dans le contenu de l'attribut « data-prototype », on remplace :
+                // - le texte "__name__label__" qu'il contient par le label du champ
+                // - le texte "__name__" qu'il contient par le numéro du champ
+                var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Valeur n°' + (index+1))
+                        .replace(/__name__/g, index));
+
+                // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+                addDeleteLink($prototype);
+
+                // On ajoute le prototype modifié à la fin de la balise <div>
+                $container.append($prototype);
+
+                // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+                index++;
+            }
+
+            // La fonction qui ajoute un lien de suppression d'une catégorie
+            function addDeleteLink($prototype) {
+                // Création du lien
+                $deleteLink = $('<div class="col-md-8 col-md-offset-4"> <a href="#" class="btn btn-block btn-danger">Supprimer</a></div>');
+
+                // Ajout du lien
+                $prototype.append($deleteLink);
+
+                // Ajout du listener sur le clic du lien
+                $deleteLink.click(function(e) {
+                    $prototype.remove();
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                    return false;
+                });
+            }
+        });
+    </script>
+{% endblock %}

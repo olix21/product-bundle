@@ -1,0 +1,14 @@
+{# Dywee\EshopBundle\Resources\View\Category\add.html.twig #}
+
+{%  extends "DyweeProductBundle::admin.html.twig" %}
+
+{% block title %} Modification d'une catégorie de produit - {{ parent() }} {% endblock %}
+
+{% block body %}
+    <div class="title-heading">
+        <h1>Modification de la catégorie</h1>
+    </div>
+
+    {% include "DyweeProductBundle:Category:form.html.twig" %}
+
+{% endblock %}

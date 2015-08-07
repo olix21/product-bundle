@@ -1,0 +1,13 @@
+{# Dywee\EshopBundle\Resources\View\Eshop\list.html.twig #}
+
+{%  extends "DyweeEshopBundle::index.html.twig" %}
+
+{% block body %}
+    <p>Votre choix: choisissez une bière ou une catégorie</p>
+
+    <div class="row">
+    {% for productLang in productLangList %}
+        {% include 'DyweeEshopBundle:Eshop:preview-product.html.twig' %}
+    {% endfor %}
+    </div>
+{% endblock %}

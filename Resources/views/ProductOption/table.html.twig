@@ -1,0 +1,106 @@
+{# Dywee\ProductBundle\Resources\View\product_option\table.html.twig #}
+
+{%  extends "DyweeProductBundle::admin.html.twig" %}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('dywee_product_table') }}"><i class="fa fa-beer"></i> Produits</a></li>
+    <li class="active"><i class="fa fa-list-alt"></i> Options de variation de produits</li>
+{% endblock %}
+
+{% block viewBody %}
+    <a href="{{ path('dywee_product_option_add') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Ajouter</a>
+
+    <div class="title-heading">
+        <h1 class="text-center">Liste des variations de produits</h1>
+    </div>
+
+    <div class="row">
+        {% if productOptionList is not empty %}
+            <div class="col-md-6">
+                <table class="table table-striped table-hover table-condensed">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Valeurs possibles</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%  for productOption in productOptionList %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ productOption.name }}</td>
+                            <td><small>
+                                    {% if productOption.productOptionValues is not empty %}
+                                        {% for productOptionValue in productOption.productOptionValues %}{% if loop.index > 1 %}, {% endif %}{{ productOptionValue.name }}{% endfor %}
+                                    {% else %}
+                                        Aucune valeur paramétrée
+                                    {% endif %}
+                                </small></td>
+                            <td><a href="{{ path('dywee_product_option_view', {id: productOption.id}) }}" class="link-unstyled" target="_blank"><i class="fa fa-eye"></i> </a>
+                                <a href="{{ path('dywee_product_option_update', {id: productOption.id}) }}" class="link-unstyled"><i class="fa fa-pencil"></i> </a>
+                                <a href="{{ path('dywee_product_option_delete', {id: productOption.id}) }}" class="link-unstyled" data-confirm="Êtes-vous sûr de vouloir supprimer cette option de produit:" data-name="{{ productOption.name }}"><i class="fa fa-trash-o"></i> </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <p>
+                    <a href="{{ path('dywee_product_option_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter une nouvelle option de variation</a>
+                </p>
+            </div>
+        {% else %}
+            <div class="col-md-6">
+                <p>Vous n'avez pas encore configuré d'options pour vos produits</p>
+                <p><a href="{{ path('dywee_product_option_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter une option de variation de produit</a></p>
+            </div>
+
+        {% endif %}
+        <div class="col-md-6">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-question"></i> Qu'est-ce qu'une variante de produits</h3>
+                <div class="box-tools pull-right">
+                    <!-- Buttons, labels, and many other things can be placed here! -->
+                    <!-- Here is a label for example -->
+                    <span class="label label-primary">Aide</span>
+                </div><!-- /.box-tools -->
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <p>Une variante de produit vous permet de créer des déclinaisons pour vos produits</p>
+                <p>Par exemple, une boutique vendant des t-shirts aura plusieurs tailles:
+                <ul>
+                    <li>Small</li>
+                    <li>Medium</li>
+                    <li>Large</li>
+                </ul>
+                </p>
+                <p>Et pourrait aussi décliner chaque t-shirt en plusieurs couleurs
+                <ul>
+                    <li>Jaune</li>
+                    <li>Rouge</li>
+                </ul>
+                </p>
+                <p>Dans ce cas, 2 options doivent être configurées:
+                <ul>
+                    <li>Taille</li>
+                    <li>Couleur</li>
+                </ul>
+                Les différentes valeurs possibles seront ajoutées à ces options</p>
+                <p>Vous pourrez ainsi gérer différents paramètres séparement pour chaque variante comme
+                <ul>
+                    <li>Le stock de chaque déclinaison de produit</li>
+                    <li>Le prix</li>
+                    <li>Plein d'autres choses</li>
+                </ul></p>
+                <p>Pour créer des déclinaisons de produits, une fois les options de variation créées, rendez-vous dans la page <a href="{{ path('dywee_product_table') }}">d'édition de vos produits</a>, dans l'onglet "déclinaison"</p>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <a href="{{ path('dywee_faq_category_add') }}">Ajouter une option de variation de produit</a>
+            </div><!-- box-footer -->
+        </div><!-- /.box -->
+    </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{# Dywee\EshopBundle\Resources\View\Brand\form.html.twig #}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{{ form_start(form) }}
+
+    {# les erreurs du formulaire #}
+    {{ form_errors(form) }}
+
+<div class="row">
+    <div class="col-lg-3">
+        <div class="col">
+            {{ form_widget(form.img) }}
+        </div>
+    </div>
+    <div class="col-lg-7">
+
+
+        <div class="form-group">
+            {{ form_label(form.name, "Nom", {"label_attr": {"class": "control-label col-sm-3"}}) }}
+            {{ form_errors(form.name) }}
+            <div class="col-sm-9">
+                {{ form_widget(form.name) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.website, "Website", {"label_attr": {"class": "control-label col-sm-3"}}) }}
+            {{ form_errors(form.website) }}
+            <div class="col-sm-9">
+                {{ form_widget(form.website) }}
+            </div>
+        </div>
+
+        {{ form_widget(form.Sauvegarder, {"attr": {"class": "btn btn-success col-md-offset-3"}}) }}
+
+    </div>
+</div>
+
+{{ form_rest(form) }}
+
+{{ form_end(form) }}

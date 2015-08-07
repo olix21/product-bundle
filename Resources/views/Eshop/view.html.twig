@@ -1,0 +1,51 @@
+{# Dywee\EshopBundle\Resources\View\Eshop\productList.html.twig #}
+
+{%  extends "DyweeProductBundle::layout.html.twig" %}
+
+{% block bodyContent %}
+    {% if product.isPromotion == 1 %}
+        <div class="alert alert-success">{{ 'Ce produit est en promotion'|trans }}, {{ product.promotionPrice|number_format(2) }}€ {{ 'au lieu de'|trans }} {{ product.price|number_format(2) }}€</div>
+    {% endif %}
+    {% if product.state == 2 %}
+        <div class="alert alert-warning">{{ 'Ce produit est en rupture de stock, il sera à nouveau disponible très prochainement'|trans }}</div>
+    {% endif %}
+
+    {% block bodyProduct %}
+    {% endblock %}
+
+        <hr />
+
+    {% block tabs %}
+        <div role="tabpanel" id="productMoreInfos">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                {% block tabsMenu %}
+                    <li role="presentation"><a href="#prix" aria-controls="prix" role="tab" data-toggle="tab">{{ 'Prix'|trans }}</a></li>
+                    <li role="presentation"><a href="#livraison" aria-controls="livraison" role="tab" data-toggle="tab">{{ 'Livraison'|trans }}</a></li>
+                    <li role="presentation"><a href="#commande" aria-controls="commande" role="tab" data-toggle="tab">{{ 'Commande'|trans }}</a></li>
+                    <li role="presentation"><a href="#paiement" aria-controls="paiement" role="tab" data-toggle="tab">{{ 'Paiement'|trans }}</a></li>
+                {% endblock %}
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                {% block tabsContent %}
+                    <div role="tabpanel" class="tab-pane" id="prix">
+                        {{ render(controller('DyweeCMSBundle:Page:viewContent', {data: 11})) }}
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="livraison">
+                        {{ render(controller('DyweeCMSBundle:Page:viewContent', {data: 12})) }}
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="commande">
+                        {{ render(controller('DyweeCMSBundle:Page:viewContent', {data: 13})) }}
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="paiement">
+                        {{ render(controller('DyweeCMSBundle:Page:viewContent', {data: 14})) }}
+                    </div>
+                {% endblock %}
+            </div>
+
+        </div>
+    {% endblock %}
+{% endblock bodyContent %}

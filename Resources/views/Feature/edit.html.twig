@@ -1,0 +1,12 @@
+{# Dywee\EshopBundle\Resources\View\Feature\add.html.twig #}
+
+{%  extends "DyweeProductBundle::admin.html.twig" %}
+
+{% block title %} Modification d'une caractéristique de produit - {{ parent() }} {% endblock %}
+
+{% block body %}
+    <h1>Modification de la caractéristique</h1>
+
+    {% include "DyweeProductBundle:Feature:form.html.twig" %}
+
+{% endblock %}

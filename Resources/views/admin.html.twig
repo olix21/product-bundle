@@ -1,0 +1,17 @@
+{# Dywee\EshopBundle\Resources\View\admin.html.twig #}
+
+{% extends "DyweeCoreBundle::admin.html.twig" %}
+
+{% block title %}
+    Eshop {{ parent() }}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    {% block breadcrumblvl2 %} <li><a href="{{ path('dywee_cms_table') }}"><i class="fa fa-beer"></i> Pages</a></li> {% endblock %}
+{% endblock %}
+
+{% block body %}
+    {% block viewBody %}
+    {% endblock %}
+{% endblock %}

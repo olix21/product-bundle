@@ -1,0 +1,20 @@
+{# Dywee\EshopBundle\Resources\View\Eshop\browseByCategory.html.twig #}
+
+{%  extends "DyweeEshopBundle::layout.html.twig" %}
+
+{% block title %}
+    Catégorie: {{ category.name }}{{ parent() }}
+{% endblock %}
+
+{% block bodyContent %}
+    <h1>{{ category.name }}</h1>
+    {% for row in productList|batch(3) %}
+        <div class="row">
+            {% for product in row %}
+                <div class="col-md-4">
+                    {% include 'DyweeProductBundle:Eshop:preview-product.html.twig' %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock %}
