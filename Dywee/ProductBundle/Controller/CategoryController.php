@@ -132,18 +132,13 @@ class CategoryController extends Controller
         return $this->render('DyweeProductBundle:Category:add.html.twig', array('form' => $form->createView()));
     }
 
-    public function updateAction($id, Request $request)
+    public function updateAction(Category $category, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $cr = $em->getRepository('DyweeProductBundle:Category');
-
-        $category = $cr->findOneById($id);
-
         $form = $this->get('form.factory')->create(new CategoryType, $category);
 
         if($form->handleRequest($request)->isValid()){
 
+            $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
 
@@ -153,22 +148,15 @@ class CategoryController extends Controller
         return $this->render('DyweeProductBundle:Category:edit.html.twig', array('form' => $form->createView()));
     }
 
-    public function deleteAction($id)
+    public function deleteAction(Category $category)
     {
         $em = $this->getDoctrine()->getManager();
-        $cr = $em->getRepository('DyweeProductBundle:Category');
 
-        $category = $cr->findOneById($id);
+        $em->remove($category);
+        $em->flush();
 
-        if($category !== null)
-        {
-            $em->remove($category);
-            $em->flush();
+        $this->get('session')->getFlashBag()->add('success', 'Catégorie bien supprimée');
 
-            $this->get('session')->getFlashBag()->add('success', 'Catégorie bien supprimée');
-
-            return $this->redirect($this->generateUrl('dywee_product_category_table'));
-        }
-        throw $this->createNotFoundException('Cette catégorie n\'existe plus');
+        return $this->redirect($this->generateUrl('dywee_product_category_table'));
     }
 }

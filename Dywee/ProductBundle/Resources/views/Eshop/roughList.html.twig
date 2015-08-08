@@ -1,21 +1,25 @@
 {# Dywee\EshopBundle\Resources\View\Eshop\roughList.html.twig #}
 
-{% for product in productList %}
-    {% set nameElements = product.name|split(' ') %}
-    {% if product.productType < 3 or 'Extension' not in nameElements %}
-        <li>
-{% set url %}{% if product.seoUrl != '' %}{{ product.seoUrl }}{% else %}{{ product.id }}{% endif %}{% endset %}
-            <a href="{{ path('dywee_product_view', {data: url })}}">
+{% if productList|length > 0 %}
+    {% for product in productList %}
+        {% set nameElements = product.name|split(' ') %}
+        {% if product.productType < 3 or 'Extension' not in nameElements %}
+            <li>
+    {% set url %}{% if product.seoUrl != '' %}{{ product.seoUrl }}{% else %}{{ product.id }}{% endif %}{% endset %}
+                <a href="{{ path('dywee_product_view', {data: url })}}">
 
-                {% for nameElement in nameElements %}
-                    {% if nameElement|lower() != 'abonnement' %}
-                        {{ nameElement }}
+                    {% for nameElement in nameElements %}
+                        {% if nameElement|lower() != 'abonnement' %}
+                            {{ nameElement }}
+                        {% endif %}
+                    {% endfor %}
+                    {% if product.productType == 3 %}
+                        <span class="pull-right"> {{ product.recurrence }} mois </span>
                     {% endif %}
-                {% endfor %}
-                {% if product.productType == 3 %}
-                    <span class="pull-right"> {{ product.recurrence }} mois </span>
-                {% endif %}
-            </a>
-        </li>
-    {% endif %}
-{% endfor %}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    Aucun produit
+{% endif %}

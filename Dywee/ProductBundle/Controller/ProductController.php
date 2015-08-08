@@ -95,16 +95,10 @@ class ProductController extends Controller
 
     }
 
-    public function adminViewAction($id)
+    public function adminViewAction(Product $product)
     {
         $em = $this->getDoctrine()->getManager();
-        $pr = $em->getRepository('DyweeProductBundle:Product');
         $psr = $em->getRepository('DyweeProductBundle:ProductStat');
-
-        $product = $pr->findOneById($id);
-
-        if($product == null)
-            throw $this->createNotFoundException('Produit sélectionné introuvable');
 
         $vues = $psr->getStats($product, 1);
         $baskets = $psr->getStats($product, 2);
@@ -163,33 +157,22 @@ class ProductController extends Controller
         return $this->render('DyweeProductBundle:Eshop:add.html.twig', array('form' => $form->createView()));
     }
 
-    public function updateAction($id, Request $request)
+    public function updateAction(Product $product, Request $request)
     {
-        $this->get('session')->set('KCFINDER', array('disabled' => false));
+        $form = $this->get('form.factory')->create(new ProductType(), $product);
 
-        $em = $this->getDoctrine()->getManager();
-        $pr = $em->getRepository('DyweeProductBundle:Product');
-        $product = $pr->findOneById($id);
+        if($form->handleRequest($request)->isValid()){
 
-        if($product !== null){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($product);
+            $em->flush();
 
-            $_SESSION['KCFINDER'] = array('disabled' => false);
+            $request->getSession()->getFlashBag()->add('success', 'Produit bien mis à jour');
 
-            $form = $this->get('form.factory')->create(new ProductType(), $product);
-
-            if($form->handleRequest($request)->isValid()){
-                $em->persist($product);
-                $em->flush();
-
-                $request->getSession()->getFlashBag()->add('success', 'Produit bien mis à jour');
-
-                return $this->redirect($this->generateUrl('dywee_product_table', array('type' => $product->getProductType())));
-            }
-
-            return $this->render('DyweeProductBundle:Eshop:edit.html.twig', array('form' => $form->createView()));
+            return $this->redirect($this->generateUrl('dywee_product_table', array('type' => $product->getProductType())));
         }
-        throw $this->createNotFoundException('Ce produit n\'existe pas');
 
+        return $this->render('DyweeProductBundle:Eshop:edit.html.twig', array('form' => $form->createView()));
     }
 
     public function tableAction($type, $page)
@@ -221,22 +204,14 @@ class ProductController extends Controller
         return $this->render('DyweeProductBundle:Eshop:roughList.html.twig', array('productList' => $productList));
     }
 
-    public function deleteAction($id)
+    public function deleteAction(Product $product)
     {
         $em = $this->getDoctrine()->getManager();
-        $pr = $em->getRepository('DyweeProductBundle:Product');
+        $em->remove($product);
+        $em->flush();
 
-        $product = $pr->findOneById($id);
+        $this->get('session')->getFlashBag()->add('success', 'Produit bien supprimée');
 
-        if($product !== null)
-        {
-            $em->remove($product);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('success', 'Produit bien supprimée');
-
-            return $this->redirect($this->generateUrl('dywee_product_table', array('type' => $product->getProductType())));
-        }
-        throw $this->createNotFoundException('Ce produit n\'existe plus');
+        return $this->redirect($this->generateUrl('dywee_product_table', array('type' => $product->getProductType())));
     }
 }

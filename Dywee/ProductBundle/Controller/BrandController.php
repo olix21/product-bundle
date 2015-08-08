@@ -21,14 +21,12 @@ class BrandController extends Controller
 
     public function addAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $brand = new Brand();
 
         $form = $this->get('form.factory')->create(new BrandType(), $brand);
 
         if($form->handleRequest($request)->isValid()){
-
+            $em = $this->getDoctrine()->getManager();
             $em->persist($brand);
             $em->flush();
 
@@ -38,35 +36,21 @@ class BrandController extends Controller
         return $this->render('DyweeProductBundle:Brand:add.html.twig', array('form' => $form->createView()));
     }
 
-    public function updateAction($id)
+    public function updateAction(Brand $brand)
     {
-        $em = $this->getDoctrine()->getManager();
-        $br = $em->getRepository('DyweeProductBundle:Brand');
-
-        $brand = $br->findOneById($id);
-
-        if($brand !== null) {
-
-        }
-        throw $this->createNotFoundException('Cette marque n\'existe plus');
+        new Response('Controller à écrire');
     }
 
-    public function deleteAction($id)
+    public function deleteAction(Brand $brand)
     {
         $em = $this->getDoctrine()->getManager();
-        $br = $em->getRepository('DyweeProductBundle:Brand');
 
-        $brand = $br->findOneById($id);
+        $em->remove($brand);
+        $em->flush();
 
-        if($brand !== null) {
-            $em->remove($brand);
-            $em->flush();
+        $this->get('session')->getFlashBag()->add('success', 'Marque bien supprimée');
 
-            $this->get('session')->getFlashBag()->add('success', 'Marque bien supprimée');
-
-            return $this->redirect($this->generateUrl('dywee_product_brand_table'));
-        }
-        throw $this->createNotFoundException('Cette marque n\'existe plus');
+        return $this->redirect($this->generateUrl('dywee_product_brand_table'));
     }
 
     public function viewProductsAction($data)
@@ -84,9 +68,7 @@ class BrandController extends Controller
         );
 
         if($brand !== null)
-        {
             return $this->render('DyweeProductBundle:Eshop:browseByBrand.html.twig', array('brand' => $brand, 'productList' => $productList));
-        }
         throw $this->createNotFoundException('Marque non trouvée');
     }
 }

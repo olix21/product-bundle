@@ -79,22 +79,15 @@ class ProductOptionController extends Controller
         return $this->render('DyweeProductBundle:ProductOption:table.html.twig', array('productOptionList' => $productOptionList));
     }
 
-    public function deleteAction($id)
+    public function deleteAction(ProductOption $productOption)
     {
         $em = $this->getDoctrine()->getManager();
-        $por = $em->getRepository('DyweeProductBundle:ProductOption');
 
-        $productOption = $por->findOneById($id);
+        $em->remove($productOption);
+        $em->flush();
 
-        if($productOption !== null)
-        {
-            $em->remove($productOption);
-            $em->flush();
+        $this->get('session')->getFlashBag()->add('success', 'Option de variante de produit bien supprimée');
 
-            $this->get('session')->getFlashBag()->add('success', 'Option de variante de produit bien supprimée');
-
-            return $this->redirect($this->generateUrl('dywee_product_option_table'));
-        }
-        throw $this->createNotFoundException('Cette option de variante de produit n\'existe plus');
+        return $this->redirect($this->generateUrl('dywee_product_option_table'));
     }
 }
