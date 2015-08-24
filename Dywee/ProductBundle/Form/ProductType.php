@@ -30,10 +30,9 @@ class ProductType extends AbstractType
                 'property' => 'name',))
             ->add('price',          'number')
             ->add('isPriceTTC')
-            ->add('metaTitle',          'text',     array('required' => false))
-            ->add('metaDescription',    'textarea', array('required' => false))
-            ->add('metaKeywords',       'textarea', array('required' => false))
-            ->add('seoUrl')
+            ->add('foo',                new SeoType(),      array(
+                'data_class' => 'Dywee\BlogBundle\Entity\Article'
+            ))
             ->add('shortDescription',   'ckeditor', array('required' => false))
             ->add('mediumDescription',  'ckeditor', array('required' => false))
             ->add('longDescription',    'ckeditor', array('required' => false))
