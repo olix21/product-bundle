@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
-    public function findByCategory($category){
+    public function findByCategory($category, $website = null){
         $query = $this->createQueryBuilder('p')
             ->select('p')
             ->leftJoin('p.categories', 'c')
@@ -30,7 +30,7 @@ class ProductRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function countByCategoriesId($categoriesId = null, $type = null)
+    public function countByCategoriesId($categoriesId = null, $type = null, $website = null)
     {
         $qb = $this->createQueryBuilder('p')
             ->select('count(p)');
@@ -171,7 +171,7 @@ class ProductRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function countByState($state = null)
+    public function countByState($state = null, $website = null)
     {
         $qb = $this->createQueryBuilder('p')
             ->select('COUNT(p)');
