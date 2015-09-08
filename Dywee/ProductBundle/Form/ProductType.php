@@ -6,6 +6,7 @@ use Dywee\ProductBundle\Entity\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Dywee\CoreBundle\Form\Type\SeoType;
 
 class ProductType extends AbstractType
 {
@@ -30,7 +31,7 @@ class ProductType extends AbstractType
                 'property' => 'name',))
             ->add('price',          'number')
             ->add('isPriceTTC')
-            ->add('foo',                new SeoType(),      array(
+            ->add('seo',                new SeoType(),      array(
                 'data_class' => 'Dywee\BlogBundle\Entity\Article'
             ))
             ->add('shortDescription',   'ckeditor', array('required' => false))

@@ -1067,6 +1067,7 @@ class Product implements Translatable
     public function addRentableProduct(\Dywee\ProductBundle\Entity\RentableProduct $rentableProducts)
     {
         $this->rentableProducts[] = $rentableProducts;
+        $rentableProducts->setParent($this);
 
         return $this;
     }

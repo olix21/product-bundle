@@ -3,6 +3,7 @@
 namespace Dywee\ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Dywee\ProductBundle\Entity\Product;
 
 /**
  * RentableProduct
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="rentable_products")
  * @ORM\Entity
  */
-class RentableProduct
+class RentableProduct extends Product
 {
     /**
      * @var integer
@@ -22,78 +23,42 @@ class RentableProduct
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="state", type="smallint")
-     */
-    private $state;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Dywee\ProductBundle\Entity\Product", inversedBy="rentableProducts", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Dywee\ProductBundle\Entity\Product", inversedBy="rentableProducts")
      */
     private $parent;
-
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
 
+
+
     /**
-     * Set name
+     * Set parent
      *
-     * @param string $name
+     * @param \Dywee\ProductBundle\Entity\Product $parent
      * @return RentableProduct
      */
-    public function setName($name)
+    public function setParent(\Dywee\ProductBundle\Entity\Product $parent = null)
     {
-        $this->name = $name;
+        $this->parent = $parent;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get parent
      *
-     * @return string 
+     * @return \Dywee\ProductBundle\Entity\Product 
      */
-    public function getName()
+    public function getParent()
     {
-        return $this->name;
-    }
-
-    /**
-     * Set state
-     *
-     * @param integer $state
-     * @return RentableProduct
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    /**
-     * Get state
-     *
-     * @return integer 
-     */
-    public function getState()
-    {
-        return $this->state;
+        return $this->parent;
     }
 }

@@ -1,0 +1,9 @@
+{# Dywee\ProductBundle\Resources\View\Product\sellType.html.twig #}
+
+{% if product.sellType == 0 %}
+    <span class="label label-default">Dématérialisé</span>
+{% elseif product.sellType == 1 %}
+    <span class="label label-default">Vente</span>
+{% elseif product.sellType == 2 %}
+    <span class="label label-default">Location</span>
+{%  endif %}
