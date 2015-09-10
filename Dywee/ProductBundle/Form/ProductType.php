@@ -30,7 +30,7 @@ class ProductType extends AbstractType
                 'class' => 'DyweeProductBundle:Brand',
                 'property' => 'name',))
             ->add('price',          'number')
-            ->add('isPriceTTC')
+            ->add('isPriceTTC',         'checkbox', array('required' => false, 'label' => 'Prix TTC'))
             ->add('seo',                new SeoType(),      array(
                 'data_class' => 'Dywee\BlogBundle\Entity\Article'
             ))
@@ -43,7 +43,7 @@ class ProductType extends AbstractType
             ->add('height',             'number',   array('required' => false))
             ->add('weight',             'number',   array('required' => false))
             ->add('stock',              'number',   array('required' => false))
-            ->add('isPromotion',        'checkbox', array('required' => false))
+            ->add('isPromotion',        'checkbox', array('required' => false, 'label' => 'En promotion'))
             ->add('promotionPrice',     'number',   array('required' => false))
             ->add('productType',        'choice',   array('choices' => array(1 => 'Produit', 2 => 'Pack de produit', 3 => 'Abonnement')))
             ->add('state',              'choice',   array('choices' => array(0 => 'Indisponible', 1 => 'Disponible', 2 => 'Bientot disponible', 3 => 'Seulement en magasin')))

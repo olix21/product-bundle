@@ -27,7 +27,7 @@
     {{ form_stylesheet(form) }}
 {% endblock %}
 
-{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 
 
@@ -56,14 +56,13 @@
             <div class="col-lg-3">
                 {{ form_widget(form.images) }}
             </div>
-            <div class="col-lg-7">
-
+            <div class="col-lg-8">
 
                 <div class="form-group">
-                    {{ form_label(form.name, "Nom") }}
+                    {{ form_label(form.name, "Nom du produit") }}
                     {{ form_errors(form.name) }}
                     <div class="col-sm-9">
-                        {{ form_widget(form.name) }}
+                        {{ form_widget(form.name, {'attr': {'placeholder': 'Nom du produit'}}) }}
                     </div>
                 </div>
 
@@ -75,13 +74,11 @@
                     </div>
                 </div>
 
-
-
                 <div class="form-group">
                     {{ form_label(form.price, "Prix") }}
                     {{ form_errors(form.price) }}
                     <div class="col-sm-9">
-                        {{ form_widget(form.price) }}
+                        {{ form_widget(form.price, {attr: {placeholder: 'Prix du produit'}}) }}
                     </div>
                 </div>
 
@@ -98,13 +95,13 @@
                     {{ form_label(form.stock, "Stock") }}
                     {{ form_errors(form.stock) }}
                     <div class="col-sm-9">
-                        {{ form_widget(form.stock) }}
+                        {{ form_widget(form.stock, {attr: {placeholder: 'Nombre de produit en stock'}}) }}
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-offset-2 cols-md-10">
-                        {{ form_label(form.isPromotion, "En promotion") }}
+                        {{ form_label(form.isPromotion) }}
                         {{ form_errors(form.isPromotion) }}
                         {{ form_widget(form.isPromotion) }}
                     </div>
@@ -113,7 +110,7 @@
                     {{ form_label(form.promotionPrice, "Prix en promotion") }}
                     {{ form_errors(form.promotionPrice) }}
                     <div class="col-sm-9">
-                        {{ form_widget(form.promotionPrice) }}
+                        {{ form_widget(form.promotionPrice, {attr: {placeholder: 'Prix en promotion'}}) }}
                     </div>
                 </div>
                 <div class="form-group">

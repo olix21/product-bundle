@@ -154,7 +154,7 @@ class ProductController extends Controller
             return $this->redirect($this->generateUrl('dywee_product_table'));
         }
 
-        return $this->render('DyweeProductBundle:Eshop:add.html.twig', array('form' => $form->createView()));
+        return $this->render('DyweeProductBundle:Product:add.html.twig', array('form' => $form->createView()));
     }
 
     public function updateAction(Product $product, Request $request)
@@ -172,7 +172,7 @@ class ProductController extends Controller
             return $this->redirect($this->generateUrl('dywee_product_table', array('type' => $product->getProductType())));
         }
 
-        return $this->render('DyweeProductBundle:Eshop:edit.html.twig', array('form' => $form->createView()));
+        return $this->render('DyweeProductBundle:Product:edit.html.twig', array('form' => $form->createView()));
     }
 
     public function tableAction($type, $page)
