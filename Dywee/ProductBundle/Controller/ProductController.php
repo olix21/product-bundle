@@ -2,6 +2,7 @@
 
 namespace Dywee\ProductBundle\Controller;
 
+use Dywee\CoreBundle\Doctrine\DQL\Date;
 use Dywee\OrderBundle\Entity\BaseOrder;
 use Dywee\ProductBundle\Entity\Product;
 use Dywee\ProductBundle\Entity\ProductStat;
@@ -95,7 +96,7 @@ class ProductController extends Controller
 
     }
 
-    public function adminViewAction(Product $product)
+    public function adminViewAction(Product $product, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $psr = $em->getRepository('DyweeProductBundle:ProductStat');
@@ -106,41 +107,65 @@ class ProductController extends Controller
 
         $stats = array();
 
+        $date = new \DateTime("previous week");
+
+        for($i = 0; $i <= 6; $i++)
+        {
+            $key = $date->modify('+1 day')->format('d/m/Y');
+            $stats[$key] = array('createdDate' => $key, 'vues' => 0, 'basket' => 0, 'ventes' => 0);
+        }
+
+        //On organise les données des stats
         foreach($vues as $vue)
-            $stats[$vue['createdDate']->format('d/m/Y')] = array('createdDate' => $vue['createdDate'], 'vues' => $vue['total'], 'basket' => 0, 'ventes' => 0);
+            $stats[$vue['createdDate']->format('d/m/Y')]['vues'] = $vue['total'];
 
         foreach($baskets as $basket)
-        {
-            if(array_key_exists($basket['createdDate']->format('d/m/Y'), $stats))
-                $stats[$basket['createdDate']->format('d/m/Y')]['basket'] = $basket['total'];
-            else $stats[$basket['createdDate']->format('d/m/Y')] = array('createdDate' => $basket['createdDate'], 'vues' => 0, 'basket' => $basket['total'], 'ventes' => 0);
-        }
+            $stats[$basket['createdDate']->format('d/m/Y')]['basket'] = $basket['total'];
 
         foreach($ventes as $vente)
-        {
-            if(array_key_exists($vente['createdDate']->format('d/m/Y'), $stats))
-                $stats[$vente['createdDate']->format('d/m/Y')]['ventes'] = $vente['total'];
-            else $stats[$vente['createdDate']->format('d/m/Y')] = array(
-                'createdDate' => $vente['createdDate'],
-                'vues' => 0,
-                'basket' => 0,
-                'ventes' => $vente['total']
-            );
-        }
+            $stats[$vente['createdDate']->format('d/m/Y')]['ventes'] = $vente['total'];
 
+        //On instancie les données à transmettre à la vue
         $data = array('product' => $product, 'stats' => $stats);
+
+        //On récupère les tresholds pour l'affichage colorisé du stock
+        $pmr = $em->getRepository('DyweeCoreBundle:ParametersManager');
+        $stockEnabled = $pmr->findOneByName('stockManagementEnabled');
+
+        $data['stockEnabled'] = $stockEnabled->getValue();
+
+
+        if($stockEnabled->getValue() == 1)
+        {
+            $stockWarning = $pmr->findOneByName('stockWarningTreshold');
+            $stockAlert = $pmr->findOneByName('stockAlertTreshold');
+
+            $data['stockWarning'] = $stockWarning->getValue();
+            $data['stockAlert'] = $stockAlert->getValue();
+        }
 
         return $this->render('DyweeProductBundle:Product:adminView.html.twig', $data);
     }
 
     public function addAction($type, Request $request)
     {
-        $this->get('session')->set('KCFINDER', array('disabled' => false));
-
         $em = $this->getDoctrine()->getManager();
 
         $product = new Product();
         $product->setProductType($type);
+
+        $pmr = $em->getRepository('DyweeCoreBundle:ParametersManager');
+
+        $stockEnabled = $pmr->findOneByName('stockManagementEnabled');
+
+        if($stockEnabled->getValue() == 1)
+        {
+            $stockWarning = $pmr->findOneByName('stockWarningTreshold');
+            $stockAlert = $pmr->findOneByName('stockAlertTreshold');
+
+            $product->setStockAlertTreshold($stockAlert->getValue());
+            $product->setStockWarningTreshold($stockWarning->getValue());
+        }
 
         $form = $this->get('form.factory')->create(new ProductType, $product);
 
@@ -151,7 +176,7 @@ class ProductController extends Controller
 
             $request->getSession()->getFlashBag()->add('success', 'Produit bien ajouté');
 
-            return $this->redirect($this->generateUrl('dywee_product_table'));
+            return $this->redirect($this->generateUrl('dywee_product_table', array('type' => $product->getProductType())));
         }
 
         return $this->render('DyweeProductBundle:Product:add.html.twig', array('form' => $form->createView()));
