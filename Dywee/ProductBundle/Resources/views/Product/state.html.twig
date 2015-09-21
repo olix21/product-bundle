@@ -6,4 +6,6 @@
     <span class="label label-warning">Bientôt disponible</span>
 {% elseif product.state == 3 %}
     <span class="label label-info">Seulement disponible en magasin</span>
+{% elseif product.state == 4 %}
+    <span class="label label-info">Seulement disponible en pack ou abonnement</span>
 {%  endif %}

@@ -15,13 +15,12 @@ class ProductStatRepository extends EntityRepository
 
     public function getStats($product, $type = 1, $detail = 'daily')
     {
-
+        $date = new \DateTime("previous week");
         $qb = $this->createQueryBuilder('s')
             ->select('sum(s.quantity) as total, s.createdDate, s.type')
-            ->where('s.product = :product and s.type = :type')
-            ->setParameters(array('product' => $product, 'type' => $type))
-            ->orderBy('s.createdDate', 'asc')
-            ->setMaxResults(6);
+            ->where('s.product = :product and s.type = :type and s.createdDate > :date')
+            ->setParameters(array('product' => $product, 'type' => $type, 'date' => $date))
+            ->orderBy('s.createdDate', 'asc');
 
         if($detail == 'daily')
             $qb->groupBy('s.createdDate');

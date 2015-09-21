@@ -173,4 +173,14 @@ $(document).ready(function() {
             return false;
         });
     }
+
+    //Gestion des champs caché par checkbox
+    if(!$("#dywee_eshopbundle_product_isPromotion").attr("checked"))
+        $("#promotionSettings").attr('style', 'display: none');
+
+
+    $("#dywee_eshopbundle_product_isPromotion").on('change', function()
+    {
+        $("#promotionSettings").slideToggle('slow');
+    });
 });

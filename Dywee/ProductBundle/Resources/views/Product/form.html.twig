@@ -106,7 +106,7 @@
                         {{ form_widget(form.isPromotion) }}
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="promotionSettings">
                     {{ form_label(form.promotionPrice, "Prix en promotion") }}
                     {{ form_errors(form.promotionPrice) }}
                     <div class="col-sm-9">
@@ -195,40 +195,36 @@
             {{ form_label(form.seo.metaTitle, "Meta Titre") }}
             {{ form_errors(form.seo.metaTitle) }}
             <div class="col-sm-9">
-                <div class="input-group">
+
                     {{ form_widget(form.seo.metaTitle) }}
-                    {{ langDropDown }}
-                </div>
+
             </div>
         </div>
         <div class="form-group">
             {{ form_label(form.seo.metaDescription, "Meta Description") }}
             {{ form_errors(form.seo.metaDescription) }}
             <div class="col-sm-9">
-                <div class="input-group">
+
                     {{ form_widget(form.seo.metaDescription) }}
-                    {{ langDropDown }}
-                </div>
+
             </div>
         </div>
         <div class="form-group">
             {{ form_label(form.seo.metaKeywords, "Meta Keywords") }}
             {{ form_errors(form.seo.metaKeywords) }}
             <div class="col-sm-9">
-                <div class="input-group">
+
                     {{ form_widget(form.seo.metaKeywords) }}
-                    {{ langDropDown }}
-                </div>
+
             </div>
         </div>
         <div class="form-group">
             {{ form_label(form.seo.seoUrl, "Url") }}
             {{ form_errors(form.seo.seoUrl) }}
             <div class="col-sm-9">
-                <div class="input-group">
+
                     {{ form_widget(form.seo.seoUrl) }}
-                    {{ langDropDown }}
-                </div>
+
             </div>
         </div>
     </div>

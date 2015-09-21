@@ -34,7 +34,7 @@ class Product implements Translatable
     /**
      * @var string
      *
-     * @ORM\Column(name="price", type="decimal", scale=2)
+     * @ORM\Column(name="price", type="decimal", scale=2, nullable=true)
      */
     private $price;
 
@@ -104,9 +104,9 @@ class Product implements Translatable
     /**
      * @var integer
      *
-     * @ORM\Column(name="stock", type="integer")
+     * @ORM\Column(name="stock", type="integer", nullable=true)
      */
-    private $stock = 0;
+    private $stock;
 
     /*
      * @ORM\Column(name="rentStock", type="smallint")
@@ -251,6 +251,11 @@ class Product implements Translatable
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(name="stockWarningTreshold", type="smallint", nullable=true)
+     */
+    private $stockWarningTreshold = null;
 
     /**
      * @ORM\Column(name="stockAlertTreshold", type="smallint", nullable=true)
@@ -1214,6 +1219,30 @@ class Product implements Translatable
     }
 
     /**
+     * Set stockWarningTreshold
+     *
+     * @param integer $stockWarningTreshold
+     *
+     * @return Product
+     */
+    public function setStockWarningTreshold($stockWarningTreshold)
+    {
+        $this->stockWarningTreshold = $stockWarningTreshold;
+
+        return $this;
+    }
+
+    /**
+     * Get stockWarningTreshold
+     *
+     * @return integer
+     */
+    public function getStockWarningTreshold()
+    {
+        return $this->stockWarningTreshold;
+    }
+
+    /**
      * Set stockAlertTreshold
      *
      * @param integer $stockAlertTreshold
@@ -1359,5 +1388,41 @@ class Product implements Translatable
     public function getProductStat()
     {
         return $this->productStat;
+    }
+
+    public function decreaseStock($quantity)
+    {
+        return $this->stockOperation($quantity, 'decrease');
+    }
+
+    public function refundStock($quantity)
+    {
+        return $this->stockOperation($quantity, 'refund');
+    }
+
+    public function stockOperation($quantity, $operation = 'decrease')
+    {
+        if($this->getProductType() == 1)
+            if($operation == 'decrease')
+                $this->setStock($this->getStock() - $quantity);
+            elseif($operation == 'refund')
+                $this->setStock($this->getStock() + $quantity);
+        else{
+            // Si la gestion du stock est activée pour le produit ( != null)
+            if(is_numeric($this->getStock()))
+                if($operation == 'decrease')
+                    $this->setStock($this->getStock() - $quantity);
+                elseif($operation == 'refund')
+                    $this->setStock($this->getStock() + $quantity);
+
+            // Puis on gère le stock pour les produits contenus dans l'abonnement ou le pack
+            foreach($this->getPackElements() as $element)
+            {
+                $productFromPack = $element->getProduct();
+                $productFromPack->stockOperation($quantity*$element->getQuantity(), $operation);
+            }
+
+        }
+        return $this;
     }
 }

@@ -40,6 +40,8 @@ dywee_product_view:
 dywee_product_admin_view:
     path:     /admin6933/product/{id}
     defaults: { _controller: DyweeProductBundle:Product:adminView}
+    requirements:
+        id: \d+
 
 dywee_product_add:
     path:     /admin6833/product/add/{type}
@@ -177,3 +179,8 @@ dywee_product_option_delete:
     defaults: { _controller: DyweeProductBundle:ProductOption:delete }
     requirements:
         id: \d+
+
+#    STOCKS   #
+dywee_product_stock_dashboard:
+    path:     /admin6833/product/stock/dashboard
+    defaults: { _controller: DyweeProductBundle:Stock:table }
