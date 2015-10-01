@@ -29,7 +29,7 @@ class ProductType extends AbstractType
                 'required' => false,
                 'class' => 'DyweeProductBundle:Brand',
                 'property' => 'name',))
-            ->add('price',          'number',       array('required' => false))
+            ->add('price',          'money',       array('required' => false))
             ->add('isPriceTTC',         'checkbox', array('required' => false, 'label' => 'Prix TTC'))
             ->add('seo',                new SeoType(),      array(
                 'data_class' => 'Dywee\BlogBundle\Entity\Article'
@@ -37,14 +37,14 @@ class ProductType extends AbstractType
             ->add('shortDescription',   'ckeditor', array('required' => false))
             ->add('mediumDescription',  'ckeditor', array('required' => false))
             ->add('longDescription',    'ckeditor', array('required' => false))
-            ->add('sellType',           'choice',   array('choices' => array(0 => 'Dematérialisé', 1 => 'Vente', 2 => 'Louable')))
+            ->add('sellType',           'choice',   array('choices' => array(1 => 'Vente', 2 => 'Louable', 0 => 'Dematérialisé')))
             ->add('length',             'number',   array('required' => false))
             ->add('width',              'number',   array('required' => false))
             ->add('height',             'number',   array('required' => false))
             ->add('weight',             'number',   array('required' => false))
             ->add('stock',              'number',   array('required' => false))
             ->add('isPromotion',        'checkbox', array('required' => false, 'label' => 'En promotion'))
-            ->add('promotionPrice',     'number',   array('required' => false))
+            ->add('promotionPrice',     'money',   array('required' => false))
             ->add('productType',        'choice',   array('choices' => array(1 => 'Produit', 2 => 'Pack de produit', 3 => 'Abonnement')))
             ->add('state',              'choice',   array('choices' => array(0 => 'Indisponible', 1 => 'Disponible', 2 => 'Bientot disponible', 3 => 'Seulement en magasin', 4 => 'Seulement en pack ou abonnement')))
             ->add('categories',         'entity',       array(

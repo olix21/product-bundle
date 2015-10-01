@@ -6,6 +6,7 @@ use Dywee\CoreBundle\Doctrine\DQL\Date;
 use Dywee\OrderBundle\Entity\BaseOrder;
 use Dywee\ProductBundle\Entity\Product;
 use Dywee\ProductBundle\Entity\ProductStat;
+use Dywee\ProductBundle\Filter\ProductFilterType;
 use Dywee\ProductBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -200,13 +201,36 @@ class ProductController extends Controller
         return $this->render('DyweeProductBundle:Product:edit.html.twig', array('form' => $form->createView()));
     }
 
-    public function tableAction($type, $page)
+    public function tableAction($type, $page, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         $pr = $em->getRepository('DyweeProductBundle:Product');
-        $productList = $pr->findBy(array('productType' => $type), array('name' => 'asc'));
-        return $this->render('DyweeProductBundle:Product:table.html.twig', array('productList' => $productList, 'type' => $type));
+
+        $form = $this->get('form.factory')->create(new ProductFilterType())
+            ->add('chercher', 'submit')
+        ;
+
+        $filterActive = false;
+
+        if($form->handleRequest($request)->isValid())
+        {
+            $filterBuilder = $pr->createQueryBuilder('p');
+
+            // build the query from the given form object
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+
+            $productList = $filterBuilder->orderBy('p.name')->getQuery()->getResult();
+            $filterActive = true;
+        }
+        else $productList = $pr->findBy(array('productType' => $type), array('name' => 'asc'));
+
+        return $this->render('DyweeProductBundle:Product:table.html.twig', array(
+            'productList' => $productList,
+            'type' => $type,
+            'search' => $form->createView(),
+            'filterActive' => $filterActive
+        ));
     }
 
     public function listAction($type = 1, $orderBy = null, $limit = null, $offset =0)

@@ -290,6 +290,13 @@ class Product implements Translatable
     private $locale;
 
     /**
+     * @Gedmo\Slug(fields={"id", "name"})
+     * @Gedmo\Translatable
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -1424,5 +1431,10 @@ class Product implements Translatable
 
         }
         return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

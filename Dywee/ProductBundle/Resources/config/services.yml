@@ -1,1 +1,13 @@
 services:
+    dywee.stock_manager:
+        class: Dywee\ProductBundle\Service\StockManagerService
+        arguments: [ @doctrine.orm.entity_manager ]
+
+    dywee_product.validator:
+        class: Dywee\ProductBundle\Service\ProductValidatorService
+        arguments: [ ]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }

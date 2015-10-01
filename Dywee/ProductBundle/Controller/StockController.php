@@ -63,6 +63,13 @@ class StockController extends Controller
 
             $em->flush();
 
+            $stockManager = $this->get('dywee.stock_manager');
+
+            if($stockEnabled->getValue())
+                $stockManager->checkAll();
+            else
+                $stockManager->removeNotifications();
+
             $this->get('session')->getFlashBag()->add('success', 'Paramètres de stock correctement mis à jour');
         }
 

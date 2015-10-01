@@ -4,9 +4,9 @@
 
 {% block title %} Modification d'un produit - {{ parent() }} {% endblock %}
 
-{% block footerJavascript %}
-    <script src="{{ asset('bundles/dyweeproduct/js/form.js') }}"></script>
-    {{ form_javascript(form) }}
+{% block breadcrumb %}
+    <li><i class="fa fa-beer"></i> Produits</li>
+    <li class="active"><i class="fa fa-pencil"></i> Modification d'un produit</li>
 {% endblock %}
 
 {% block body %}
@@ -14,4 +14,9 @@
 
     {% include "DyweeProductBundle:Product:form.html.twig" %}
 
+{% endblock %}
+
+{% block footerJavascript %}
+    <script src="{{ asset('bundles/dyweeproduct/js/form.js') }}"></script>
+    {{ form_javascript(form) }}
 {% endblock %}

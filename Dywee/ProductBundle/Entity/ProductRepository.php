@@ -12,6 +12,22 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
+    public function searchBy($data)
+    {
+        /*$query = $this->createQueryBuilder('p')
+            ->select('p');
+
+        foreach($data as $property => $value)
+            $query->andWhere($property. ' = ')
+
+        $query->setHint(
+            \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,
+            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+        );
+
+        return $query->getResult();*/
+    }
+
     public function findByCategory($category, $website = null){
         $query = $this->createQueryBuilder('p')
             ->select('p')
