@@ -283,6 +283,11 @@ class Product implements Translatable
     private $productStat;
 
     /**
+     * @ORM\Column(name="externalDownloadLink", type="string", length=255)
+     */
+    private $externalDownloadLink;
+
+    /**
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
@@ -1436,5 +1441,17 @@ class Product implements Translatable
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    public function setExternalDownloadLink($link)
+    {
+        $this->externalDownloadLink = $link;
+
+        return $this;
+    }
+
+    public function getExternalDownloadLink()
+    {
+        return $this->externalDownloadLink;
     }
 }

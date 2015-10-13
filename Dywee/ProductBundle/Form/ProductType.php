@@ -2,7 +2,6 @@
 
 namespace Dywee\ProductBundle\Form;
 
-use Dywee\ProductBundle\Entity\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -37,7 +36,7 @@ class ProductType extends AbstractType
             ->add('shortDescription',   'ckeditor', array('required' => false))
             ->add('mediumDescription',  'ckeditor', array('required' => false))
             ->add('longDescription',    'ckeditor', array('required' => false))
-            ->add('sellType',           'choice',   array('choices' => array(1 => 'Vente', 2 => 'Louable', 0 => 'Dematérialisé')))
+            ->add('sellType',           'choice',   array('choices' => array(1 => 'Vente', 2 => 'Louable', 0 => 'Dematérialisé', 3 => 'Service')))
             ->add('length',             'number',   array('required' => false))
             ->add('width',              'number',   array('required' => false))
             ->add('height',             'number',   array('required' => false))
@@ -45,7 +44,7 @@ class ProductType extends AbstractType
             ->add('stock',              'number',   array('required' => false))
             ->add('isPromotion',        'checkbox', array('required' => false, 'label' => 'En promotion'))
             ->add('promotionPrice',     'money',   array('required' => false))
-            ->add('productType',        'choice',   array('choices' => array(1 => 'Produit', 2 => 'Pack de produit', 3 => 'Abonnement')))
+            ->add('productType',        'choice',   array('choices' => array(1 => 'Produit', 2 => 'Pack de produit', 3 => 'Abonnement', 4 => 'Service')))
             ->add('state',              'choice',   array('choices' => array(0 => 'Indisponible', 1 => 'Disponible', 2 => 'Bientot disponible', 3 => 'Seulement en magasin', 4 => 'Seulement en pack ou abonnement')))
             ->add('categories',         'entity',       array(
                 'required' => false,

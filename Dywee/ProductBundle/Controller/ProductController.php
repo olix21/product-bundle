@@ -263,4 +263,12 @@ class ProductController extends Controller
 
         return $this->redirect($this->generateUrl('dywee_product_table', array('type' => $product->getProductType())));
     }
+
+    public function renderLastRentingAction(Product $product)
+    {
+        $or = $this->getDoctrine()->getManager()->getRepository('DyweeOrderBundle:OrderElement');
+        $os = $or->findLastRentingByProduct($product);
+
+        return $this->render('DyweeProductBundle:Product:rentMiniTable.html.twig', array('orderElementList' => $os));
+    }
 }
