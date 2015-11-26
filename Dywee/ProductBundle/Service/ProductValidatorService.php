@@ -67,7 +67,7 @@ class ProductValidatorService
             return;
         }
 
-        if($product->getSeoUrl() == '')
+        /*if($product->getSeoUrl() == '')
         {
             $product->setSeoUrl($product->getSlug());
 
@@ -82,11 +82,11 @@ class ProductValidatorService
 
             $em->persist($notificationSeoUrl);
 
-        }
+        }*/
 
-        if($product->getMetaTitle() == '')
+        /*if($product->getMetaTitle() == '')
         {
-            $product->setMetaTitle($product->setName());
+            $product->setMetaTitle($product->getName());
 
             $notificationSeoTitle = new Notification();
             $notificationSeoTitle->setBundle('product');
@@ -100,6 +100,6 @@ class ProductValidatorService
             $em->persist($notificationSeoTitle);
         }
 
-        $em->flush();
+        $em->flush();*/
     }
 }

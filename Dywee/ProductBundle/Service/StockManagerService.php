@@ -41,6 +41,7 @@ class StockManagerService
                 //On créé une alerte si le stock est vide
                 if($product->getStock() == 0)
                 {
+                    //$product->setState(5);
                     $alert = new Alert();
                     $alert->setBundle('product');
                     $alert->setType('product.stock.empty');

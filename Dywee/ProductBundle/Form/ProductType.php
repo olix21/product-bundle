@@ -45,7 +45,7 @@ class ProductType extends AbstractType
             ->add('isPromotion',        'checkbox', array('required' => false, 'label' => 'En promotion'))
             ->add('promotionPrice',     'money',   array('required' => false))
             ->add('productType',        'choice',   array('choices' => array(1 => 'Produit', 2 => 'Pack de produit', 3 => 'Abonnement', 4 => 'Service')))
-            ->add('state',              'choice',   array('choices' => array(0 => 'Indisponible', 1 => 'Disponible', 2 => 'Bientot disponible', 3 => 'Seulement en magasin', 4 => 'Seulement en pack ou abonnement')))
+            ->add('state',              'choice',   array('choices' => array(0 => 'Indisponible', 1 => 'Disponible', 2 => 'Bientot disponible', 3 => 'Seulement en magasin', 4 => 'Seulement en pack ou abonnement', 5 => 'Rupture de stock')))
             ->add('categories',         'entity',       array(
                 'required' => false,
                 'class' => 'DyweeProductBundle:Category',

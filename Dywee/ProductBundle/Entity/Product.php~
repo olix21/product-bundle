@@ -34,7 +34,7 @@ class Product implements Translatable
     /**
      * @var string
      *
-     * @ORM\Column(name="price", type="decimal", scale=2)
+     * @ORM\Column(name="price", type="decimal", scale=2, nullable=true)
      */
     private $price;
 
@@ -104,9 +104,9 @@ class Product implements Translatable
     /**
      * @var integer
      *
-     * @ORM\Column(name="stock", type="integer")
+     * @ORM\Column(name="stock", type="integer", nullable=true)
      */
-    private $stock = 0;
+    private $stock;
 
     /*
      * @ORM\Column(name="rentStock", type="smallint")
@@ -212,7 +212,7 @@ class Product implements Translatable
     private $sellType = 2;
 
     /**
-     * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\Image", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\ProductImage", mappedBy="product", cascade={"persist", "remove"})
      */
     private $images;
 
@@ -253,6 +253,11 @@ class Product implements Translatable
     private $updatedAt;
 
     /**
+     * @ORM\Column(name="stockWarningTreshold", type="smallint", nullable=true)
+     */
+    private $stockWarningTreshold = null;
+
+    /**
      * @ORM\Column(name="stockAlertTreshold", type="smallint", nullable=true)
      */
     private $stockAlertTreshold = null;
@@ -263,7 +268,7 @@ class Product implements Translatable
     private $availableAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\ProductVariant", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\ProductVariant", mappedBy="product", cascade={"persist", "remove"})
      */
     private $productVariants;
 
@@ -278,11 +283,28 @@ class Product implements Translatable
     private $productStat;
 
     /**
+     * @ORM\Column(name="externalDownloadLink", type="string", length=255)
+     */
+    private $externalDownloadLink;
+
+    /**
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
      */
     private $locale;
+
+    /**
+     * @Gedmo\Slug(fields={"id", "name"})
+     * @Gedmo\Translatable
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Dywee\ModuleBundle\Entity\Event")
+     */
+    private $event;
 
     /**
      * Get id
@@ -849,10 +871,10 @@ class Product implements Translatable
     /**
      * Add images
      *
-     * @param \Dywee\ProductBundle\Entity\Image $images
+     * @param \Dywee\ProductBundle\Entity\ProductImage $images
      * @return Product
      */
-    public function addImage(\Dywee\ProductBundle\Entity\Image $images)
+    public function addImage(\Dywee\ProductBundle\Entity\ProductImage $images)
     {
         $this->images[] = $images;
         $images->setProduct($this);
@@ -862,9 +884,9 @@ class Product implements Translatable
     /**
      * Remove images
      *
-     * @param \Dywee\ProductBundle\Entity\Image $images
+     * @param \Dywee\ProductBundle\Entity\ProductImage $images
      */
-    public function removeImage(\Dywee\ProductBundle\Entity\Image $images)
+    public function removeImage(\Dywee\ProductBundle\Entity\ProductImage $images)
     {
         $this->images->removeElement($images);
     }
@@ -1067,6 +1089,7 @@ class Product implements Translatable
     public function addRentableProduct(\Dywee\ProductBundle\Entity\RentableProduct $rentableProducts)
     {
         $this->rentableProducts[] = $rentableProducts;
+        $rentableProducts->setParent($this);
 
         return $this;
     }
@@ -1213,6 +1236,30 @@ class Product implements Translatable
     }
 
     /**
+     * Set stockWarningTreshold
+     *
+     * @param integer $stockWarningTreshold
+     *
+     * @return Product
+     */
+    public function setStockWarningTreshold($stockWarningTreshold)
+    {
+        $this->stockWarningTreshold = $stockWarningTreshold;
+
+        return $this;
+    }
+
+    /**
+     * Get stockWarningTreshold
+     *
+     * @return integer
+     */
+    public function getStockWarningTreshold()
+    {
+        return $this->stockWarningTreshold;
+    }
+
+    /**
      * Set stockAlertTreshold
      *
      * @param integer $stockAlertTreshold
@@ -1302,7 +1349,7 @@ class Product implements Translatable
     public function addProductVariant(\Dywee\ProductBundle\Entity\ProductVariant $productVariant)
     {
         $this->productVariants[] = $productVariant;
-        $productVariant->setProduct($productVariant);
+        $productVariant->setProduct($this);
 
         return $this;
     }
@@ -1325,5 +1372,104 @@ class Product implements Translatable
     public function getProductVariants()
     {
         return $this->productVariants;
+    }
+
+    /**
+     * Add productStat
+     *
+     * @param \Dywee\ProductBundle\Entity\ProductStat $productStat
+     * @return Product
+     */
+    public function addProductStat(\Dywee\ProductBundle\Entity\ProductStat $productStat)
+    {
+        $this->productStat[] = $productStat;
+
+        return $this;
+    }
+
+    /**
+     * Remove productStat
+     *
+     * @param \Dywee\ProductBundle\Entity\ProductStat $productStat
+     */
+    public function removeProductStat(\Dywee\ProductBundle\Entity\ProductStat $productStat)
+    {
+        $this->productStat->removeElement($productStat);
+    }
+
+    /**
+     * Get productStat
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductStat()
+    {
+        return $this->productStat;
+    }
+
+    public function decreaseStock($quantity)
+    {
+        return $this->stockOperation($quantity, 'decrease');
+    }
+
+    public function refundStock($quantity)
+    {
+        return $this->stockOperation($quantity, 'refund');
+    }
+
+    public function stockOperation($quantity, $operation = 'decrease')
+    {
+        if($this->getProductType() == 1)
+            if($operation == 'decrease')
+                $this->setStock($this->getStock() - $quantity);
+            elseif($operation == 'refund')
+                $this->setStock($this->getStock() + $quantity);
+        else{
+            // Si la gestion du stock est activée pour le produit ( != null)
+            if(is_numeric($this->getStock()))
+                if($operation == 'decrease')
+                    $this->setStock($this->getStock() - $quantity);
+                elseif($operation == 'refund')
+                    $this->setStock($this->getStock() + $quantity);
+
+            // Puis on gère le stock pour les produits contenus dans l'abonnement ou le pack
+            foreach($this->getPackElements() as $element)
+            {
+                $productFromPack = $element->getProduct();
+                $productFromPack->stockOperation($quantity*$element->getQuantity(), $operation);
+            }
+
+        }
+        return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setExternalDownloadLink($link)
+    {
+        $this->externalDownloadLink = $link;
+
+        return $this;
+    }
+
+    public function getExternalDownloadLink()
+    {
+        return $this->externalDownloadLink;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Product
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }
