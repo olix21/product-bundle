@@ -295,7 +295,7 @@ class Product implements Translatable
     private $locale;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dywee\ModuleBundle\Entity\Event")
+     * @ORM\ManyToOne(targetEntity="Dywee\ModuleBundle\Entity\Event", inversedBy="products")
      */
     private $event;
 
