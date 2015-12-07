@@ -300,6 +300,11 @@ class Product implements Translatable
     private $event;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Dywee\WebsiteBundle\Entity\Website")
+     */
+    private $website;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -1469,5 +1474,28 @@ class Product implements Translatable
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * Set website
+     *
+     * @param \Dywee\WebsiteBundle\Entity\Website $website
+     * @return Product
+     */
+    public function setWebsite(\Dywee\WebsiteBundle\Entity\Website $website = null)
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    /**
+     * Get website
+     *
+     * @return \Dywee\WebsiteBundle\Entity\Website 
+     */
+    public function getWebsite()
+    {
+        return $this->website;
     }
 }

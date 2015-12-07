@@ -283,7 +283,7 @@ class Product implements Translatable
     private $productStat;
 
     /**
-     * @ORM\Column(name="externalDownloadLink", type="string", length=255)
+     * @ORM\Column(name="externalDownloadLink", type="string", length=255, nullable=true)
      */
     private $externalDownloadLink;
 
@@ -295,16 +295,14 @@ class Product implements Translatable
     private $locale;
 
     /**
-     * @Gedmo\Slug(fields={"id", "name"})
-     * @Gedmo\Translatable
-     * @ORM\Column(length=128, unique=true)
-     */
-    private $slug;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Dywee\ModuleBundle\Entity\Event")
+     * @ORM\ManyToOne(targetEntity="Dywee\ModuleBundle\Entity\Event", inversedBy="products")
      */
     private $event;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Dywee\WebsiteBundle\Entity\Website")
+     */
+    private $website;
 
     /**
      * Get id
@@ -1443,11 +1441,6 @@ class Product implements Translatable
         return $this;
     }
 
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
     public function setExternalDownloadLink($link)
     {
         $this->externalDownloadLink = $link;
@@ -1461,15 +1454,25 @@ class Product implements Translatable
     }
 
     /**
-     * Set slug
+     * Set event
      *
-     * @param string $slug
+     * @param \Dywee\ModuleBundle\Entity\Event $event
      * @return Product
      */
-    public function setSlug($slug)
+    public function setEvent(\Dywee\ModuleBundle\Entity\Event $event = null)
     {
-        $this->slug = $slug;
+        $this->event = $event;
 
         return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \Dywee\ModuleBundle\Entity\Event 
+     */
+    public function getEvent()
+    {
+        return $this->event;
     }
 }

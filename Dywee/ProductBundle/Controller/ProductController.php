@@ -26,6 +26,9 @@ class ProductController extends Controller
 
         if($product != null)
         {
+            if($product->getWebsite()->getId() != $this->container->getParameter('website.id'))
+                throw $this->createNotFoundException('Ce produit est introuvable');
+
             $productStat = new ProductStat();
 
             $productStat->setProduct($product);
@@ -99,6 +102,9 @@ class ProductController extends Controller
 
     public function adminViewAction(Product $product, Request $request)
     {
+        if($product->getWebsite()->getId() != $request->getSession()->get('activeWebsite')->getId())
+            throw $this->createNotFoundException('Ce produit est introuvable');
+
         $em = $this->getDoctrine()->getManager();
         $psr = $em->getRepository('DyweeProductBundle:ProductStat');
 
@@ -156,8 +162,12 @@ class ProductController extends Controller
         $product->setProductType($type);
 
         $pmr = $em->getRepository('DyweeCoreBundle:ParametersManager');
+        $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
 
         $stockEnabled = $pmr->findOneByName('stockManagementEnabled');
+        $website = $websiteRepository->findOneById($this->get('session')->get('activeWebsite'));
+
+        $product->setWebsite($website);
 
         if($stockEnabled->getValue() == 1)
         {
@@ -170,7 +180,8 @@ class ProductController extends Controller
 
         $form = $this->get('form.factory')->create(new ProductType, $product);
 
-        if($form->handleRequest($request)->isValid()){
+        if($form->handleRequest($request)->isValid())
+        {
 
             $em->persist($product);
             $em->flush();
@@ -185,6 +196,9 @@ class ProductController extends Controller
 
     public function updateAction(Product $product, Request $request)
     {
+        if($product->getWebsite()->getId() != $request->getSession()->get('activeWebsite')->getId())
+            throw $this->createNotFoundException('Ce produit est introuvable');
+
         $form = $this->get('form.factory')->create(new ProductType(), $product);
 
         if($form->handleRequest($request)->isValid()){
@@ -206,6 +220,9 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $pr = $em->getRepository('DyweeProductBundle:Product');
+        $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
+
+        $website = $websiteRepository->findOneById($this->get('session')->get('activeWebsite'));
 
         $form = $this->get('form.factory')->create(new ProductFilterType())
             ->add('chercher', 'submit')
@@ -215,15 +232,23 @@ class ProductController extends Controller
 
         if($form->handleRequest($request)->isValid())
         {
-            $filterBuilder = $pr->createQueryBuilder('p');
+            // Le filtrage ne marche, sûrement du à la traduction
+
+            /*$filterBuilder = $pr->createQueryBuilder('p');
 
             // build the query from the given form object
             $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
 
-            $productList = $filterBuilder->orderBy('p.name')->getQuery()->getResult();
-            $filterActive = true;
+            $productList = $filterBuilder
+                ->orderBy('p.name')
+                /*->where('p.website = :website')
+                ->setParameter('website', $website)
+                ->getQuery()
+                ->getResult();
+            $filterActive = true;*/
+            $productList = $pr->findBy(array('productType' => $type, 'website' => $website), array('name' => 'asc'));
         }
-        else $productList = $pr->findBy(array('productType' => $type), array('name' => 'asc'));
+        else $productList = $pr->findBy(array('productType' => $type, 'website' => $website), array('name' => 'asc'));
 
         return $this->render('DyweeProductBundle:Product:table.html.twig', array(
             'productList' => $productList,
@@ -235,19 +260,30 @@ class ProductController extends Controller
 
     public function listAction($type = 1, $orderBy = null, $limit = null, $offset =0)
     {
-        $pr = $this->getDoctrine()->getManager()->getRepository('DyweeProductBundle:Product');
-        $productList = $pr->getByDisplayOrder($type, $limit, $orderBy);
+        $em = $this->getDoctrine()->getManager();
+        $pr = $em->getRepository('DyweeProductBundle:Product');
+        $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
+        $website = $websiteRepository->findOneById($this->get('session')->get('activeWebsite'));
+
+        $productList = $pr->getByDisplayOrder($website, $type, $limit, $orderBy);
 
         return $this->render('DyweeProductBundle:Eshop:roughList.html.twig', array('productList' => $productList));
     }
 
     public function getListAction($type)
     {
-        $pr = $this->getDoctrine()->getManager()->getRepository('DyweeProductBundle:Product');
-        $productList = $pr->findBy(
+        $em = $this->getDoctrine()->getManager();
+        $productRepository = $em->getRepository('DyweeProductBundle:Product');
+        $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
+
+        $website = $websiteRepository->findOneById($this->container->getParameter('website.id'));
+
+
+        $productList = $productRepository->findBy(
             array(
                 'productType' => $type,
-                'state' => 1
+                'state' => 1,
+                'website' => $website
             )
         );
         return $this->render('DyweeProductBundle:Eshop:roughList.html.twig', array('productList' => $productList));
@@ -255,6 +291,9 @@ class ProductController extends Controller
 
     public function deleteAction(Product $product)
     {
+        if($product->getWebsite()->getId() != $this->get('session')->get('activeWebsite')->getId())
+            throw $this->createNotFoundException('Ce produit est introuvable');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($product);
         $em->flush();
@@ -266,8 +305,16 @@ class ProductController extends Controller
 
     public function renderLastRentingAction(Product $product)
     {
-        $or = $this->getDoctrine()->getManager()->getRepository('DyweeOrderBundle:OrderElement');
-        $os = $or->findLastRentingByProduct($product);
+        $website = $this->get('session')->get('activeWebsite');
+        if($product->getWebsite()->getId() != $website->getId())
+            throw $this->createNotFoundException('Ce produit est introuvable');
+
+        $em = $this->getDoctrine()->getManager();
+        $or = $em->getRepository('DyweeOrderBundle:OrderElement');
+        $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
+        $website = $websiteRepository->findOneById($website);
+
+        $os = $or->findLastRentingByProduct($product, $website);
 
         return $this->render('DyweeProductBundle:Product:rentMiniTable.html.twig', array('orderElementList' => $os));
     }

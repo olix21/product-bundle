@@ -38,7 +38,7 @@
                                 {% for product in productList %}
                                     <tr>
                                         <td><small>{{ product.id }}</small></td>
-                                        <td>{{ product.name }}</td>
+                                        <td><a href="{{ path('dywee_product_admin_view', {id: product.id}) }}" class="link-unstyled">{{ product.name }}</a></td>
                                         {#<td><small>{{ product.brand.name }}</small></td>#}
                                         {#<td><small>{% for category in product.categories%}{{ category.name }}, {% endfor %}</small></td>#}
                                         <td>{% include 'DyweeProductBundle:Product:sellType.html.twig' %}</td>
