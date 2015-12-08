@@ -1,6 +1,6 @@
 <?php
 
-namespace Dywee\ProductBundle\Entity;
+namespace Dywee\ProductBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -206,6 +206,8 @@ class ProductRepository extends EntityRepository
     public function getSelectList($website)
     {
         $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.event', 'e')
+            ->addSelect('e')
             ->where('p.website = :website')
             ->setParameters(array('website' => $website))
         ;

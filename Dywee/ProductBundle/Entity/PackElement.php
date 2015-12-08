@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * PackElement
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Entity\PackElementRepository")
+ * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\PackElementRepository")
  */
 class PackElement
 {

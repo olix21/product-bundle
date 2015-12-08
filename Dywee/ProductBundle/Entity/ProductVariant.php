@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ProductVariant
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Entity\ProductVariantRepository")
+ * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductVariantRepository")
  */
 class ProductVariant
 {

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ProductStat
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Entity\ProductStatRepository")
+ * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductStatRepository")
  */
 class ProductStat
 {

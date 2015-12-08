@@ -10,7 +10,7 @@ use Gedmo\Translatable\Translatable;
  * Product
  *
  * @ORM\Table(name="products")
- * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Entity\ProductRepository")
+ * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Product implements Translatable
@@ -1497,5 +1497,12 @@ class Product implements Translatable
     public function getWebsite()
     {
         return $this->website;
+    }
+
+    public function getCompleteName()
+    {
+        if($this->getProductType() == 4)
+            return $this->getEvent()->getTitle(). ' - '.$this->getName();
+        else return $this->getName();
     }
 }

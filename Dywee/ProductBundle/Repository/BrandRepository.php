@@ -1,6 +1,6 @@
 <?php
 
-namespace Dywee\ProductBundle\Entity;
+namespace Dywee\ProductBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

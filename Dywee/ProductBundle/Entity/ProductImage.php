@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Image
  *
  * @ORM\Table(name="product_images")
- * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Entity\ProductImageRepository")
+ * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductImageRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class ProductImage
