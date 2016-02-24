@@ -28,12 +28,4 @@ class ProductOptionValueType extends AbstractType
             'data_class' => 'Dywee\ProductBundle\Entity\ProductOptionValue'
         ));
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'dywee_productbundle_productoptionvalue';
-    }
 }

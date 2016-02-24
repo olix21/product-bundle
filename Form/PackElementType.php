@@ -2,6 +2,7 @@
 
 namespace Dywee\ProductBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +21,7 @@ class PackElementType extends AbstractType
             //->add('discountValue')
             //->add('unitPrice')
             //->add('totalPrice')
-            ->add('product', 'entity', array(
+            ->add('product', EntityType::class, array(
                 'class' => 'DyweeProductBundle:Product',
                 'property' => 'name'
             ))
@@ -35,13 +36,5 @@ class PackElementType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Dywee\ProductBundle\Entity\PackElement'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'dywee_productbundle_packelement';
     }
 }

@@ -19,7 +19,7 @@ class ProductImageType extends AbstractType
                 'multiple' => true
             ))*/
             ->add('src', 'elfinder',    array('instance'=>'form', 'enable'=>true))
-            ->add('alt', 'text',        array('required' => false))
+            ->add('alt', null,        array('required' => false))
         ;
     }
     
@@ -31,13 +31,5 @@ class ProductImageType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Dywee\ProductBundle\Entity\ProductImage'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'dywee_productbundle_image';
     }
 }

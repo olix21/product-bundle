@@ -3,6 +3,10 @@
 namespace Dywee\ProductBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,17 +20,17 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('enableMulti',    'checkbox', array('required' => false))
+            ->add('enableMulti',    CheckboxType::class, array('required' => false))
             ->add('parent', 'entity',   array(
                 'class'     =>  'DyweeProductBundle:Category',
                 'property'  =>  'name',
                 'required'  =>  false
             ))
-            ->add('position',   'number',   array('required' => false))
-            ->add('isVisible',    'checkbox', array('required' => false))
+            ->add('position',   NumberType::class,   array('required' => false))
+            ->add('isVisible',    CheckboxType::class, array('required' => false))
             ->add('seoUrl')
-            ->add('state',          'choice', array('choices' => array(0 => 'Désactivée', 1 => 'Activée')))
-            ->add('sauvegarder', 'submit')
+            ->add('state',          ChoiceType::class, array('choices' => array(0 => 'Désactivée', 1 => 'Activée')))
+            ->add('sauvegarder', SubmitType::class)
         ;
     }
     
@@ -38,13 +42,5 @@ class CategoryType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Dywee\ProductBundle\Entity\Category'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'dywee_productbundle_category';
     }
 }

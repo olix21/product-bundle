@@ -3,6 +3,7 @@
 namespace Dywee\ProductBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Dywee\CoreBundle\Form\Type\SeoType;
@@ -17,7 +18,7 @@ class ProductEventType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('price',          'money',       array('required' => false))
+            ->add('price',          MoneyType::class,       array('required' => false))
         ;
     }
 

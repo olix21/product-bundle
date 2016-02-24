@@ -2,7 +2,10 @@
 
 namespace Dywee\ProductBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,13 +18,13 @@ class FeatureElementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('feature',        'entity',   array(
+            ->add('feature',        EntityType::class,   array(
                 'class'     => 'DyweeProductBundle:Feature',
                 'property'  => 'name',
                 'required'  => false
             ))
-            ->add('isCustomValue',  'checkbox', array('required' => false))
-            ->add('customValue',    'text',     array('required' => false))
+            ->add('isCustomValue',  CheckboxType::class, array('required' => false))
+            ->add('customValue',    TextType::class,     array('required' => false))
         ;
     }
     
@@ -33,13 +36,5 @@ class FeatureElementType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Dywee\ProductBundle\Entity\FeatureElement'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'dywee_productbundle_featureelement';
     }
 }

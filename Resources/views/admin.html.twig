@@ -5,13 +5,3 @@
 {% block title %}
     Eshop {{ parent() }}
 {% endblock %}
-
-{% block breadcrumb %}
-    {{ parent() }}
-    {% block breadcrumblvl2 %} <li><a href="{{ path('dywee_product_table') }}"><i class="fa fa-beer"></i> Produits</a></li> {% endblock %}
-{% endblock %}
-
-{% block body %}
-    {% block viewBody %}
-    {% endblock %}
-{% endblock %}

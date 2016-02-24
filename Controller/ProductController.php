@@ -9,6 +9,7 @@ use Dywee\ProductBundle\Entity\ProductStat;
 use Dywee\ProductBundle\Filter\ProductFilterType;
 use Dywee\ProductBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -178,7 +179,7 @@ class ProductController extends Controller
             $product->setStockWarningTreshold($stockWarning->getValue());
         }
 
-        $form = $this->get('form.factory')->create(new ProductType, $product);
+        $form = $this->get('form.factory')->create(ProductType::class, $product);
 
         if($form->handleRequest($request)->isValid())
         {
@@ -199,7 +200,7 @@ class ProductController extends Controller
         if($product->getWebsite()->getId() != $request->getSession()->get('activeWebsite')->getId())
             throw $this->createNotFoundException('Ce produit est introuvable');
 
-        $form = $this->get('form.factory')->create(new ProductType(), $product);
+        $form = $this->get('form.factory')->create(ProductType::class, $product);
 
         if($form->handleRequest($request)->isValid()){
 
@@ -224,8 +225,8 @@ class ProductController extends Controller
 
         $website = $websiteRepository->findOneById($this->get('session')->get('activeWebsite'));
 
-        $form = $this->get('form.factory')->create(new ProductFilterType())
-            ->add('chercher', 'submit')
+        $form = $this->get('form.factory')->create(ProductFilterType::class)
+            ->add('chercher', SubmitType::class)
         ;
 
         $filterActive = false;

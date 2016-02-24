@@ -3,6 +3,7 @@
 namespace Dywee\ProductBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,8 +17,8 @@ class ProductOptionType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('productOptionValues', 'collection', array(
-                'type' => new ProductOptionValueType(),
+            ->add('productOptionValues', CollectionType::class, array(
+                'type' => ProductOptionValueType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
@@ -35,13 +36,5 @@ class ProductOptionType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Dywee\ProductBundle\Entity\ProductOption'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'dywee_productbundle_productoption';
     }
 }

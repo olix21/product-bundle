@@ -3,6 +3,7 @@
 namespace Dywee\ProductBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,7 +17,7 @@ class FeatureType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('save',   'submit')
+            ->add('save',   SubmitType::class)
         ;
     }
     
@@ -28,13 +29,5 @@ class FeatureType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Dywee\ProductBundle\Entity\Feature'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'dywee_productbundle_feature';
     }
 }

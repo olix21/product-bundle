@@ -2,12 +2,7 @@
 
 {%  extends "DyweeProductBundle::admin.html.twig" %}
 
-{% block breadcrumb %}
-    <li><i class="fa fa-beer"></i> Produits</li>
-    <li class="active"><i class="fa fa-list-alt"></i> Liste des produits</li>
-{% endblock %}
-
-{% block viewBody %}
+{% block body %}
     <a href="{{ path('dywee_product_add', {type: type}) }}" class="btn btn-success action-right"><i class="fa fa-plus"></i> Ajouter</a>
 
     <div class="title-heading">
