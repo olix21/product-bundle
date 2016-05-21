@@ -19,7 +19,7 @@
     }
   ],
   "require": {
-    "php": ">=7.0.0",
+    "php": ">=5.5.9",
     "dywee/core-bundle": "dev-master"
   },
   "autoload": {
