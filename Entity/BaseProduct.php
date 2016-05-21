@@ -9,14 +9,14 @@ use Gedmo\Translatable\Translatable;
 /**
  * Product
  *
- * @InheritanceType("JOINED")
- * @DiscriminatorColumn(name="discr", type="string")
- * @DiscriminatorMap({
- *     "product" = "Product",
- *     "productPack" = "ProductPack",
- *     "productSubscription" = "ProductSubscription",
- *     "productService" = "ProductService",
- *     "productDownloadable" = "ProductDownloadable",
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({
+ *     "Product" = "Product",
+ *     "ProductPack" = "ProductPack",
+ *     "ProductSubscription" = "ProductSubscription",
+ *     "ProductService" = "ProductService",
+ *     "ProductDownloadable" = "ProductDownloadable",
  * })
  *
  * @ORM\HasLifecycleCallbacks()
@@ -215,7 +215,7 @@ class BaseProduct implements Translatable
      */
     private $availableAt;
 
-    /**
+    /*
      * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\ProductStat", mappedBy="product")
      */
     private $productStat;
