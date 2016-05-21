@@ -9,9 +9,10 @@ use Gedmo\Translatable\Translatable;
 /**
  * Product
  *
- * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductRepository")
+ * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductServiceRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Product extends BaseProduct
+class ProductService  extends BaseProduct
 {
+
 }

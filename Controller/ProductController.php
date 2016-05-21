@@ -6,6 +6,7 @@ use Dywee\CoreBundle\Doctrine\DQL\Date;
 use Dywee\OrderBundle\Entity\BaseOrder;
 use Dywee\ProductBundle\Entity\Product;
 use Dywee\ProductBundle\Entity\ProductStat;
+use Dywee\ProductBundle\Entity\ProductSubscription;
 use Dywee\ProductBundle\Filter\ProductFilterType;
 use Dywee\ProductBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,6 +24,7 @@ class ProductController extends Controller
         if(is_numeric($data))
             $product = $pr->findOneById($data);
         else $product = $pr->findBySeoUrl($data);
+
 
 
         if($product != null)

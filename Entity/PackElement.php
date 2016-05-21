@@ -57,16 +57,10 @@ class PackElement
     private $totalPrice = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dywee\ProductBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="Dywee\ProductBundle\Entity\BaseProduct", inversedBy="packElements")
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Dywee\ProductBundle\Entity\Product", inversedBy="packElements")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $parent;
 
 
     /**
@@ -215,28 +209,5 @@ class PackElement
     public function getProduct()
     {
         return $this->product;
-    }
-
-    /**
-     * Set parent
-     *
-     * @param \Dywee\ProductBundle\Entity\Product $parent
-     * @return PackElement
-     */
-    public function setParent(\Dywee\ProductBundle\Entity\Product $parent = null)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return \Dywee\ProductBundle\Entity\Product
-     */
-    public function getParent()
-    {
-        return $this->parent;
     }
 }

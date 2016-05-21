@@ -10,10 +10,16 @@
       "email": "olivier.delbruyere@hotmail.com",
       "homepage": "http://dywee.com",
       "role": "Developer"
+    },
+    {
+      "name": "POITIER Johan",
+      "email": "poitierjohan@gmail.com",
+      "homepage": "http://dywee.com",
+      "role": "Developer"
     }
   ],
   "require": {
-    "php": ">=5.3.0",
+    "php": ">=7.0.0",
     "dywee/core-bundle": "dev-master"
   },
   "autoload": {
