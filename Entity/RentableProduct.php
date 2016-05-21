@@ -11,7 +11,7 @@ use Dywee\ProductBundle\Entity\Product;
  * @ORM\Table(name="rentable_products")
  * @ORM\Entity
  */
-class RentableProduct extends Product
+class RentableProduct
 {
     /**
      * @var integer

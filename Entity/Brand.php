@@ -31,13 +31,6 @@ class Brand
     /**
      * @var string
      *
-     * @ORM\Column(name="website", type="string", length=255, nullable=true)
-     */
-    private $website;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="img", type="string", length=255, nullable=true)
      */
     private $img;
@@ -74,29 +67,6 @@ class Brand
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set website
-     *
-     * @param string $website
-     * @return Brand
-     */
-    public function setWebsite($website)
-    {
-        $this->website = $website;
-
-        return $this;
-    }
-
-    /**
-     * Get website
-     *
-     * @return string 
-     */
-    public function getWebsite()
-    {
-        return $this->website;
     }
 
     /**

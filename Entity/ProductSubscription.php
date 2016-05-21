@@ -9,7 +9,7 @@ use Gedmo\Translatable\Translatable;
 /**
  * Product
  *
- * @ORM\Table(name="products")
+ * @ORM\MappedSuperclass
  * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductSubscriptionRepository")
  * @ORM\HasLifecycleCallbacks()
  */

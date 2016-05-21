@@ -28,7 +28,7 @@ class BaseProductRepository extends EntityRepository
         return $query->getResult();*/
     }
 
-    public function findByCategory($category, $website = null){
+    public function findByCategory($category){
         $query = $this->createQueryBuilder('p')
             ->select('p')
             ->leftJoin('p.categories', 'c')
@@ -46,7 +46,7 @@ class BaseProductRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function countByCategoriesId($categoriesId = null, $type = null, $website = null)
+    public function countByCategoriesId($categoriesId = null, $type = null)
     {
         $qb = $this->createQueryBuilder('p')
             ->select('count(p)');
@@ -115,13 +115,13 @@ class BaseProductRepository extends EntityRepository
     }
 
 
-    public function getByDisplayOrder($website, $type, $limit = null, $order = null)
+    public function getByDisplayOrder($type, $limit = null, $order = null)
     {
         $qb = $this->createQueryBuilder('p')
             ->select('p')
             ->join('p.images', 'i')
             ->addselect('i')
-            ->where('p.productType = :productType and p.state = 1 and p.website = :website');
+            ->where('p.productType = :productType and p.state = 1');
 
         if($order == 'db')
             $qb->andWhere('p.displayOrder >= 1');
@@ -130,7 +130,6 @@ class BaseProductRepository extends EntityRepository
         $qb->setParameters(
             array(
                 'productType'   => $type,
-                'website' => $website
             )
         );
 
@@ -148,14 +147,14 @@ class BaseProductRepository extends EntityRepository
         return $query->getArrayResult();
     }
 
-    public function findBySeoUrl($url, $website)
+    public function findBySeoUrl($url)
     {
         $qb = $this->createQueryBuilder('p')
             ->select('p')
             ->join('p.images', 'i')
             ->addselect('i')
             ->where('p.seoUrl = :seoUrl and p.website = :website')
-            ->setParameters(array('seoUrl' => $url, 'website' => $website));
+            ->setParameters(array('seoUrl' => $url));
 
         $query = $qb->getQuery();
         $query->setHint(
@@ -166,7 +165,7 @@ class BaseProductRepository extends EntityRepository
         return $query->getSingleResult();
     }
 
-    public function myFindById($id, $website)
+    public function myFindById($id)
     {
         $qb = $this->createQueryBuilder('p')
             ->select('p')
@@ -178,9 +177,6 @@ class BaseProductRepository extends EntityRepository
         else
             $qb->where('p.id in (:id)')->setParameter('id', $id);
 
-        $qb->andWhere('p.website = :website')
-        ->setParameter('website', $website);
-
         $query = $qb->getQuery();
 
         $query->setHint(
@@ -191,7 +187,7 @@ class BaseProductRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function countByState($state = null, $website = null)
+    public function countByState($state = null)
     {
         $qb = $this->createQueryBuilder('p')
             ->select('COUNT(p)');
@@ -203,13 +199,11 @@ class BaseProductRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getSelectList($website)
+    public function getSelectList()
     {
         $qb = $this->createQueryBuilder('p')
             ->innerJoin('p.event', 'e')
             ->addSelect('e')
-            ->where('p.website = :website')
-            ->setParameters(array('website' => $website))
         ;
 
         return $qb;

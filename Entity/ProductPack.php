@@ -9,11 +9,13 @@ use Gedmo\Translatable\Translatable;
 /**
  * Product
  *
+ * @ORM\MappedSuperclass
  * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductPackRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class ProductPack  extends BaseProduct
 {
+
     /**
      * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\PackElement", mappedBy="parent", cascade={"persist", "remove"})
      */

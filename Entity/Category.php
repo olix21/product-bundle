@@ -105,12 +105,6 @@ class Category implements Translatable
     private $locale;
 
     /**
-     * @ORM\OneToOne(targetEntity="Dywee\ProductBundle\Entity\ProductImage")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $images;
-
-    /**
      * @ORM\ManyToMany(targetEntity="Dywee\ProductBundle\Entity\Product", mappedBy="categories")
      */
     private $product;

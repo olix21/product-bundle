@@ -7,22 +7,25 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 
 /**
- * Product
+ * BaseProduct
+ *
+ * @ORM\Entity
  *
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
- *     "Product" = "Product",
- *     "ProductPack" = "ProductPack",
- *     "ProductSubscription" = "ProductSubscription",
- *     "ProductService" = "ProductService",
- *     "ProductDownloadable" = "ProductDownloadable",
+ *     "product" = "Product",
+ *     "productPack" = "ProductPack",
+ *     "productSubscription" = "ProductSubscription",
+ *     "productService" = "ProductService",
+ *     "productDownloadable" = "ProductDownloadable",
  * })
  *
  * @ORM\HasLifecycleCallbacks()
  */
-class BaseProduct implements Translatable
+abstract class BaseProduct implements Translatable
 {
+
     /**
      * @var integer
      *
@@ -164,22 +167,22 @@ class BaseProduct implements Translatable
      */
     private $metaKeywords;
 
-    /**
+    /*
      * @ORM\ManyToOne(targetEntity="Dywee\ProductBundle\Entity\Brand")
      */
     private $brand;
 
-    /**
+    /*
      * @ORM\ManyToMany(targetEntity="Dywee\ProductBundle\Entity\Category", inversedBy="product")
      */
     private $categories;
 
-    /**
+    /*
      * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\FeatureElement", mappedBy="product", cascade={"persist", "remove"})
      */
     private $features;
 
-    /**
+    /*
      * @ORM\OneToMany(targetEntity="PackElement", mappedBy="product")
      */
     private $packElements;
@@ -235,7 +238,7 @@ class BaseProduct implements Translatable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -258,7 +261,7 @@ class BaseProduct implements Translatable
     /**
      * Get price
      *
-     * @return string 
+     * @return string
      */
     public function getPrice()
     {
@@ -281,7 +284,7 @@ class BaseProduct implements Translatable
     /**
      * Get isPriceTTC
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsPriceTTC()
     {
@@ -304,7 +307,7 @@ class BaseProduct implements Translatable
     /**
      * Get length
      *
-     * @return string 
+     * @return string
      */
     public function getLength()
     {
@@ -327,7 +330,7 @@ class BaseProduct implements Translatable
     /**
      * Get width
      *
-     * @return string 
+     * @return string
      */
     public function getWidth()
     {
@@ -350,7 +353,7 @@ class BaseProduct implements Translatable
     /**
      * Get height
      *
-     * @return string 
+     * @return string
      */
     public function getHeight()
     {
@@ -373,7 +376,7 @@ class BaseProduct implements Translatable
     /**
      * Get sizeUnit
      *
-     * @return string 
+     * @return string
      */
     public function getSizeUnit()
     {
@@ -396,7 +399,7 @@ class BaseProduct implements Translatable
     /**
      * Get weight
      *
-     * @return string 
+     * @return string
      */
     public function getWeight()
     {
@@ -419,7 +422,7 @@ class BaseProduct implements Translatable
     /**
      * Get weightUnit
      *
-     * @return string 
+     * @return string
      */
     public function getWeightUnit()
     {
@@ -442,7 +445,7 @@ class BaseProduct implements Translatable
     /**
      * Get stock
      *
-     * @return integer 
+     * @return integer
      */
     public function getStock()
     {
@@ -465,7 +468,7 @@ class BaseProduct implements Translatable
     /**
      * Get state
      *
-     * @return integer 
+     * @return integer
      */
     public function getState()
     {
@@ -488,7 +491,7 @@ class BaseProduct implements Translatable
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -511,7 +514,7 @@ class BaseProduct implements Translatable
     /**
      * Get shortDescription
      *
-     * @return string 
+     * @return string
      */
     public function getShortDescription()
     {
@@ -534,7 +537,7 @@ class BaseProduct implements Translatable
     /**
      * Get mediumDescription
      *
-     * @return string 
+     * @return string
      */
     public function getMediumDescription()
     {
@@ -557,7 +560,7 @@ class BaseProduct implements Translatable
     /**
      * Get longDescription
      *
-     * @return string 
+     * @return string
      */
     public function getLongDescription()
     {
@@ -580,7 +583,7 @@ class BaseProduct implements Translatable
     /**
      * Get metaTitle
      *
-     * @return string 
+     * @return string
      */
     public function getMetaTitle()
     {
@@ -603,7 +606,7 @@ class BaseProduct implements Translatable
     /**
      * Get metaDescription
      *
-     * @return string 
+     * @return string
      */
     public function getMetaDescription()
     {
@@ -626,7 +629,7 @@ class BaseProduct implements Translatable
     /**
      * Get seoUrl
      *
-     * @return string 
+     * @return string
      */
     public function getSeoUrl()
     {
@@ -649,7 +652,7 @@ class BaseProduct implements Translatable
     /**
      * Get metaKeywords
      *
-     * @return string 
+     * @return string
      */
     public function getMetaKeywords()
     {
@@ -672,7 +675,7 @@ class BaseProduct implements Translatable
     /**
      * Get brand
      *
-     * @return \Dywee\ProductBundle\Entity\Brand 
+     * @return \Dywee\ProductBundle\Entity\Brand
      */
     public function getBrand()
     {
@@ -706,7 +709,7 @@ class BaseProduct implements Translatable
     /**
      * Get categories
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCategories()
     {
@@ -743,7 +746,7 @@ class BaseProduct implements Translatable
     /**
      * Get features
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFeatures()
     {
@@ -968,7 +971,7 @@ class BaseProduct implements Translatable
     /**
      * Get productStat
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getProductStat()
     {

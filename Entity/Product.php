@@ -14,4 +14,5 @@ use Gedmo\Translatable\Translatable;
  */
 class Product extends BaseProduct
 {
+
 }

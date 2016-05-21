@@ -165,12 +165,8 @@ class ProductController extends Controller
         $product->setProductType($type);
 
         $pmr = $em->getRepository('DyweeCoreBundle:ParametersManager');
-        $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
 
         $stockEnabled = $pmr->findOneByName('stockManagementEnabled');
-        $website = $websiteRepository->findOneById($this->get('session')->get('activeWebsite'));
-
-        $product->setWebsite($website);
 
         if($stockEnabled->getValue() == 1)
         {
@@ -223,9 +219,6 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $pr = $em->getRepository('DyweeProductBundle:Product');
-        $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
-
-        $website = $websiteRepository->findOneById($this->get('session')->get('activeWebsite'));
 
         $form = $this->get('form.factory')->create(ProductFilterType::class)
             ->add('chercher', SubmitType::class)
@@ -244,14 +237,12 @@ class ProductController extends Controller
 
             $productList = $filterBuilder
                 ->orderBy('p.name')
-                /*->where('p.website = :website')
-                ->setParameter('website', $website)
                 ->getQuery()
                 ->getResult();
             $filterActive = true;*/
-            $productList = $pr->findBy(array('productType' => $type, 'website' => $website), array('name' => 'asc'));
+            $productList = $pr->findBy(array('productType' => $type), array('name' => 'asc'));
         }
-        else $productList = $pr->findBy(array('productType' => $type, 'website' => $website), array('name' => 'asc'));
+        else $productList = $pr->findBy(array('productType' => $type), array('name' => 'asc'));
 
         return $this->render('DyweeProductBundle:Product:table.html.twig', array(
             'productList' => $productList,
@@ -265,10 +256,8 @@ class ProductController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $pr = $em->getRepository('DyweeProductBundle:Product');
-        $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
-        $website = $websiteRepository->findOneById($this->get('session')->get('activeWebsite'));
 
-        $productList = $pr->getByDisplayOrder($website, $type, $limit, $orderBy);
+        $productList = $pr->getByDisplayOrder($type, $limit, $orderBy);
 
         return $this->render('DyweeProductBundle:Eshop:roughList.html.twig', array('productList' => $productList));
     }
@@ -277,16 +266,11 @@ class ProductController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('DyweeProductBundle:Product');
-        $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
-
-        $website = $websiteRepository->findOneById($this->container->getParameter('website.id'));
-
 
         $productList = $productRepository->findBy(
             array(
                 'productType' => $type,
                 'state' => 1,
-                'website' => $website
             )
         );
         return $this->render('DyweeProductBundle:Eshop:roughList.html.twig', array('productList' => $productList));
@@ -308,16 +292,10 @@ class ProductController extends Controller
 
     public function renderLastRentingAction(Product $product)
     {
-        $website = $this->get('session')->get('activeWebsite');
-        if($product->getWebsite()->getId() != $website->getId())
-            throw $this->createNotFoundException('Ce produit est introuvable');
-
         $em = $this->getDoctrine()->getManager();
         $or = $em->getRepository('DyweeOrderBundle:OrderElement');
-        $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
-        $website = $websiteRepository->findOneById($website);
 
-        $os = $or->findLastRentingByProduct($product, $website);
+        $os = $or->findLastRentingByProduct($product);
 
         return $this->render('DyweeProductBundle:Product:rentMiniTable.html.twig', array('orderElementList' => $os));
     }
