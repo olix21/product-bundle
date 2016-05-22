@@ -1,0 +1,13 @@
+###############################
+#                             #
+#         NORMAL WAY          #
+#                             #
+###############################
+
+product_pack_table:
+    path:     /admin6833/product/pack
+    defaults: { _controller: DyweeProductBundle:ProductPack:table }
+
+product_pack_add:
+    path:     /admin6833/product/pack/add
+    defaults: { _controller: DyweeProductBundle:ProductPack:add }

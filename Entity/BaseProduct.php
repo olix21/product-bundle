@@ -22,6 +22,8 @@ use Gedmo\Translatable\Translatable;
  * })
  *
  * @ORM\HasLifecycleCallbacks()
+ *
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 abstract class BaseProduct implements Translatable
 {
@@ -234,6 +236,16 @@ abstract class BaseProduct implements Translatable
      * this is not a mapped field of entity metadata, just a simple property
      */
     private $locale;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+
+
+
+
 
     /**
      * Get id
@@ -1044,5 +1056,13 @@ abstract class BaseProduct implements Translatable
         return $this;
     }
 
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
 }

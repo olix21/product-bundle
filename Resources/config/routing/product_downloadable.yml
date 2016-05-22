@@ -1,0 +1,13 @@
+###############################
+#                             #
+#         NORMAL WAY          #
+#                             #
+###############################
+
+product_downloadable_table:
+    path:     /admin6833/product/downlodable
+    defaults: { _controller: DyweeProductBundle:ProductDownloadable:table }
+
+product_downloadable_add:
+    path:     /admin6833/product/downlodable/add
+    defaults: { _controller: DyweeProductBundle:ProductDownloadable:add }
