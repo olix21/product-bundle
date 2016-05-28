@@ -21,91 +21,88 @@ class StockManagerService
 
     public function checkProduct(Product $product)
     {
-        //Si le produit est de type service
-        if($product->getSellType() < 3)
+        //$pmr = $this->em->getRepository('DyweeCoreBundle:ParametersManager');
+
+        //$stockEnabled = $pmr->findOneByName('stockManagementEnabled');
+
+        //Si la gestion des stocks est activée
+        if(false/*$stockEnabled->getValue() == 1*/)
         {
-            $pmr = $this->em->getRepository('DyweeCoreBundle:ParametersManager');
+            $stockWarning = $pmr->findOneByName('stockWarningTreshold');
+            $stockAlert = $pmr->findOneByName('stockAlertTreshold');
 
-            $stockEnabled = $pmr->findOneByName('stockManagementEnabled');
+            //On récupère l'alerte si déjà présentes concernant le stock du produit
+            $ar = $this->em->getRepository('DyweeNotificationBundle:Alert');
+            $alert = $ar->findOneBy(array('type' => 'product.stock.empty', 'argument1' => $product->getId()));
 
-            //Si la gestion des stocks est activée
-            if($stockEnabled->getValue() == 1)
+            //On créé une alerte si le stock est vide
+            if($product->getStock() == 0)
             {
-                $stockWarning = $pmr->findOneByName('stockWarningTreshold');
-                $stockAlert = $pmr->findOneByName('stockAlertTreshold');
+                //$product->setState(5);
+                $alert = new Alert();
+                $alert->setBundle('product');
+                $alert->setType('product.stock.empty');
+                $alert->setContent('Rupture de stock');
+                $alert->setArgument1($product->getId());
+                $alert->setArgument2($product->getName());
+                $alert->setRoutingPath('dywee_product_admin_view');
+                $alert->setRoutingArguments('{"id": '.$product->getId().'}');
+                $this->em->persist($alert);
+            }
+            //Sinon on créé une notification fonction du treshold fixé dans l'admin
+            else if($product->getStock() <= $product->getStockAlertTreshold())
+            {
+                $notification = new Notification();
+                $notification->setBundle('product');
+                $notification->setType('product.stock.alert');
+                $notification->setContent('Rupture de stock imminente');
+                $notification->setArgument1($product->getId());
+                $notification->setArgument2($product->getName());
+                $notification->setRoutingPath('dywee_product_admin_view');
+                $notification->setRoutingArguments('{"id": '.$product->getId().'}');
+                $this->em->persist($notification);
 
-                //On récupère l'alerte si déjà présentes concernant le stock du produit
-                $ar = $this->em->getRepository('DyweeNotificationBundle:Alert');
-                $alert = $ar->findOneBy(array('type' => 'product.stock.empty', 'argument1' => $product->getId()));
-
-                //On créé une alerte si le stock est vide
-                if($product->getStock() == 0)
-                {
-                    //$product->setState(5);
-                    $alert = new Alert();
-                    $alert->setBundle('product');
-                    $alert->setType('product.stock.empty');
-                    $alert->setContent('Rupture de stock');
-                    $alert->setArgument1($product->getId());
-                    $alert->setArgument2($product->getName());
-                    $alert->setRoutingPath('dywee_product_admin_view');
-                    $alert->setRoutingArguments('{"id": '.$product->getId().'}');
-                    $this->em->persist($alert);
-                }
-                //Sinon on créé une notification fonction du treshold fixé dans l'admin
-                else if($product->getStock() <= $product->getStockAlertTreshold())
-                {
-                    $notification = new Notification();
-                    $notification->setBundle('product');
-                    $notification->setType('product.stock.alert');
-                    $notification->setContent('Rupture de stock imminente');
-                    $notification->setArgument1($product->getId());
-                    $notification->setArgument2($product->getName());
-                    $notification->setRoutingPath('dywee_product_admin_view');
-                    $notification->setRoutingArguments('{"id": '.$product->getId().'}');
-                    $this->em->persist($notification);
-
-                    //Si une alert existe on la supprime
-                    if($alert)
-                        $this->em->remove($alert);
-                }
-                else if($product->getStock() <= $product->getStockWarningTreshold())
-                {
-                    $notification = new Notification();
-                    $notification->setBundle('product');
-                    $notification->setType('product.stock.warning');
-                    $notification->setContent('Le stock diminue');
-                    $notification->setArgument1($product->getId());
-                    $notification->setArgument2($product->getName());
-                    $notification->setRoutingPath('dywee_product_admin_view');
-                    $notification->setRoutingArguments('{"id": '.$product->getId().'}');
-                    $this->em->persist($notification);
-
-                    //Si une alert existe on la supprime
-                    if($alert)
-                        $this->em->remove($alert);
-                }
-                else if($alert)
+                //Si une alert existe on la supprime
+                if($alert)
                     $this->em->remove($alert);
             }
-            //Si la gestion des stocks est désactivée on supprime tout
-            else{
-                //Récup des alertes relatives au stock et suppression
-                $ar = $this->em->getRepository('DyweeNotificationBundle:Alert');
-                $as = $ar->findByType('product.stock.empty');
-                foreach($as as $alert)
+            else if($product->getStock() <= $product->getStockWarningTreshold())
+            {
+                $notification = new Notification();
+                $notification->setBundle('product');
+                $notification->setType('product.stock.warning');
+                $notification->setContent('Le stock diminue');
+                $notification->setArgument1($product->getId());
+                $notification->setArgument2($product->getName());
+                $notification->setRoutingPath('dywee_product_admin_view');
+                $notification->setRoutingArguments('{"id": '.$product->getId().'}');
+                $this->em->persist($notification);
+
+                //Si une alert existe on la supprime
+                if($alert)
                     $this->em->remove($alert);
-
-                //Récup des notifications relatives au stock et suppression
-                $nr = $this->em->getRepository('DyweeNotificationBundle:Notification');
-                $ns = array_merge($nr->findByType('product.stock.alert'), $nr->findByType('product.stock.warning'));
-
-                foreach($ns as $notification)
-                    $this->em->remove($notification);
             }
-
-            $this->em->flush();
+            else if($alert)
+                $this->em->remove($alert);
         }
+        //Si la gestion des stocks est désactivée on supprime tout
+        else{
+            //Récup des alertes relatives au stock et suppression
+            /*$ar = $this->em->getRepository('DyweeNotificationBundle:Alert');
+            $as = $ar->findByType('product.stock.empty');
+            foreach($as as $alert)
+                $this->em->remove($alert);
+
+            //Récup des notifications relatives au stock et suppression
+            $nr = $this->em->getRepository('DyweeNotificationBundle:Notification');
+            $ns = array_merge($nr->findByType('product.stock.alert'), $nr->findByType('product.stock.warning'));
+
+            foreach($ns as $notification)
+                $this->em->remove($notification);
+            */
+        }
+
+        $this->em->flush();
 
     }
 

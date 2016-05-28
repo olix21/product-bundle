@@ -1,5 +1,10 @@
 {% extends 'DyweeProductBundle::admin.html.twig' %}
 
 {% block body %}
-    test
+    <p><a href="{{ path('product_add') }}">Ajouter un nouveau produit</a></p>
+    <p><a href="{{ path('product_pack_add') }}">Ajouter un nouveau pack</a></p>
+    <p><a href="{{ path('product_subscription_add') }}">Ajouter un nouveau abonnement</a></p>
+    <p><a href="{{ path('product_service_add') }}">Ajouter un nouveau service</a></p>
+    <p><a href="{{ path('product_downloadable_add') }}">Ajouter un nouveau downloadable</a></p>
+    {{ dump(products) }}
 {% endblock %}

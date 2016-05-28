@@ -17,7 +17,7 @@ class ProductPack  extends BaseProduct
 {
 
     /**
-     * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\PackElement", mappedBy="parent", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\PackElement", mappedBy="product", cascade={"persist", "remove"})
      */
     private $packElements;
 

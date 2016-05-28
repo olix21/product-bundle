@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Feature
  *
  * @ORM\Table(name="products_features")
- * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Entity\FeatureRepository")
+ * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\FeatureRepository")
  */
 class Feature
 {

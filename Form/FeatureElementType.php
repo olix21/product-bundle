@@ -20,7 +20,7 @@ class FeatureElementType extends AbstractType
         $builder
             ->add('feature',        EntityType::class,   array(
                 'class'     => 'DyweeProductBundle:Feature',
-                'property'  => 'name',
+                'choice_label'  => 'name',
                 'required'  => false
             ))
             ->add('isCustomValue',  CheckboxType::class, array('required' => false))

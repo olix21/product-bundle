@@ -27,6 +27,21 @@ use Gedmo\Translatable\Translatable;
  */
 abstract class BaseProduct implements Translatable
 {
+    const STATE_HIDDEN = 0;
+    const STATE_AVAILABLE = 1;
+    const STATE_NOT_AVAILABLE_ANYMORE = 5;
+    const STATE_AVAILABLE_SOON = 2;
+    const STATE_ONLY_IN_STORE = 3;
+    const STATE_STOCK_EMPTY = 4;
+    const STATE_ONLY_ON_WEB = 6;
+
+    const SIZE_UNIT_MM = 'mm';
+    const SIZE_UNIT_CM = 'cm';
+    const SIZE_UNIT_METER = 'm';
+
+    const WEIGHT_UNIT_GR = 'gr';
+    const WEIGHT_UNIT_KG = 'kg';
+
 
     /**
      * @var integer
@@ -75,7 +90,7 @@ abstract class BaseProduct implements Translatable
      *
      * @ORM\Column(name="sizeUnit", type="string", length=255)
      */
-    private $sizeUnit = 'cm';
+    private $sizeUnit = self::SIZE_UNIT_MM;
 
     /**
      * @var string
@@ -89,7 +104,7 @@ abstract class BaseProduct implements Translatable
      *
      * @ORM\Column(name="weightUnit", type="string", length=255)
      */
-    private $weightUnit = 'gr';
+    private $weightUnit = self::WEIGHT_UNIT_GR;
 
     /**
      * @var integer
@@ -103,7 +118,7 @@ abstract class BaseProduct implements Translatable
      *
      * @ORM\Column(name="state", type="smallint")
      */
-    private $state = 1;
+    private $state = self::STATE_AVAILABLE;
 
     /**
      * @var string
@@ -169,22 +184,22 @@ abstract class BaseProduct implements Translatable
      */
     private $metaKeywords;
 
-    /*
+    /**
      * @ORM\ManyToOne(targetEntity="Dywee\ProductBundle\Entity\Brand")
      */
     private $brand;
 
-    /*
+    /**
      * @ORM\ManyToMany(targetEntity="Dywee\ProductBundle\Entity\Category", inversedBy="product")
      */
     private $categories;
 
-    /*
+    /**
      * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\FeatureElement", mappedBy="product", cascade={"persist", "remove"})
      */
     private $features;
 
-    /*
+    /**
      * @ORM\OneToMany(targetEntity="PackElement", mappedBy="product")
      */
     private $packElements;
@@ -220,15 +235,10 @@ abstract class BaseProduct implements Translatable
      */
     private $availableAt;
 
-    /*
+    /**
      * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\ProductStat", mappedBy="product")
      */
     private $productStat;
-
-    /**
-     * @ORM\Column(name="externalDownloadLink", type="string", length=255, nullable=true)
-     */
-    private $externalDownloadLink;
 
     /**
      * @Gedmo\Locale
@@ -241,6 +251,11 @@ abstract class BaseProduct implements Translatable
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $deletedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ProductPicture", mappedBy="product", cascade={"persist"})
+     */
+    private $pictures;
 
 
 
@@ -1065,4 +1080,29 @@ abstract class BaseProduct implements Translatable
     {
         $this->deletedAt = $deletedAt;
     }
+
+    public function addPicture(ProductPicture $picture)
+    {
+        $this->pictures[] = $picture;
+        $picture->setProduct($this);
+    }
+
+    public function getPictures()
+    {
+        return $this->pictures;
+    }
+
+    public function removePicture(ProductPicture $picture)
+    {
+        $this->pictures->removeElement($picture);
+        return $this;
+    }
+
+    static function getConstantList()
+    {
+        $oClass = new \ReflectionClass(__CLASS__);
+        return $oClass->getConstants();
+    }
+
+
 }

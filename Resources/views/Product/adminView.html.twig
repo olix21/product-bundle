@@ -5,21 +5,17 @@
 {% block title %} Coup d'oeil sur un produit - {{ parent() }} {% endblock %}
 
 {% block body %}
-    {% if stockEnabled == 1 %}
         {% if product.stock == 0 %}
             <div class="callout callout-danger">
                 <h4>Attention!</h4>
-                <p>Ce produit est en rupture de stock</p>
-                <p><a href="{{ path('dywee_product_update', { id: product.id }) }}">Modifier le stock de ce produit</a></p>
+                <p>Ce produit est en rupture de stock. <a href="{{ path('product_update', { id: product.id }) }}">Modifier le stock de ce produit</a></p>
             </div>
         {% elseif product.stock <= stockWarning %}
             <div class="callout callout-warning">
                 <h4>Attention!</h4>
-                <p>Ce produit est bientôt en rupture de stock</p>
-                <p><a href="{{ path('dywee_product_update', { id: product.id }) }}" >Modifier le stock de ce produit</a></p>
+                <p>Ce produit est bientôt en rupture de stock. <a href="{{ path('product_update', { id: product.id }) }}" >Modifier le stock de ce produit</a></p>
             </div>
         {% endif %}
-    {% endif %}
 
     <!-- Default box -->
     <div class="box">
@@ -33,8 +29,8 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-3">
-                    {% for image in product.images %}
-                        <img src="{{ image.src }}" alt="{{ product.name }}" class="img-responsive" />
+                    {% for picture in product.pictures %}
+                        <img src="{{ asset('images/products/' ~ picture.imageName) }}" alt="{{ product.name }}" class="img-responsive" />
                     {% endfor %}
                 </div>
                 <div class="col-md-3">
@@ -49,7 +45,7 @@
                             <th>Prix</th>
                             <td>{{ product.price|number_format(2) }}€</td>
                         </tr>
-                        <tr>
+                        {#<tr>
                             <th>Prix en promotion</th>
                             <td>{{ product.promotionPrice|number_format(2) }}€</td>
                         </tr>
@@ -68,29 +64,25 @@
                                     {% endif %}
                                 </td>
                             </tr>
-                        {% endif %}
-                        <tr>
-                            <th>Vendu</th>
-                            <td>{% include 'DyweeProductBundle:Product:sellType.html.twig' %}</td>
-                        </tr>
+                        {% endif %}#}
                         <tr>
                             <th>Statut</th>
-                            <td>{% include 'DyweeProductBundle:Product:state.html.twig' %}</td>
+                            <td>{% include 'DyweeProductBundle:BaseProduct:state.html.twig' %}</td>
                         </tr>
                         </tbody>
                     </table>
-                    <p><a href="{{ path('dywee_product_update', {id: product.id}) }}" class="btn btn-default btn-block"><i class="fa fa-pencil"></i> Modifier le produit</a></p>
+                    <p><a href="{{ path('product_update', {id: product.id}) }}" class="btn btn-default btn-block"><i class="fa fa-pencil"></i> Modifier le produit</a></p>
                 </div>
-                <div class="col-md-3">
+                {#<div class="col-md-3">
                     <h2>Déclinaisons</h2>
                     {{ render(controller('DyweeProductBundle:ProductVariantAdmin:table', {idProduct: product.id})) }}
-                </div>
-                {% if product.sellType == 2 %}
+                </div>#}
+                {#{% if product.sellType == 2 %}
                 <div class="col-md-3">
                     <h2>Locations</h2>
-                    {% render(controller('DyweeProductBundle:Product:renderLastRenting', {id: product.id})) %}
+                    {{ render(controller('DyweeProductBundle:Product:renderLastRenting', {id: product.id})) }}
                 </div>
-                {% endif %}
+                {% endif %}#}
             </div>
         </div><!-- /.box-body -->
     </div><!-- /.box -->

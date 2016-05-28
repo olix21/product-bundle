@@ -2,8 +2,6 @@
 
 namespace Dywee\ProductBundle\Controller;
 
-
-class ProductController extends ParentController
+class ProductController extends BaseProductController
 {
-
 }

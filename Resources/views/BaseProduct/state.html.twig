@@ -1,5 +1,5 @@
 {% if product.state == 0 %}
-    <span class="label label-warning">Indisponible</span>
+    <span class="label label-warning">Désactivé</span>
 {% elseif product.state == 1 %}
     <span class="label label-success">Disponible</span>
 {% elseif product.state == 2 %}
@@ -7,5 +7,9 @@
 {% elseif product.state == 3 %}
     <span class="label label-info">Seulement disponible en magasin</span>
 {% elseif product.state == 4 %}
-    <span class="label label-info">Seulement disponible en pack ou abonnement</span>
+    <span class="label label-info">Rupture de stock</span>
+{% elseif product.state == 5 %}
+    <span class="label label-info">Indisponible</span>
+{% elseif product.state == 5 %}
+    <span class="label label-info">Seulement sur internet</span>
 {%  endif %}

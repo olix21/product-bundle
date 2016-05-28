@@ -11,7 +11,7 @@ use Gedmo\Translatable\Translatable;
  *
  * @ORM\Table(name="categories")
  * @Gedmo\Tree(type="nested")
- * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Entity\CategoryRepository")
+ * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\CategoryRepository")
  */
 class Category implements Translatable
 {
