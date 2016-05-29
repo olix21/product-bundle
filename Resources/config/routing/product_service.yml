@@ -5,9 +5,9 @@
 ###############################
 
 product_service_table:
-    path:     /admin6833/product/service
+    path:     /admin/product/service
     defaults: { _controller: DyweeProductBundle:ProductService:table }
 
 product_service_add:
-    path:     /admin6833/product/service/add
+    path:     /admin/product/service/add
     defaults: { _controller: DyweeProductBundle:ProductService:add }

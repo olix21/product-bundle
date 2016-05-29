@@ -5,9 +5,9 @@
 ###############################
 
 product_pack_table:
-    path:     /admin6833/product/pack
+    path:     /admin/product/pack
     defaults: { _controller: DyweeProductBundle:ProductPack:table }
 
 product_pack_add:
-    path:     /admin6833/product/pack/add
+    path:     /admin/product/pack/add
     defaults: { _controller: DyweeProductBundle:ProductPack:add }

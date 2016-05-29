@@ -5,9 +5,9 @@
 ###############################
 
 product_subscription_table:
-    path:     /admin6833/product/subscription
+    path:     /admin/product/subscription
     defaults: { _controller: DyweeProductBundle:ProductSubscription:table }
 
 product_subscription_add:
-    path:     /admin6833/product/subscription/add
+    path:     /admin/product/subscription/add
     defaults: { _controller: DyweeProductBundle:ProductSubscription:add }
