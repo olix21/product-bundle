@@ -27,13 +27,13 @@ use Gedmo\Translatable\Translatable;
  */
 abstract class BaseProduct implements Translatable
 {
-    const STATE_HIDDEN = 0;
-    const STATE_AVAILABLE = 1;
-    const STATE_NOT_AVAILABLE_ANYMORE = 5;
-    const STATE_AVAILABLE_SOON = 2;
-    const STATE_ONLY_IN_STORE = 3;
-    const STATE_STOCK_EMPTY = 4;
-    const STATE_ONLY_ON_WEB = 6;
+    const STATE_HIDDEN = 'product.state_hidden';
+    const STATE_AVAILABLE = 'product_state_available';
+    const STATE_NOT_AVAILABLE_ANYMORE = 'product.not_available';
+    const STATE_AVAILABLE_SOON = 'product.available_soon';
+    const STATE_ONLY_IN_STORE = 'product.only_store';
+    const STATE_STOCK_EMPTY = 'product.stock_empty';
+    const STATE_ONLY_ON_WEB = 'product.only_web';
 
     const SIZE_UNIT_MM = 'mm';
     const SIZE_UNIT_CM = 'cm';
@@ -116,7 +116,7 @@ abstract class BaseProduct implements Translatable
     /**
      * @var integer
      *
-     * @ORM\Column(name="state", type="smallint")
+     * @ORM\Column(name="state", type="string", length=25)
      */
     private $state = self::STATE_AVAILABLE;
 

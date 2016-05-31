@@ -13,7 +13,13 @@ product_service_routing:
 product_subscription_routing:
     resource: "@DyweeProductBundle/Resources/config/routing/product_subscription.yml"
 
+product_brand_routing:
+    resource: "@DyweeProductBundle/Resources/config/routing/brand.yml"
+
+product_categories_routing:
+    resource: "@DyweeProductBundle/Resources/config/routing/category.yml"
+
 
 base_product_dashboard:
-    path:     /admin6833/product/dashboard
+    path:     /admin/product/dashboard
     defaults: { _controller: DyweeProductBundle:BaseProduct:dashboard }

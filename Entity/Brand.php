@@ -3,12 +3,14 @@
 namespace Dywee\ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Brand
  *
  * @ORM\Table(name="brands")
  * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\BrandRepository")
+ * @Vich\Uploadable
  */
 class Brand
 {
@@ -29,11 +31,29 @@ class Brand
     private $name;
 
     /**
-     * @var string
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @ORM\Column(name="img", type="string", length=255, nullable=true)
+     * @Vich\UploadableField(mapping="brand_image", fileNameProperty="imageName")
+     *
+     * @var File
      */
-    private $img;
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $imageName;
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+
 
 
     /**
@@ -70,32 +90,54 @@ class Brand
     }
 
     /**
-     * Set img
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
      *
-     * @param string $img
-     * @return Brand
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     *
+     * @return Product
      */
-    public function setImg($img)
+    public function setImageFile(\Symfony\Component\HttpFoundation\File\File $image = null)
     {
-        $this->img = $img;
+        $this->imageFile = $image;
+
+        if ($image) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTime();
+        }
 
         return $this;
     }
 
     /**
-     * Get img
-     *
-     * @return string 
+     * @return File
      */
-    public function getImg()
+    public function getImageFile()
     {
-        return $this->img;
+        return $this->imageFile;
     }
 
-    public function getUrl()
+    /**
+     * @param string $imageName
+     *
+     * @return Product
+     */
+    public function setImageName($imageName)
     {
-        if($this->getSeoUrl() !== null)
-            return $this->getSeoUrl();
-        else return $this->getId();
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
     }
 }

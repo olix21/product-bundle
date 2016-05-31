@@ -3,51 +3,12 @@
 {%  extends "DyweeProductBundle::admin.html.twig" %}
 
 {% block body %}
-    <a href="{{ path('dywee_product_category_add') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Ajouter</a>
 
     <div class="title-heading">
+        <a href="{{ path('product_category_add') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Ajouter</a>
         <h1 class="text-center">Liste des Catégories de produit</h1>
     </div>
-    {% if categoryList|length > 0 %}
-        <table class="table table-striped table-hover table-condensed">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Nom</th>
-                <th>Parent</th>
-                <th>Visible dans le menu</th>
-                <th>Position</th>
-                <th>Statut</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {%  for category in categoryList %}
-                <tr>
-                    <td>{{ category.id }}</td>
-                    <td><a href="{{ path('dywee_product_parentCategory_table', {id: category.id}) }}">{{ category.name }}</a></td>
-                    <td>{% if category.parent is not null %}{{ category.parent.name }}{% else %}Aucun{% endif %}</td>
-                    <td>{% if category.isVisible == 1 %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-remove"></i>{% endif %}</td>
-                    <td>{{ category.position }}</td>
-                    <td>{% if category.state == 0 %}
-                                <span class="label label-warning">Désactivé</span>
-                            {% elseif category.state == 1 %}
-                                <span class="label label-success">Actif</span>
-                            {%  endif %}
 
-                    </td>
-                    <td>
-                            <a href="{{ path('dywee_product_category_update', {id: category.id}) }}" class="link-unstyled"><i class="fa fa-pencil"></i> </a>
-                            <a href="{{ path('dywee_product_category_delete', {id: category.id}) }}" class="link-unstyled"><i class="fa fa-trash-o"></i> </a>
-
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>Vous n'avez pas encore ajouté de catégorie de produit.</p>
-        <p><a href="{{ path('dywee_product_category_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter une catégorie</a></p>
-    {% endif %}
+    {% include 'DyweeProductBundle:Category:miniTable.html.twig' %}
 
 {% endblock %}

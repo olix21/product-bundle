@@ -5,6 +5,7 @@ namespace Dywee\ProductBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Category
@@ -12,6 +13,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Table(name="categories")
  * @Gedmo\Tree(type="nested")
  * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\CategoryRepository")
+ * @Vich\Uploadable
  */
 class Category implements Translatable
 {
@@ -42,26 +44,19 @@ class Category implements Translatable
     /**
      * @var boolean
      *
-     * @ORM\Column(name="visible", type="boolean")
+     * @ORM\Column(name="enabled", type="boolean")
      */
-    private $isVisible = true;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="state", type="smallint")
-     */
-    private $state = 1;
+    private $enabled = true;
 
     /**
      * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="Dywee\ProductBundle\Entity\Category", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
      * @ORM\JoinColumn(nullable=true)
      */
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\Category", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     private $children;
@@ -105,7 +100,7 @@ class Category implements Translatable
     private $locale;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Dywee\ProductBundle\Entity\Product", mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity="BaseProduct", mappedBy="categories")
      */
     private $product;
 
@@ -113,6 +108,29 @@ class Category implements Translatable
      * @ORM\Column(name="seoUrl", type="string", length=255, nullable=true)
      */
     private $seoUrl;
+
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="category_image", fileNameProperty="imageName")
+     *
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $imageName;
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
+     */
+    private $updatedAt;
 
 
     /**
@@ -169,29 +187,6 @@ class Category implements Translatable
     public function getEnableMulti()
     {
         return $this->enableMulti;
-    }
-
-    /**
-     * Set state
-     *
-     * @param integer $state
-     * @return Category
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    /**
-     * Get state
-     *
-     * @return integer 
-     */
-    public function getState()
-    {
-        return $this->state;
     }
 
     /**
@@ -313,24 +308,24 @@ class Category implements Translatable
     /**
      * Set visible
      *
-     * @param boolean $isVisible
+     * @param boolean $enabled
      * @return Category
      */
-    public function setIsVisible($isVisible)
+    public function setEnabled($enabled)
     {
-        $this->isVisible = $isVisible;
+        $this->enabled = $enabled;
 
         return $this;
     }
 
     /**
-     * Get visible
+     * Get enabled
      *
      * @return boolean 
      */
-    public function getIsVisible()
+    public function isEnabled()
     {
-        return $this->isVisible;
+        return $this->enabled;
     }
 
     public function sortChildCategories()
@@ -355,11 +350,11 @@ class Category implements Translatable
     /**
      * Add product
      *
-     * @param \Dywee\ProductBundle\Entity\Product $product
+     * @param BaseProduct $product
      *
      * @return Category
      */
-    public function addProduct(\Dywee\ProductBundle\Entity\Product $product)
+    public function addProduct(BaseProduct $product)
     {
         $this->product[] = $product;
 
@@ -369,9 +364,9 @@ class Category implements Translatable
     /**
      * Remove product
      *
-     * @param \Dywee\ProductBundle\Entity\Product $product
+     * @param BaseProduct $product
      */
-    public function removeProduct(\Dywee\ProductBundle\Entity\Product $product)
+    public function removeProduct(BaseProduct $product)
     {
         $this->product->removeElement($product);
     }
@@ -516,11 +511,11 @@ class Category implements Translatable
     /**
      * Add child
      *
-     * @param \Dywee\ProductBundle\Entity\Category $child
+     * @param Category $child
      *
      * @return Category
      */
-    public function addChild(\Dywee\ProductBundle\Entity\Category $child)
+    public function addChild(Category $child)
     {
         $this->children[] = $child;
 
@@ -530,9 +525,9 @@ class Category implements Translatable
     /**
      * Remove child
      *
-     * @param \Dywee\ProductBundle\Entity\Category $child
+     * @param Category $child
      */
-    public function removeChild(\Dywee\ProductBundle\Entity\Category $child)
+    public function removeChild(Category $child)
     {
         $this->children->removeElement($child);
     }
@@ -541,5 +536,57 @@ class Category implements Translatable
         if($this->lvl > 0)
             return str_repeat($this->parent->name." > ", $this->lvl) . $this->name;
         else return $this->name;
+    }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     *
+     * @return Product
+     */
+    public function setImageFile(\Symfony\Component\HttpFoundation\File\File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTime();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param string $imageName
+     *
+     * @return Product
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
     }
 }

@@ -10,9 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CategoryController extends Controller
+class CategoryController extends ParentController
 {
-    public function tableAction($page = 1, $id = false)
+    protected $tableViewName = 'product_category_table';
+
+    /*public function tableAction($page = 1, $id = false)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -48,7 +50,7 @@ class CategoryController extends Controller
             return $this->render('DyweeProductBundle:Eshop:browseByCategory.html.twig', $data);
         }
         throw $this->createNotFoundException('Catégorie introuvable');
-    }
+    }*/
 
     public function filterAjaxAction()
     {
@@ -110,53 +112,5 @@ class CategoryController extends Controller
             return $response;
         }
         throw $this->createNotFoundException('Erreur dans la requête');
-    }
-
-    public function addAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $category = new Category();
-        $category->setState(1);
-
-        $form = $this->get('form.factory')->create(new CategoryType, $category);
-
-        if($form->handleRequest($request)->isValid()){
-
-            $em->persist($category);
-            $em->flush();
-
-            $request->getSession()->getFlashBag()->add('success', 'Catégorie bien ajoutée');
-            return $this->redirect($this->generateUrl('dywee_product_category_table'));
-        }
-        return $this->render('DyweeProductBundle:Category:add.html.twig', array('form' => $form->createView()));
-    }
-
-    public function updateAction(Category $category, Request $request)
-    {
-        $form = $this->get('form.factory')->create(new CategoryType, $category);
-
-        if($form->handleRequest($request)->isValid()){
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($category);
-            $em->flush();
-
-            $request->getSession()->getFlashBag()->add('success', 'Catégorie bien modifiée');
-            return $this->redirect($this->generateUrl('dywee_product_category_table'));
-        }
-        return $this->render('DyweeProductBundle:Category:edit.html.twig', array('form' => $form->createView()));
-    }
-
-    public function deleteAction(Category $category)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $em->remove($category);
-        $em->flush();
-
-        $this->get('session')->getFlashBag()->add('success', 'Catégorie bien supprimée');
-
-        return $this->redirect($this->generateUrl('dywee_product_category_table'));
     }
 }

@@ -11,3 +11,13 @@ services:
             - { name: doctrine.event_listener, event: preUpdate }
             - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: postUpdate }
+
+    dywee_product.admin_menu:
+        class: Dywee\ProductBundle\Service\ProductAdminSidebarHandler
+        arguments: [ '@router' ]
+
+    dywee_product.admin_sidebar_listener:
+        class: Dywee\ProductBundle\Listener\AdminSidebarBuilderListener
+        arguments: [ '@dywee_product.admin_menu' ]
+        tags:
+            - { name: kernel.event_subscriber, event: kernel.exception, method: addElementToSidebar }

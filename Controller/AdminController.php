@@ -31,9 +31,50 @@ class AdminController extends Controller
 </li>
          */
         $menu = array(
-            'icon' => 'beer',
+            'icon' => 'fa fa-beer',
             'label' => 'Produits',
-            'children' => array()
+            'children' => array(
+                array(
+                    'icon' => 'fa fa-beer',
+                    'label' => 'Liste des produits',
+                    'route' => $this->generateUrl('product_table')
+                ),
+                array(
+                    'icon' => 'fa fa-beer',
+                    'label' => 'Liste des packs',
+                    'route' => $this->generateUrl('pack_table')
+                ),
+                array(
+                    'icon' => 'fa fa-beer',
+                    'label' => 'Listes des abonnements',
+                    'route' => $this->generateUrl('subscription_table')
+                ),
+                array(
+                    'icon' => 'fa fa-beer',
+                    'label' => 'Liste des services',
+                    'route' => $this->generateUrl('service_table')
+                ),
+                array(
+                    'icon' => 'fa fa-beer',
+                    'label' => 'Liste des catégories',
+                    'route' => $this->generateUrl('product_category_table')
+                ),
+                array(
+                    'icon' => 'fa fa-beer',
+                    'label' => 'Liste des marques',
+                    'route' => $this->generateUrl('product_brand_table')
+                ),
+                /*array(
+                    'icon' => 'fa fa-beer',
+                    'label' => 'Liste des caractéristiques',
+                    'route' => ''
+                ),
+                array(
+                    'icon' => 'fa fa-beer',
+                    'label' => 'Listes des options',
+                    'route' => ''
+                ),*/
+            )
         );
     }
 }

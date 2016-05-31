@@ -3,8 +3,10 @@
 namespace Dywee\ProductBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class BrandType extends AbstractType
 {
@@ -16,9 +18,12 @@ class BrandType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('website')
-            ->add('img')
-            ->add('Sauvegarder', 'submit')
+            ->add('imageFile',   VichImageType::class, array(
+                'required'      => false,
+                'allow_delete'  => true, // not mandatory, default is true
+                'download_link' => true, // not mandatory, default is true
+            ))
+            ->add('Sauvegarder', SubmitType::class)
         ;
     }
     
@@ -30,13 +35,5 @@ class BrandType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Dywee\ProductBundle\Entity\Brand'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'dywee_productbundle_brand';
     }
 }
