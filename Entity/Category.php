@@ -274,10 +274,10 @@ class Category implements Translatable
     /**
      * Add children
      *
-     * @param \Dywee\ProductBundle\Entity\Category $children
+     * @param Category $child
      * @return Category
      */
-    public function addChildCategory(\Dywee\ProductBundle\Entity\Category $child)
+    public function addChildCategory(Category $child)
     {
         $this->children[] = $child;
         $child->setParent($this);
@@ -288,7 +288,7 @@ class Category implements Translatable
     /**
      * Remove children
      *
-     * @param \Dywee\ProductBundle\Entity\Category $chil
+     * @param Category $child
      */
     public function removeChildCategory(\Dywee\ProductBundle\Entity\Category $child)
     {

@@ -1,4 +1,4 @@
-{% if brandList|length > 0 %}
+{% if brands|length > 0 %}
     <table class="table table-striped table-hover table-condensed">
         <thead>
         <tr>
@@ -9,7 +9,7 @@
         </tr>
         </thead>
         <tbody>
-        {%  for brand in brandList %}
+        {%  for brand in brands %}
             <tr>
                 <td><small>{{ brand.id }}</small></td>
                 <td><small>{{ brand.name }}</small></td>

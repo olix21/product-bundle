@@ -9,7 +9,7 @@
         <h1 class="text-center">Liste des Produits</h1>
     </div>
 
-    {% if products|length > 0 or filterActive == true %}
+    {% if products|length > 0 or filterActive is defined and filterActive == true %}
         <div class="row">
             <div class="col-md-9">
                 <div class="box box-success">
@@ -74,7 +74,7 @@
 
     {% else %}
         <p>Vous n'avez pas encore ajouté de produit.</p>
-        <p><a href="{{ path('product_add', {type: type}) }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter un produit</a></p>
+        <p><a href="{{ path('product_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter un produit</a></p>
     {% endif %}
 
 {% endblock %}

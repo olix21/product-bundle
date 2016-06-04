@@ -2,12 +2,6 @@
 
 namespace Dywee\ProductBundle\Controller;
 
-use Dywee\ProductBundle\Entity\Category;
-use Dywee\ProductBundle\Entity\Product;
-use Dywee\ProductBundle\Form\CategoryType;
-use Dywee\ProductBundle\Form\ProductType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends ParentController

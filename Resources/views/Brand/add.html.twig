@@ -12,3 +12,11 @@
     {% include "DyweeProductBundle:Brand:form.html.twig" %}
 
 {% endblock %}
+
+{% block footerJavascript %}
+    <script>
+        $(document).ready(function(){
+            $("#brand_imageFile_file").fileinput({showUpload: false, showRemove: false});
+        });
+    </script>
+{% endblock %}

@@ -5,10 +5,15 @@
 {% block title %} Modification d'une catégorie de produit - {{ parent() }} {% endblock %}
 
 {% block body %}
-    <div class="title-heading">
-        <h1>Modification de la catégorie</h1>
-    </div>
 
     {% include "DyweeProductBundle:Category:form.html.twig" %}
 
+{% endblock %}
+
+{% block footerJavascript %}
+    <script>
+        $(document).ready(function(){
+            $("#category_imageFile_file").fileinput({showUpload: fase, showRemove: false});
+        });
+    </script>
 {% endblock %}

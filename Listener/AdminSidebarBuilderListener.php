@@ -20,7 +20,7 @@ class AdminSidebarBuilderListener implements EventSubscriberInterface{
     {
         // return the subscribed events, their methods and priorities
         return array(
-            DyweeCoreEvent::BUILD_ADMIN_SIDEBAR => 'addElementToSidebar'
+            DyweeCoreEvent::BUILD_ADMIN_SIDEBAR => array('addElementToSidebar', -10)
         );
     }
 

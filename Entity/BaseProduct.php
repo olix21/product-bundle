@@ -28,7 +28,7 @@ use Gedmo\Translatable\Translatable;
 abstract class BaseProduct implements Translatable
 {
     const STATE_HIDDEN = 'product.state_hidden';
-    const STATE_AVAILABLE = 'product_state_available';
+    const STATE_AVAILABLE = 'product.state_available';
     const STATE_NOT_AVAILABLE_ANYMORE = 'product.not_available';
     const STATE_AVAILABLE_SOON = 'product.available_soon';
     const STATE_ONLY_IN_STORE = 'product.only_store';
@@ -123,7 +123,6 @@ abstract class BaseProduct implements Translatable
     /**
      * @var string
      *
-     * @Gedmo\Translatable
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -256,6 +255,12 @@ abstract class BaseProduct implements Translatable
      * @ORM\OneToMany(targetEntity="ProductPicture", mappedBy="product", cascade={"persist"})
      */
     private $pictures;
+
+    /*
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
 
 
@@ -664,6 +669,17 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
+     * return custom seo url if provided, return an auto-generated slug if not
+     * @return string
+     */
+    public function getUrl()
+    {
+        if($this->getSeoUrl())
+            return $this->getSeoUrl();
+        return $this->getSlug();
+    }
+
+    /**
      * Set metaKeywords
      *
      * @param string $metaKeywords
@@ -689,10 +705,10 @@ abstract class BaseProduct implements Translatable
     /**
      * Set brand
      *
-     * @param \Dywee\ProductBundle\Entity\Brand $brand
+     * @param Brand $brand
      * @return Product
      */
-    public function setBrand(\Dywee\ProductBundle\Entity\Brand $brand = null)
+    public function setBrand(Brand $brand = null)
     {
         $this->brand = $brand;
 
@@ -702,7 +718,7 @@ abstract class BaseProduct implements Translatable
     /**
      * Get brand
      *
-     * @return \Dywee\ProductBundle\Entity\Brand
+     * @return Brand
      */
     public function getBrand()
     {
@@ -712,10 +728,10 @@ abstract class BaseProduct implements Translatable
     /**
      * Add categories
      *
-     * @param \Dywee\ProductBundle\Entity\Category $categories
+     * @param Category $category
      * @return Product
      */
-    public function addCategory(\Dywee\ProductBundle\Entity\Category $category)
+    public function addCategory(Category $category)
     {
         $this->categories[] = $category;
         $category->addProduct($this);
@@ -726,9 +742,9 @@ abstract class BaseProduct implements Translatable
     /**
      * Remove categories
      *
-     * @param \Dywee\ProductBundle\Entity\Category $categories
+     * @param Category $category
      */
-    public function removeCategory(\Dywee\ProductBundle\Entity\Category $category)
+    public function removeCategory(Category $category)
     {
         $this->categories->removeElement($category);
     }
@@ -749,15 +765,9 @@ abstract class BaseProduct implements Translatable
     {
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->packElements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pictures = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
-    }
-
-    public function getUrl()
-    {
-        if($this->getSeoUrl() !== null && $this->getSeoUrl() != '')
-            return $this->getSeoUrl();
-        else return $this->getId();
     }
 
     public function setTranslatableLocale($locale)
@@ -975,10 +985,10 @@ abstract class BaseProduct implements Translatable
     /**
      * Add productStat
      *
-     * @param \Dywee\ProductBundle\Entity\ProductStat $productStat
+     * @param ProductStat $productStat
      * @return Product
      */
-    public function addProductStat(\Dywee\ProductBundle\Entity\ProductStat $productStat)
+    public function addProductStat(ProductStat $productStat)
     {
         $this->productStat[] = $productStat;
 
@@ -988,9 +998,9 @@ abstract class BaseProduct implements Translatable
     /**
      * Remove productStat
      *
-     * @param \Dywee\ProductBundle\Entity\ProductStat $productStat
+     * @param ProductStat $productStat
      */
-    public function removeProductStat(\Dywee\ProductBundle\Entity\ProductStat $productStat)
+    public function removeProductStat(ProductStat $productStat)
     {
         $this->productStat->removeElement($productStat);
     }
@@ -1104,5 +1114,9 @@ abstract class BaseProduct implements Translatable
         return $oClass->getConstants();
     }
 
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 
 }

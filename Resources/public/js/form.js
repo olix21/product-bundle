@@ -24,6 +24,8 @@ $(document).ready(function() {
         addDeleteLink($(this));
     });
 
+    $('input[id^="product_pictures_"]').fileinput({showUpload: false, showRemove: false});
+
     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
     $containerPicture.append($addPictureLink);
 
@@ -41,8 +43,7 @@ $(document).ready(function() {
 
         // On ajoute le prototype modifié à la fin de la balise <div>
         $containerPicture.append($prototype);
-
-        $("#product_pictures"+indexPicture+"_src").val(url);
+        $('input[id^="product_pictures_"]').fileinput({showUpload: false, showRemove: false});
 
         // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
         indexPicture++;

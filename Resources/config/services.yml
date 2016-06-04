@@ -20,4 +20,4 @@ services:
         class: Dywee\ProductBundle\Listener\AdminSidebarBuilderListener
         arguments: [ '@dywee_product.admin_menu' ]
         tags:
-            - { name: kernel.event_subscriber, event: kernel.exception, method: addElementToSidebar }
+            - { name: kernel.event_subscriber }

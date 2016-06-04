@@ -5,8 +5,15 @@
 {% block title %} Creation d'une categorie de produit - {{ parent() }} {% endblock %}
 
 {% block body %}
-    <h1>Nouvelle catégorie de produit</h1>
 
     {% include "DyweeProductBundle:Category:form.html.twig" %}
 
+{% endblock %}
+
+{% block footerJavascript %}
+    <script>
+        $(document).ready(function(){
+            $("#category_imageFile_file").fileinput({showUpload: false, showRemove: false});
+        });
+    </script>
 {% endblock %}

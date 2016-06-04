@@ -3,10 +3,10 @@
 {%  extends "DyweeProductBundle::layout.html.twig" %}
 
 {% block bodyContent %}
-    {% if product.isPromotion == 1 %}
+    {#{% if product.isPromotion == 1 %}
         <div class="alert alert-success">{{ 'Ce produit est en promotion'|trans }}, {{ product.promotionPrice|number_format(2) }}€ {{ 'au lieu de'|trans }} {{ product.price|number_format(2) }}€</div>
-    {% endif %}
-    {% if product.state == 2 %}
+    {% endif %}#}
+    {% if product.state == 'product.available_soon' %}
         <div class="alert alert-warning">{{ 'Ce produit est en rupture de stock, il sera à nouveau disponible très prochainement'|trans }}</div>
     {% endif %}
 
@@ -32,16 +32,16 @@
             <div class="tab-content">
                 {% block tabsContent %}
                     <div role="tabpanel" class="tab-pane" id="prix">
-                        {{ render(controller('DyweeCMSBundle:Page:viewContent', {data: 11})) }}
+                    {#{{ render(controller('DyweeCMSBundle:Page:viewContent', {data: 11})) }}#}
                     </div>
                     <div role="tabpanel" class="tab-pane" id="livraison">
-                        {{ render(controller('DyweeCMSBundle:Page:viewContent', {data: 12})) }}
+                        {#{{ render(controller('DyweeCMSBundle:Page:viewContent', {data: 12})) }}#}
                     </div>
                     <div role="tabpanel" class="tab-pane" id="commande">
-                        {{ render(controller('DyweeCMSBundle:Page:viewContent', {data: 13})) }}
+                        {#{{ render(controller('DyweeCMSBundle:Page:viewContent', {data: 13})) }}#}
                     </div>
                     <div role="tabpanel" class="tab-pane" id="paiement">
-                        {{ render(controller('DyweeCMSBundle:Page:viewContent', {data: 14})) }}
+                        {#{{ render(controller('DyweeCMSBundle:Page:viewContent', {data: 14})) }}#}
                     </div>
                 {% endblock %}
             </div>

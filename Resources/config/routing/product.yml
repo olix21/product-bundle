@@ -10,6 +10,10 @@ product_view:
     requirements:
         page: \d*
 
+product_view_by_url:
+    path:     /product/{seoUrl}
+    defaults: { _controller: DyweeProductBundle:Product:view, page:1 }
+
 product_table:
     path:     /admin/product
     defaults: { _controller: DyweeProductBundle:Product:table }
