@@ -2,7 +2,9 @@
 
 namespace Dywee\ProductBundle\Controller;
 
+use Dywee\ProductBundle\DyweeProductEvent;
 use Dywee\ProductBundle\Entity\BaseProduct;
+use Dywee\ProductBundle\Event\ProductStatEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,6 +64,10 @@ class BaseProductController extends Controller
 
     public function viewAction(BaseProduct $baseProduct)
     {
+        $event = new ProductStatEvent($baseProduct);
+
+        $this->get('event_dispatcher')->dispatch(DyweeProductEvent::PRODUCT_PAGE_DISPLAY, $event);
+
         return $this->render('DyweeProductBundle:'.$this->childrenClassName.':view.html.twig', array(
             'product' => $baseProduct
         ));
@@ -69,10 +75,9 @@ class BaseProductController extends Controller
 
     public function adminViewAction(BaseProduct $baseProduct)
     {
-        $stats = null;
         return $this->render('DyweeProductBundle:'.$this->childrenClassName.':adminView.html.twig', array(
             'product' => $baseProduct,
-            'stats' => $stats
+            'stats' => $this->get('dywee_product.stat_manager')->getForProduct($baseProduct)
         ));
     }
 

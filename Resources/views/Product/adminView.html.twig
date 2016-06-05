@@ -98,11 +98,8 @@
         </div>
         <div class="box-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div id="product_stats"></div>
-                </div>
-                <div class="col-md-6">
-                    {#<div id="map"></div>#}
                 </div>
             </div>
             <div class="text-center">
@@ -132,7 +129,7 @@
                 ['Mois', 'Vues', 'Ajout au panier', 'Achats']
                 {% if stats|length > 0 %}
                     {% for stat in stats %}
-                    , ['{{ stat.createdDate }}', {{ stat.vues }}, {{ stat.basket}}, {{ stat.ventes }}]
+                    , ['{{ stat.createdAt }}', {{ stat.view }}, {{ stat.basket}}, {{ stat.sale }}]
                     {% endfor %}
                 {% else %}
                     ['', 0, 0, 0]

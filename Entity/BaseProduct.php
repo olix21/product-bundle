@@ -235,9 +235,9 @@ abstract class BaseProduct implements Translatable
     private $availableAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\ProductStat", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="ProductStat", mappedBy="product")
      */
-    private $productStat;
+    private $productStats;
 
     /**
      * @Gedmo\Locale
@@ -262,9 +262,31 @@ abstract class BaseProduct implements Translatable
      */
     private $slug;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="BaseProduct", inversedBy="relatedProducts")
+     */
+    private $relatedToProduct;
+
+    /**
+     * @ORM\OneToMany(targetEntity="BaseProduct", mappedBy="relatedToProduct")
+     */
+    private $relatedProducts;
 
 
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->packElements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pictures = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->relatedProducts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->productStats = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
 
 
     /**
@@ -758,17 +780,6 @@ abstract class BaseProduct implements Translatable
     {
         return $this->categories;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->packElements = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->pictures = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
-    }
 
     public function setTranslatableLocale($locale)
     {
@@ -990,7 +1001,7 @@ abstract class BaseProduct implements Translatable
      */
     public function addProductStat(ProductStat $productStat)
     {
-        $this->productStat[] = $productStat;
+        $this->productStats[] = $productStat;
 
         return $this;
     }
@@ -1002,17 +1013,17 @@ abstract class BaseProduct implements Translatable
      */
     public function removeProductStat(ProductStat $productStat)
     {
-        $this->productStat->removeElement($productStat);
+        $this->productStats->removeElement($productStat);
     }
 
     /**
-     * Get productStat
+     * Get productStats
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProductStat()
+    public function getProductStats()
     {
-        return $this->productStat;
+        return $this->productStats;
     }
 
     public function decreaseStock($quantity)
@@ -1117,6 +1128,58 @@ abstract class BaseProduct implements Translatable
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Add related product
+     *
+     * @param BaseProduct $product
+     * @return Product
+     */
+    public function addRelatedProduct(BaseProduct $product)
+    {
+        $this->relatedProducts[] = $product;
+        $product->setRelatedToProduct($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove related product
+     *
+     * @param BaseProduct $product
+     */
+    public function removeRelatedProduct(BaseProduct $product)
+    {
+        $this->relatedProducts->removeElement($product);
+    }
+
+    /**
+     * Get related products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRelatedProducts()
+    {
+        return $this->relatedProducts;
+    }
+
+    /**
+     * @param BaseProduct $product
+     * @return $this
+     */
+    public function setRelatedToProduct(BaseProduct $product)
+    {
+        $this->relatedToProduct = $product;
+        return $this;
+    }
+
+    /**
+     * @return BaseProduct
+     */
+    public function getRelatedToProduct()
+    {
+        return $this->relatedToProduct;
     }
 
 }

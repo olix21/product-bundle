@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ProductStat
 {
+
+    const TYPE_DISPLAY = 'display';
+    const TYPE_ADD_TO_BASKET = 'add_to_basket';
+    const TYPE_BUY = 'buy';
+    const TYPE_RETURNED = 'returned';
+
     /**
      * @var integer
      *
@@ -22,28 +28,22 @@ class ProductStat
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dywee\ProductBundle\Entity\Product", inversedBy="productStat")
+     * @ORM\ManyToOne(targetEntity="BaseProduct", inversedBy="productStats")
      */
     private $product;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdDate", type="date")
+     * @ORM\Column(name="createdAt", type="datetime")
      */
-    private $createdDate;
+    private $createdAt;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="createdTime", type="time")
-     */
-    private $createdTime;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="type", type="smallint")
+     * @ORM\Column(name="type", type="string", length=20)
      */
     private $type;
 
@@ -54,10 +54,21 @@ class ProductStat
      */
     private $quantity;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50)
+     */
+    private $trackingKey;
+
+
+
+    /**
+     * ProductStat constructor.
+     */
     public function __construct()
     {
-        $this->createdDate = new \DateTime();
-        $this->createdTime = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -119,10 +130,10 @@ class ProductStat
     /**
      * Set product
      *
-     * @param \Dywee\ProductBundle\Entity\Product $product
+     * @param BaseProduct $product
      * @return ProductStat
      */
-    public function setProduct(\Dywee\ProductBundle\Entity\Product $product = null)
+    public function setProduct(BaseProduct $product = null)
     {
         $this->product = $product;
 
@@ -132,7 +143,7 @@ class ProductStat
     /**
      * Get product
      *
-     * @return \Dywee\ProductBundle\Entity\Product 
+     * @return BaseProduct
      */
     public function getProduct()
     {
@@ -140,48 +151,35 @@ class ProductStat
     }
 
     /**
-     * Set createdDate
-     *
-     * @param \DateTime $createdDate
-     * @return ProductStat
+     * @return \DateTime
      */
-    public function setCreatedDate($createdDate)
+    public function getCreatedAt()
     {
-        $this->createdDate = $createdDate;
-
-        return $this;
+        return $this->createdAt;
     }
 
     /**
-     * Get createdDate
-     *
-     * @return \DateTime 
+     * @param \DateTime $createdAt
      */
-    public function getCreatedDate()
+    public function setCreatedAt($createdAt)
     {
-        return $this->createdDate;
+        $this->createdAt = $createdAt;
     }
 
     /**
-     * Set createdTime
-     *
-     * @param \DateTime $createdTime
-     * @return ProductStat
+     * @return mixed
      */
-    public function setCreatedTime($createdTime)
+    public function getTrackingKey()
     {
-        $this->createdTime = $createdTime;
-
-        return $this;
+        return $this->trackingKey;
     }
 
     /**
-     * Get createdTime
-     *
-     * @return \DateTime 
+     * @param mixed $trackingKey
      */
-    public function getCreatedTime()
+    public function setTrackingKey($trackingKey)
     {
-        return $this->createdTime;
+        $this->trackingKey = $trackingKey;
     }
+
 }

@@ -12,12 +12,40 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: postUpdate }
 
-    dywee_product.admin_menu:
-        class: Dywee\ProductBundle\Service\ProductAdminSidebarHandler
-        arguments: [ '@router' ]
+
+    ####################################################
+    #                                                  #
+    #                     ADMIN SIDEBAR                #
+    #                                                  #
+    ####################################################
 
     dywee_product.admin_sidebar_listener:
         class: Dywee\ProductBundle\Listener\AdminSidebarBuilderListener
         arguments: [ '@dywee_product.admin_menu' ]
         tags:
             - { name: kernel.event_subscriber }
+
+    dywee_product.admin_menu:
+        class: Dywee\ProductBundle\Service\ProductAdminSidebarHandler
+        arguments: [ '@router' ]
+
+
+    ####################################################
+    #                                                  #
+    #                       STAT                       #
+    #                                                  #
+    ####################################################
+
+    dywee_product.product_stat_listener:
+        class: Dywee\ProductBundle\Listener\ProductStatListener
+        arguments: [ '@dywee_product.stat_manager' ]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    dywee_product.session_manager:
+        class: Dywee\ProductBundle\Service\SessionManager
+        arguments: [ '@session' ]
+
+    dywee_product.stat_manager:
+        class: Dywee\ProductBundle\Service\ProductStatManager
+        arguments: [ '@doctrine.orm.entity_manager', '@dywee_product.session_manager' ]

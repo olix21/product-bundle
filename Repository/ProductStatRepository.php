@@ -13,17 +13,21 @@ use Doctrine\ORM\EntityRepository;
 class ProductStatRepository extends EntityRepository
 {
 
-    public function getStats($product, $type = 1, $detail = 'daily')
+    public function getStats($product, $type, $beginAt, $endAt, $detail = 'day')
     {
-        $date = new \DateTime("previous week");
         $qb = $this->createQueryBuilder('s')
-            ->select('sum(s.quantity) as total, s.createdDate, s.type')
-            ->where('s.product = :product and s.type = :type and s.createdDate > :date')
-            ->setParameters(array('product' => $product, 'type' => $type, 'date' => $date))
-            ->orderBy('s.createdDate', 'asc');
+            ->select('sum(s.quantity) as total, s.createdAt, SUBSTRING(s.createdAt, 0, 10) as dateForGroupBy, s.type')
+            ->where('s.product = :product and s.type = :type and s.createdAt between :beginAt and :endAt')
+            ->setParameters(array(
+                'product' => $product,
+                'type' => $type,
+                'beginAt' => $beginAt,
+                'endAt' => $endAt)
+            )
+            ->orderBy('s.createdAt', 'asc');
 
-        if($detail == 'daily')
-            $qb->groupBy('s.createdDate');
+        if($detail == 'day')
+            $qb->groupBy('dateForGroupBy');
 
         return $qb->getQuery()->getResult();
     }
