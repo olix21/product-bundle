@@ -41,13 +41,13 @@ class ProductAdminSidebarHandler
                 ),
                 array(
                     'icon' => 'fa fa-beer',
-                    'label' => 'Liste des catégories',
-                    'route' => $this->router->generate('product_category_table')
+                    'label' => 'Liste des marques',
+                    'route' => $this->router->generate('product_brand_table')
                 ),
                 array(
                     'icon' => 'fa fa-beer',
-                    'label' => 'Liste des marques',
-                    'route' => $this->router->generate('product_brand_table')
+                    'label' => 'Liste des catégories',
+                    'route' => $this->router->generate('product_category_table')
                 ),
                 /*array(
                     'icon' => 'fa fa-beer',

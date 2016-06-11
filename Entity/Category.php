@@ -37,14 +37,14 @@ class Category implements Translatable
     /**
      * @var boolean
      *
-     * @ORM\Column(name="enableMulti", type="boolean")
+     * @ORM\Column(type="boolean")
      */
     private $enableMulti = false;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="enabled", type="boolean")
+     * @ORM\Column(type="boolean")
      */
     private $enabled = true;
 

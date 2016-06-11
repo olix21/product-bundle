@@ -1,23 +1,23 @@
 {% if brands|length > 0 %}
-    <table class="table table-striped table-hover table-condensed">
+    <table class="table table-striped table-hover">
         <thead>
         <tr>
             <th>#</th>
             <th>Nom</th>
-            <th>Website</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         {%  for brand in brands %}
             <tr>
-                <td><small>{{ brand.id }}</small></td>
-                <td><small>{{ brand.name }}</small></td>
-                <td><small>{{ brand.website }}</small></td>
-                <td><small>
-                        <a href="{{ path('product_brand_update', {id: brand.id}) }}" class="link-unstyled"><i class="fa fa-pencil"></i> </a>
-                        <a href="{{ path('product_brand_delete', {id: brand.id}) }}" class="link-unstyled"><i class="fa fa-trash-o"></i> </a>
-                    </small>
+                <td>{{ loop.index }}</td>
+                <td><a href="{{ path('product_brand_update', {id: brand.id}) }}" class="link-unstyled">{{ brand.name }}</a></td>
+                <td>
+                    <div class="btn-group btn-xs">
+                        <a href="{{ path('product_brand_update', {id: brand.id}) }}" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> </a>
+                        <a href="{{ path('product_brand_update', {id: brand.id}) }}" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i> </a>
+                    </div>
+                        <a href="{{ path('product_brand_delete', {id: brand.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> </a>
                 </td>
             </tr>
         {% endfor %}

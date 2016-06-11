@@ -77,6 +77,13 @@ class BaseProductType extends AbstractType
                 'allow_delete'  => true,
                 'by_reference'  => false
             ))
+            ->add('relatedProducts',    EntityType::class,       array(
+                'required'      => false,
+                'class'         => 'DyweeProductBundle:Product',
+                'choice_label'  => 'name',
+                'multiple'      => true,
+                'expanded'      => true
+            ))
             /*->add('packElements',       CollectionType::class,  array(
                 'entry_type'          => PackElementType::class,
                 'allow_add'     => true,

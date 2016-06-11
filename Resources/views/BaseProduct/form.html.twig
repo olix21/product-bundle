@@ -29,7 +29,7 @@
     {# les erreurs du formulaire #}
     {{ form_errors(form) }}
 
-    {{ form_widget(form.sauvegarder, {"attr": {"class": "btn btn-success pull-right"}}) }}
+    {{ form_widget(form.sauvegarder, {"attr": {"class": "btn-success pull-right"}}) }}
 
     <ul id="descriptions" class="nav nav-tabs">
         {% block productFormNavTabs %}
@@ -40,6 +40,7 @@
         <li><a href="#shortDescriptionTab" data-toggle="tab"><i class="fa fa-cog"></i> Petite description</a></li>
         <li><a href="#mediumDescriptionTab" data-toggle="tab"><i class="fa fa-cog"></i> Description Page Produit</a></li>
         <li><a href="#longDescriptionTab" data-toggle="tab"><i class="fa fa-cog"></i> Description détaillée</a></li>
+        <li><a href="#relatedProducts" data-toggle="tab"><i class="fa fa-cog"></i> Produits associés</a></li>
         {#<li><a href="#pack" data-toggle="tab"><i class="fa fa-cog"></i> Pack</a></li>#}
         {% endblock %}
     </ul>
@@ -238,6 +239,19 @@
             {{ langDropDown }}
         </div>
     </div>
+
+        <div class="tab-pane fade in" id="relatedProducts">
+            <div class="col-md-12">
+
+                {{ form_errors(form.relatedProducts) }}
+
+                <div class="col-md-9">
+                    {{ form_widget(form.relatedProducts) }}
+                </div>
+
+                {{ langDropDown }}
+            </div>
+        </div>
 
     {#<div class="tab-pane fade in" id="pack">
 

@@ -1,0 +1,17 @@
+{# Dywee\EshopBundle\Resources\View\Product\add.html.twig #}
+
+{%  extends "DyweeProductBundle::admin.html.twig" %}
+
+{% block title %} Creation d'un abonnement - {{ parent() }} {% endblock %}
+
+{% block body %}
+    <h1>Nouveau pack</h1>
+
+    {% include "DyweeProductBundle:ProductSubscription:form.html.twig" %}
+
+{% endblock %}
+
+{% block footerJavascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/dyweeproduct/js/form.js') }}"></script>
+{% endblock %}

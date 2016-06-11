@@ -130,11 +130,11 @@
             var data = google.visualization.arrayToDataTable([
                 ['Mois', 'Vues', 'Ajout au panier', 'Achats']
                 {% if stats|length > 0 %}
-                {% for stat in stats %}
-                , ['{{ stat.createdAt }}', {{ stat.view }}, {{ stat.basket}}, {{ stat.sale }}]
-                        {% endfor %}
-                        {% else %}
-                        ['', 0, 0, 0]
+                    {% for stat in stats %}
+                    , ['{{ stat.createdAt }}', {{ stat.view }}, {{ stat.basket}}, {{ stat.sale }}]
+                    {% endfor %}
+                {% else %}
+                    ['', 0, 0, 0]
                 {% endif %}
                 {#[months['month'+5],  1000,      400,        200],
                 [months['month'+4],  1170,      460,        50],

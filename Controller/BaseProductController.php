@@ -13,6 +13,7 @@ class BaseProductController extends Controller
 {
     protected $childrenClassNameWithNamespace;
     protected $childrenClassName;
+    protected $childrenClassNameUnderscored;
 
 
     public function __construct()
@@ -20,6 +21,16 @@ class BaseProductController extends Controller
         $this->childrenClassNameWithNamespace = str_replace('\\\\', '\Entity\\', str_replace(array('Controller'), '', get_class($this)));
         $exploded = explode('\\', $this->childrenClassNameWithNamespace);
         $this->childrenClassName = $exploded[count($exploded)-1];
+
+        //To underscore
+        $split = str_split($string);
+        $return = '';
+        foreach($split as $letter){
+            if(ctype_upper($letter))
+                $return .= $separator;
+            $return .= $letter;
+        }
+        $this->childrenClassNameUnderscored = strtolower($return);
     }
 
     public function dashboardAction()
@@ -44,7 +55,7 @@ class BaseProductController extends Controller
             $em->persist($product);
             $em->flush();
 
-            return $this->redirectToRoute(strtolower($this->childrenClassName).'_table');
+            return $this->redirectToRoute(strtolower($this->childrenClassNameUnderscored).'_table');
         }
 
         return $this->render('DyweeProductBundle:'.$this->childrenClassName.':add.html.twig', array(
@@ -83,7 +94,7 @@ class BaseProductController extends Controller
 
     public function updateAction(BaseProduct $baseProduct, Request $request)
     {
-        $formTypeName = str_replace('Entity', 'Form', $this->childrenClassNameWithNamespace.'Type');
+        $formTypeName = str_replace('Entity', 'Form', get_class($baseProduct).'Type');
 
         $form = $this->createForm($formTypeName, $baseProduct);
 
@@ -93,7 +104,7 @@ class BaseProductController extends Controller
             $em->persist($baseProduct);
             $em->flush();
 
-            return $this->redirectToRoute(strtolower($this->childrenClassName).'_table');
+            return $this->redirectToRoute(strtolower($this->childrenClassNameUnderscored).'_table');
         }
 
         return $this->render('DyweeProductBundle:'.$this->childrenClassName.':add.html.twig', array(

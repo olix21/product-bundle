@@ -1,0 +1,47 @@
+{% block collection_widget %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('collection_item_widget') }) %}
+        {% endif %}
+        {{ form_errors(form) }}
+
+        <div {{ block('widget_container_attributes') }}>
+            {% for rows in form %}
+                <div class="col-xs-12 col-md-6">
+                    <div class="box" id="address-box-__name__">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"></h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            {{ form_widget(rows.isMainAddress, { 'attr': { 'class': 'form-control' }}) }}
+                            <p>&nbsp;</p>
+                            {{ form_widget(rows.address) }}
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div>
+            {% endfor %}
+        </div>
+
+        {{ form_rest(form) }}
+    {% endspaceless %}
+{% endblock collection_widget %}
+
+
+
+{% block collection_item_widget %}
+    {% spaceless %}
+        <div class="col-xs-12 col-md-6">
+            <div class="box" id="address-box-__name__">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    {{ form_widget(prototype.isMainAddress, { 'attr': { 'class': 'form-control' }}) }}
+                    <p>&nbsp;</p>
+                    {{ form_widget(prototype.address) }}
+
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    {% endspaceless %}
+{% endblock collection_item_widget %}

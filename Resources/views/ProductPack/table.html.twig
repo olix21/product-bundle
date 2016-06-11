@@ -3,23 +3,23 @@
 {%  extends "DyweeProductBundle::admin.html.twig" %}
 
 {% block body %}
-    <a href="{{ path('product_add') }}" class="btn btn-success action-right"><i class="fa fa-plus"></i> Ajouter</a>
+    <a href="{{ path('product_pack_add') }}" class="btn btn-success action-right"><i class="fa fa-plus"></i> Ajouter</a>
 
     <div class="title-heading">
-        <h1 class="text-center">Liste des Produits</h1>
+        <h1 class="text-center">Liste des Packs</h1>
     </div>
 
     {% if products|length > 0 or filterActive is defined and filterActive == true %}
         <div class="row">
             <div class="col-md-9">
                 <div class="box box-success">
-                {% include 'DyweeProductBundle:Product:miniTable.html.twig' %}
+                {% include 'DyweeProductBundle:ProductPack:miniTable.html.twig' %}
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title"><i class="fa fa-search"></i> Recherche de produit</h3>
+                        <h3 class="box-title"><i class="fa fa-search"></i> Recherche de Packs</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         {#{{ form(search) }}#}
@@ -29,8 +29,8 @@
         </div>
 
     {% else %}
-        <p>Vous n'avez pas encore ajouté de produit.</p>
-        <p><a href="{{ path('product_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter un produit</a></p>
+        <p>Vous n'avez pas encore ajouté de packs.</p>
+        <p><a href="{{ path('product_pack_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter un pack</a></p>
     {% endif %}
 
 {% endblock %}

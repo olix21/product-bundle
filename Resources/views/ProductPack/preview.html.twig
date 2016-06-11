@@ -1,0 +1,39 @@
+{% block bodyContent %}
+    {% if product.isPromotion == 1 %}
+        <div class="alert alert-success">{{ 'Ce produit est en promotion'|trans }}, {{ product.promotionPrice|number_format(2) }}€ {{ 'au lieu de'|trans }} {{ product.price|number_format(2) }}€</div>
+    {% endif %}
+    {% if product.state == 2 %}
+        <div class="alert alert-warning">{{ 'Ce produit est en rupture de stock, il sera à nouveau disponible très prochainement'|trans }}</div>
+    {% endif %}
+
+    {% block bodyProduct %}
+        <a href="{{ path('product_view', {data: product.url}) }}" class="product">
+            {% set img = product.images|first %}
+            <img src="{{ img.src }}" alt="{{ product.name }}" class="img-responsive"/>
+            <h3>{{ product.name }}</h3>
+            <div class="shortDescription">
+                <p>{{ product.shortDescription|striptags|raw }}
+                </p>
+            </div>
+            <p class="lead text-center product-price">{{ product.displayPrice|raw }}</p>
+            <div class="product-footer row">
+                {#<div class="col-md-4">
+                    <a href="{{ path('dywee_product_addModal') }}" class="btn btn-block"><i class="fa fa-2x fa-cart-plus"></i> </a>
+                </div>#}
+                <div class="col-md-12">
+
+                    <div class="btn btn-block">{{ 'Plus d\'infos'|trans }}</div>
+
+                </div>
+            </div>
+        </a>
+
+    {% endblock %}
+
+    <hr />
+
+    {% block tabs %}
+
+    {% endblock %}
+{% endblock bodyContent %}
+

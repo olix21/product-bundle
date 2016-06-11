@@ -1,0 +1,8 @@
+<div class="products-grid">
+    <header>
+        <h3 class="head text-center">Latest Products</h3>
+    </header>
+    {% for product in products %}
+        {% include 'DyweeProductBundle:CMS:big_preview.html.twig' %}
+    <div class="clearfix"></div>
+</div>

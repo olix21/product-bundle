@@ -22,7 +22,7 @@ class PackElementType extends AbstractType
             //->add('unitPrice')
             //->add('totalPrice')
             ->add('product', EntityType::class, array(
-                'class' => 'DyweeProductBundle:Product',
+                'class' => 'DyweeProductBundle:BaseProduct',
                 'choice_label' => 'name'
             ))
         ;

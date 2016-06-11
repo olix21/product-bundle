@@ -1,0 +1,10 @@
+<div class="col-md-4 product simpleCart_shelfItem text-center">
+    <a href="{{ path('product_view_by_seoUrl', { product.seoUrl }) }}">
+        <img src="{{ asset('images/products/' ~ picture.imageName) }}" alt="{{ product.name }}" />
+    </a>
+    <div class="mask">
+        <a href="{{ path('product_view_by_seoUrl', { product.seoUrl }) }}">Quick View</a>
+    </div>
+    <a class="product_name" href="{{ path('product_view_by_seoUrl', { product.seoUrl }) }}">{{ product.name }}</a>
+    <p><a class="item_add" href="#"><i></i> <span class="item_price">€{{ product.price|number_format(2) }}</span></a></p>
+</div>

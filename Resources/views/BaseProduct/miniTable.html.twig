@@ -1,0 +1,49 @@
+{% if products|length > 0 %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                {#<th>Marque</th>#}
+                {#<th>Catégories</th>#}
+                <th>Prix</th>
+                <th>Stock</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td><small>{{ loop.index }}</small></td>
+                    <td><a href="{{ path('product_adminView', {id: product.id}) }}" class="link-unstyled">{{ product.name }}</a></td>
+                    {#<td><small>{{ product.brand.name }}</small></td>#}
+                    {#<td><small>{% for category in product.categories%}{{ category.name }}, {% endfor %}</small></td>#}
+                    <td>{#{% if product.isPromotion == 1 %}
+                                                <strike>{{ product.price }}€</strike> > {{ product.promotionPrice|number_format(2) }}€
+                                            {% else %}#}
+                        {{ product.price }}€
+                        {#{% endif %}#}
+                    </td>
+                    <td>{{ product.stock }}</td>
+                    <td>{% include 'DyweeProductBundle:BaseProduct:state.html.twig' %}
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-xs">
+                            <a href="{{ path('product_adminView', {id: product.id}) }}" class="btn btn-xs btn-default"><i class="fa fa-eye"></i> </a>
+                            <a href="{{ path('product_update', {id: product.id}) }}" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i> </a>
+                        </div>
+
+                        <a href="{{ path('product_delete', {id: product.id}) }}" class="btn btn-xs btn-danger" data-confirm="Êtes-vous sûr de vouloir supprimer ce produit:" data-name="{{ product.name }}"><i class="fa fa-trash-o"></i> </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="box-body">
+        <p>Il n'y a pas de produit répondant à ces critères</p>
+    </div>
+{% endif %}

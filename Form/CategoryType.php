@@ -29,9 +29,8 @@ class CategoryType extends AbstractType
                 'required'      => false
             ))
             ->add('position',       NumberType::class,   array('required' => false))
-            ->add('enabled'        )
+            ->add('enabled',        CheckboxType::class, array('required' => false))
             ->add('seoUrl')
-            ->add('enabled',        ChoiceType::class, array('choices' => array(0 => 'disabled', 1 => 'enabled')))
             ->add('imageFile',       VichImageType::class, array(
                 'required'      => false,
                 'allow_delete'  => true, // not mandatory, default is true
