@@ -1,0 +1,28 @@
+{% block collection_widget %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('collection_item_widget') }) %}
+        {% endif %}
+        {{ form_errors(form) }}
+        <div {{ block('widget_container_attributes') }}>
+            {% for rows in form %}
+                <div class="form-group">
+                    <div class="col-md-12">
+                        {{ form_widget(rows.imageFile) }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {{ form_rest(form) }}
+    {% endspaceless %}
+{% endblock collection_widget %}
+
+{% block collection_item_widget %}
+    {% spaceless %}
+        <div class="form-group">
+            <div class="col-md-12">
+                {{ form_widget(prototype.imageFile) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock collection_item_widget %}

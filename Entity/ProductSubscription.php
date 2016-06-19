@@ -29,6 +29,18 @@ class ProductSubscription  extends BaseProduct
     private $recurrenceUnit;
 
     /**
+     * @ORM\OneToMany(targetEntity="PackElement", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $packElements;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->packElements = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * @deprecated use setRecurrenceUnit
      * Set recurrenceFreq
      * @param string $recurrenceFreq
@@ -81,6 +93,39 @@ class ProductSubscription  extends BaseProduct
      */
     public function getRecurrenceUnit(){
         return $this->recurrenceUnit;
+    }
+
+    /**
+     * Add packElements
+     * @param \Dywee\ProductBundle\Entity\PackElement $packElements
+     * @return ProductSubscription
+     */
+    public function addSubscriptionElement(PackElement $packElements)
+    {
+        $this->packElements[] = $packElements;
+        $packElements->setParent($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove packElements
+     * @param \Dywee\ProductBundle\Entity\PackElement $packElements
+     * @return ProductSubscription
+     */
+    public function removeSubscriptionElement(PackElement $packElements){
+        $this->packElements->removeElement($packElements);
+        $packElements->setParent(null);
+
+        return $this;
+    }
+
+    /**
+     * Get packElements
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSubscriptionElements(){
+        return $this->packElements;
     }
 
 }

@@ -3,6 +3,7 @@
 namespace Dywee\ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Dywee\CoreBundle\Traits\Seo;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 
@@ -27,6 +28,8 @@ use Gedmo\Translatable\Translatable;
  */
 abstract class BaseProduct implements Translatable
 {
+    use Seo;
+
     const STATE_HIDDEN = 'product.state_hidden';
     const STATE_AVAILABLE = 'product.state_available';
     const STATE_NOT_AVAILABLE_ANYMORE = 'product.not_available';
@@ -150,38 +153,6 @@ abstract class BaseProduct implements Translatable
      * @ORM\Column(name="longDescription", type="text", nullable=true)
      */
     private $longDescription;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Translatable
-     * @ORM\Column(name="metaTitle", type="string", length=255, nullable=true)
-     */
-    private $metaTitle;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Translatable
-     * @ORM\Column(name="metaDescription", type="text", nullable=true)
-     */
-    private $metaDescription;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Translatable
-     * @ORM\Column(name="seoUrl", type="string", length=255, nullable=true)
-     */
-    private $seoUrl;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Translatable
-     * @ORM\Column(name="metaKeywords", type="text", nullable=true)
-     */
-    private $metaKeywords;
 
     /**
      * @ORM\ManyToOne(targetEntity="Dywee\ProductBundle\Entity\Brand")
@@ -619,109 +590,6 @@ abstract class BaseProduct implements Translatable
     public function getLongDescription()
     {
         return $this->longDescription;
-    }
-
-    /**
-     * Set metaTitle
-     *
-     * @param string $metaTitle
-     * @return Product
-     */
-    public function setMetaTitle($metaTitle)
-    {
-        $this->metaTitle = $metaTitle;
-
-        return $this;
-    }
-
-    /**
-     * Get metaTitle
-     *
-     * @return string
-     */
-    public function getMetaTitle()
-    {
-        return $this->metaTitle;
-    }
-
-    /**
-     * Set metaDescription
-     *
-     * @param string $metaDescription
-     * @return Product
-     */
-    public function setMetaDescription($metaDescription)
-    {
-        $this->metaDescription = $metaDescription;
-
-        return $this;
-    }
-
-    /**
-     * Get metaDescription
-     *
-     * @return string
-     */
-    public function getMetaDescription()
-    {
-        return $this->metaDescription;
-    }
-
-    /**
-     * Set seoUrl
-     *
-     * @param string $seoUrl
-     * @return Product
-     */
-    public function setSeoUrl($seoUrl)
-    {
-        $this->seoUrl = $seoUrl;
-
-        return $this;
-    }
-
-    /**
-     * Get seoUrl
-     *
-     * @return string
-     */
-    public function getSeoUrl()
-    {
-        return $this->seoUrl;
-    }
-
-    /**
-     * return custom seo url if provided, return an auto-generated slug if not
-     * @return string
-     */
-    public function getUrl()
-    {
-        if($this->getSeoUrl())
-            return $this->getSeoUrl();
-        return $this->getSlug();
-    }
-
-    /**
-     * Set metaKeywords
-     *
-     * @param string $metaKeywords
-     * @return Product
-     */
-    public function setMetaKeywords($metaKeywords)
-    {
-        $this->metaKeywords = $metaKeywords;
-
-        return $this;
-    }
-
-    /**
-     * Get metaKeywords
-     *
-     * @return string
-     */
-    public function getMetaKeywords()
-    {
-        return $this->metaKeywords;
     }
 
     /**

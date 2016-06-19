@@ -22,12 +22,19 @@ class ProductPack  extends BaseProduct
     private $packElements;
 
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->packElements = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
     /**
      * Add packElements
      * @param \Dywee\ProductBundle\Entity\PackElement $packElements
-     * @return Product
+     * @return ProductPack
      */
-    public function addPackElement(\Dywee\ProductBundle\Entity\PackElement $packElements)
+    public function addPackElement(PackElement $packElements)
     {
         $this->packElements[] = $packElements;
         $packElements->setParent($this);
@@ -38,10 +45,13 @@ class ProductPack  extends BaseProduct
     /**
      * Remove packElements
      * @param \Dywee\ProductBundle\Entity\PackElement $packElements
+     * @return ProductPack
      */
-    public function removePackElement(\Dywee\ProductBundle\Entity\PackElement $packElements){
+    public function removePackElement(PackElement $packElements){
         $this->packElements->removeElement($packElements);
         $packElements->setParent(null);
+
+        return $this;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Dywee\ProductBundle\Form;
 
+use Dywee\CoreBundle\Form\Type\SeoType;
 use Dywee\ProductBundle\Entity\Product;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -40,10 +41,9 @@ class BaseProductType extends AbstractType
             ))
             ->add('price',              MoneyType::class,       array('required' => false))
             ->add('isPriceTTC',         CheckboxType::class,    array('required' => false, 'label' => 'Prix TTC'))
-            ->add('metaTitle',          TextType::class,        array('required' => false))
-            ->add('metaDescription',    TextareaType::class,    array('required' => false))
-            ->add('metaKeywords',       TextareaType::class,    array('required' => false))
-            ->add('seoUrl',             UrlType::class,         array('required' => false))
+            ->add('seo',                SeoType::class,         array(
+                'data_class' => 'Dywee\ProductBundle\Entity\BaseProduct'
+            ))
             ->add('shortDescription',   CKEditorType::class,    array('required' => false))
             ->add('mediumDescription',  CKEditorType::class,    array('required' => false))
             ->add('longDescription',    CKEditorType::class,    array('required' => false))

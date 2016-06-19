@@ -208,4 +208,12 @@ class BaseProductRepository extends EntityRepository
 
         return $qb;
     }
+
+    public function findAllWithoutSubscription()
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('p')
+            ->where('p.recurrence is null');
+        return $qb;
+    }
 }

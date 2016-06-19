@@ -23,11 +23,11 @@ class BaseProductController extends Controller
         $this->childrenClassName = $exploded[count($exploded)-1];
 
         //To underscore
-        $split = str_split($string);
+        $split = str_split($this->childrenClassName);
         $return = '';
         foreach($split as $letter){
             if(ctype_upper($letter))
-                $return .= $separator;
+                $return .= '_';
             $return .= $letter;
         }
         $this->childrenClassNameUnderscored = strtolower($return);
