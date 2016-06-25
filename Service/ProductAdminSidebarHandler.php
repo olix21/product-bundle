@@ -49,12 +49,12 @@ class ProductAdminSidebarHandler
                     'label' => 'Liste des catégories',
                     'route' => $this->router->generate('product_category_table')
                 ),
-                /*array(
+                array(
                     'icon' => 'fa fa-beer',
                     'label' => 'Liste des caractéristiques',
-                    'route' => ''
+                    'route' => $this->router->generate('product_feature_table')
                 ),
-                array(
+                /*array(
                     'icon' => 'fa fa-beer',
                     'label' => 'Listes des options',
                     'route' => ''

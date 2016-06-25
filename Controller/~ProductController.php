@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class OldProductController extends Controller
+class ProductController extends Controller
 {
     public function viewAction($data, Request $request)
     {

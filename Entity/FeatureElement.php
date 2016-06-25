@@ -46,6 +46,11 @@ class FeatureElement
      */
     private $isCustomValue = false;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $position = 1;
+
 
     /**
      * Get id
@@ -179,5 +184,28 @@ class FeatureElement
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set position
+     *
+     * @param string $position
+     * @return Feature
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get values
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

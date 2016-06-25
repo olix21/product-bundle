@@ -1,11 +1,8 @@
-{# Dywee\ProductBundle\Resources\View\Feature\table.html.twig #}
-
 {%  extends "DyweeProductBundle::admin.html.twig" %}
 
 {% block body %}
-    <a href="{{ path('dywee_product_feature_add') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Ajouter</a>
-
     <div class="title-heading">
+        <a href="{{ path('product_feature_add') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Ajouter</a>
         <h1 class="text-center">Liste des Caractéristiques de produit</h1>
     </div>
     {% if featureList|length > 0 %}
@@ -20,12 +17,13 @@
             <tbody>
             {%  for feature in featureList %}
                 <tr>
-                    <td><small>{{ feature.id }}</small></td>
-                    <td><small>{{ feature.name }}</small></td>
-                    <td><small>
-                            <a href="{{ path('dywee_product_feature_update', {id: feature.id}) }}" class="link-unstyled"><i class="fa fa-pencil"></i> </a>
-                            <a href="{{ path('dywee_product_feature_delete', {id: feature.id}) }}" class="link-unstyled"><i class="fa fa-trash-o"></i> </a>
-                        </small>
+                    <td>{{ feature.id }}</td>
+                    <td><a href="{{ path('product_feature_update', {id: feature.id}) }}">{{ feature.name }}</a></td>
+                    <td>
+                        <div class="btn-group btn-group-xs">
+                            <a href="{{ path('product_feature_update', {id: feature.id}) }}" class="btn btn-default"><i class="fa fa-pencil"></i> </a>
+                        </div>
+                        <a href="{{ path('product_feature_delete', {id: feature.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> </a>
                     </td>
                 </tr>
             {% endfor %}
@@ -33,7 +31,7 @@
         </table>
     {% else %}
         <p>Aucune caractéristique n'a été enregistrée.</p>
-        <p><a href="{{ path('dywee_product_feature_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter une caractéristique</a></p>
+        <p><a href="{{ path('product_feature_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter une caractéristique</a></p>
     {% endif %}
 
 {% endblock %}

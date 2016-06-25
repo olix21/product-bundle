@@ -1,3 +1,5 @@
+dywee_handle_form_collection("product_features");
+
 var indexPicture;
 var $containerPicture;
 

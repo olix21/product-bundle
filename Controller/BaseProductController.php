@@ -26,17 +26,20 @@ class BaseProductController extends Controller
         $split = str_split($this->childrenClassName);
         $return = '';
         foreach($split as $letter){
-            if(ctype_upper($letter))
+            if(ctype_upper($letter) && sizeof($return) > 1)
                 $return .= '_';
             $return .= $letter;
         }
         $this->childrenClassNameUnderscored = strtolower($return);
     }
 
-    public function dashboardAction()
+    public function dashboardAction(Request $request)
     {
         $baseProductRepository = $this->getDoctrine()->getRepository('DyweeProductBundle:BaseProduct');
         $products = $baseProductRepository->findAll();
+
+        if($request->isXmlHttpRequest())
+            return new Response(json_encode(array('products' => $products)));
 
         return $this->render('DyweeProductBundle:BaseProduct:dashboard.html.twig', array('products' => $products));
     }
@@ -55,18 +58,27 @@ class BaseProductController extends Controller
             $em->persist($product);
             $em->flush();
 
+            if($request->isXmlHttpRequest())
+                return new Response(array('type' => 'success', 'redirectTo' => $this->generateUrl(strtolower($this->childrenClassNameUnderscored).'_table')));
+
             return $this->redirectToRoute(strtolower($this->childrenClassNameUnderscored).'_table');
         }
+
+        if($request->isXmlHttpRequest())
+            return new Response(array('form' => $form->createView()));
 
         return $this->render('DyweeProductBundle:'.$this->childrenClassName.':add.html.twig', array(
             'form' => $form->createView()
         ));
     }
 
-    public function tableAction()
+    public function tableAction(Request $request)
     {
         $repository = $this->getDoctrine()->getRepository('DyweeProductBundle:'.$this->childrenClassName);
         $products = $repository->findAll();
+
+        if($request->isXmlHttpRequest())
+            return new Response(array('type' => 'success', 'products' => $products));
 
         return $this->render('DyweeProductBundle:'.$this->childrenClassName.':table.html.twig', array(
             'products' => $products
@@ -86,7 +98,7 @@ class BaseProductController extends Controller
 
     public function adminViewAction(BaseProduct $baseProduct)
     {
-        return $this->render('DyweeProductBundle:'.$this->childrenClassName.':adminView.html.twig', array(
+        return $this->render('DyweeProductBundle:'.$this->childrenClassName.':view.html.twig', array(
             'product' => $baseProduct,
             'stats' => $this->get('dywee_product.stat_manager')->getForProduct($baseProduct)
         ));

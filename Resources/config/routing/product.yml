@@ -4,16 +4,6 @@
 #                             #
 ###############################
 
-product_view:
-    path:     /product/{id}
-    defaults: { _controller: DyweeProductBundle:Product:view, page:1 }
-    requirements:
-        page: \d*
-
-product_view_by_url:
-    path:     /product/{seoUrl}
-    defaults: { _controller: DyweeProductBundle:Product:view, page:1 }
-
 product_table:
     path:     /admin/product
     defaults: { _controller: DyweeProductBundle:Product:table }
@@ -22,7 +12,7 @@ product_add:
     path:     /admin/product/add
     defaults: { _controller: DyweeProductBundle:Product:add }
 
-product_adminView:
+product_view:
     path:     /admin/product/{id}
     defaults: { _controller: DyweeProductBundle:Product:adminView }
     requirements:

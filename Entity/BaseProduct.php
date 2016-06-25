@@ -2,6 +2,7 @@
 
 namespace Dywee\ProductBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Dywee\CoreBundle\Traits\Seo;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -250,11 +251,11 @@ abstract class BaseProduct implements Translatable
      */
     public function __construct()
     {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->packElements = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->pictures = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->relatedProducts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->productStats = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->packElements = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
+        $this->relatedProducts = new ArrayCollection();
+        $this->productStats = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
@@ -696,11 +697,11 @@ abstract class BaseProduct implements Translatable
     /**
      * Add feature
      *
-     * @param \Dywee\ProductBundle\Entity\FeatureElement $feature
+     * @param FeatureElement $feature
      *
      * @return Product
      */
-    public function addFeature(\Dywee\ProductBundle\Entity\FeatureElement $feature)
+    public function addFeature(FeatureElement $feature)
     {
         $this->features[] = $feature;
         $feature->setProduct($this);
@@ -711,9 +712,9 @@ abstract class BaseProduct implements Translatable
     /**
      * Remove feature
      *
-     * @param \Dywee\ProductBundle\Entity\FeatureElement $feature
+     * @param FeatureElement $feature
      */
-    public function removeFeature(\Dywee\ProductBundle\Entity\FeatureElement $feature)
+    public function removeFeature(FeatureElement $feature)
     {
         $this->features->removeElement($feature);
     }
