@@ -21,11 +21,24 @@ class ProductStatManager{
 
     public function createStatForDisplay(BaseProduct $product)
     {
-        $productStat = new ProductStat();
-        $productStat->setProduct($product);
-        $productStat->setQuantity(1);
-        $productStat->setType(ProductStat::TYPE_DISPLAY);
-        $productStat->setTrackingKey($this->sessionManager->getTrackingKey());
+        $productStatRepository = $this->em->getRepository('DyweeProductBundle:ProductStat');
+
+        $productStat = $productStatRepository->findOneBy(array(
+            'product'       => $product,
+            'type'          => ProductStat::TYPE_DISPLAY,
+            'trackingKey'   => $this->sessionManager->getTrackingKey()
+        ));
+
+        // TODO vérifier qu'on a bien la même date
+        if($productStat)
+            $productStat->setQuantity($productStat->getQuantity()+1);
+        else{
+            $productStat = new ProductStat();
+            $productStat->setProduct($product);
+            $productStat->setQuantity(1);
+            $productStat->setType(ProductStat::TYPE_DISPLAY);
+            $productStat->setTrackingKey($this->sessionManager->getTrackingKey());
+        }
 
         $this->em->persist($productStat);
         $this->em->flush();

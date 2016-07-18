@@ -85,6 +85,11 @@ class BaseProductController extends Controller
         ));
     }
 
+    /**
+     * @deprecated will be removed soon
+     * @param BaseProduct $baseProduct
+     * @return Response
+     */
     public function viewAction(BaseProduct $baseProduct)
     {
         $event = new ProductStatEvent($baseProduct);

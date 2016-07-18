@@ -36,11 +36,6 @@ services:
     #                                                  #
     ####################################################
 
-    dywee_product.product_stat_listener:
-        class: Dywee\ProductBundle\Listener\ProductStatListener
-        arguments: [ '@dywee_product.stat_manager' ]
-        tags:
-            - { name: kernel.event_subscriber }
 
     dywee_product.session_manager:
         class: Dywee\ProductBundle\Service\SessionManager
