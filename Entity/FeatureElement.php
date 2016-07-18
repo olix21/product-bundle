@@ -47,9 +47,9 @@ class FeatureElement
     private $isCustomValue = false;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
-    private $position = 1;
+    private $position = null;
 
 
     /**
