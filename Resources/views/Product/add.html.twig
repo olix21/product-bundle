@@ -5,7 +5,9 @@
 {% block title %} Creation d'un produit - {{ parent() }} {% endblock %}
 
 {% block body %}
-    <h1>Nouveau produit</h1>
+    <div class="title-heading">
+        <h1>Nouveau produit</h1>
+    </div>
 
     {% include "DyweeProductBundle:Product:form.html.twig" %}
 
