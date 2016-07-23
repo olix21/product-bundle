@@ -11,7 +11,6 @@ class AdminController extends Controller
 {
     public function getSideBarMenuElementAction()
     {
-        //TEST
         /*
          <li class="treeview">
     <a href="pages/widgets.html">
