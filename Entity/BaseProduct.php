@@ -1051,4 +1051,22 @@ abstract class BaseProduct implements Translatable
         return $this->relatedToProduct;
     }
 
+    public function getUrl()
+    {
+        //if($this->getSeoUrl())
+        //    return $this->getSeoUrl();
+
+        return $this->getId();
+    }
+
+    public function getMainPicture()
+    {
+        return $this->getPictures()[0];
+    }
+
+    public function isInPromotion()
+    {
+        return false;
+    }
+
 }

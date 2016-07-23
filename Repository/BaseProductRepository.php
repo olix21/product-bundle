@@ -216,4 +216,14 @@ class BaseProductRepository extends EntityRepository
             ->where('p.recurrence is null');
         return $qb;
     }
+
+    public function findForHomepage()
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('p')
+            ->orderBy('p.name')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
