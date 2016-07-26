@@ -60,7 +60,7 @@ abstract class BaseProduct implements Translatable
      * @var string
      * @ORM\Column(name="price", type="decimal", scale=2, nullable=true)
      */
-    private $price;
+    private $price = 0;
 
     /**
      * @var boolean
