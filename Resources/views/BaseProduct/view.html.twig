@@ -11,11 +11,11 @@
                 <h4>Attention!</h4>
                 <p>Ce produit est en rupture de stock. <a href="{{ path('product_update', { id: product.id }) }}">Modifier le stock de ce produit</a></p>
             </div>
-        {% elseif product.stock <= stockWarning %}
+        {#{% elseif product.stock <= stockWarning %}
             <div class="callout callout-warning">
                 <h4>Attention!</h4>
                 <p>Ce produit est bientôt en rupture de stock. <a href="{{ path('product_update', { id: product.id }) }}" >Modifier le stock de ce produit</a></p>
-            </div>
+            </div>#}
         {% endif %}
     {% endblock alert %}
 

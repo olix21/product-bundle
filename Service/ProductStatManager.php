@@ -93,7 +93,7 @@ class ProductStatManager{
 
         $diff = (int) $endAt->diff($beginAt)->format('%a');
 
-        for($i = 0; $i <= $diff; $i++)
+        for($i = 0; $i < $diff; $i++)
         {
             $key = $date->modify('+1 day')->format('d/m/Y');
             $stats[$key] = array('createdAt' => $key, 'view' => 0, 'basket' => 0, 'sale' => 0);

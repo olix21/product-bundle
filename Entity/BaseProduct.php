@@ -21,12 +21,15 @@ use Gedmo\Translatable\Translatable;
  *     "productSubscription" = "ProductSubscription",
  *     "productService" = "ProductService",
  *     "productDownloadable" = "ProductDownloadable",
+ *     "rentableProduct" = "RentableProduct",
+ *     "rentableProductItem" = "RentableProductItem",
  * })
  *
  * @ORM\HasLifecycleCallbacks()
  *
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
+
 abstract class BaseProduct implements Translatable
 {
     use Seo;
@@ -58,7 +61,7 @@ abstract class BaseProduct implements Translatable
 
     /**
      * @var string
-     * @ORM\Column(name="price", type="decimal", scale=2, nullable=true)
+     * @ORM\Column(name="price", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $price = 0;
 
@@ -171,11 +174,6 @@ abstract class BaseProduct implements Translatable
     private $features;
 
     /**
-     * @ORM\OneToMany(targetEntity="PackElement", mappedBy="product")
-     */
-    private $packElements;
-
-    /**
      * @ORM\Column(name="displayOrder", type="smallint", nullable = true)
      */
     //Retiens l'ordonnancement d'affichage des produits
@@ -244,6 +242,11 @@ abstract class BaseProduct implements Translatable
      */
     private $relatedProducts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="product")
+     */
+    private $comments;
+
 
 
     /**
@@ -258,6 +261,7 @@ abstract class BaseProduct implements Translatable
         $this->productStats = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        $this->comments = new ArrayCollection();
     }
 
 
@@ -274,7 +278,7 @@ abstract class BaseProduct implements Translatable
     /**
      * Set price
      *
-     * @param string $price
+     * @param decimal $price
      * @return Product
      */
     public function setPrice($price)
@@ -287,7 +291,7 @@ abstract class BaseProduct implements Translatable
     /**
      * Get price
      *
-     * @return string
+     * @return decimal
      */
     public function getPrice()
     {
@@ -1067,6 +1071,30 @@ abstract class BaseProduct implements Translatable
     public function isInPromotion()
     {
         return false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param Comment $comment
+     * @return BaseProduct
+     */
+    public function addComment(Comment $comment)
+    {
+        $this->comments[] = $comment;
+        return $this;
+    }
+
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+        return $this;
     }
 
 }

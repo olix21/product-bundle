@@ -2,63 +2,53 @@
 
 namespace Dywee\ProductBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Dywee\ProductBundle\Entity\Product;
 
 /**
  * RentableProduct
  *
- * @ORM\Table(name="rentable_products")
+ * @ORM\Table()
  * @ORM\Entity
  */
-class RentableProduct
+class RentableProduct extends BaseProduct
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\RentableProductItem", mappedBy="parent")
      */
-    private $id;
+    private $items;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Dywee\ProductBundle\Entity\Product", inversedBy="rentableProducts")
-     */
-    private $parent;
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function __construct()
     {
-        return $this->id;
+        $this->items = new ArrayCollection();
     }
 
-
-
     /**
-     * Set parent
-     *
-     * @param \Dywee\ProductBundle\Entity\Product $parent
+     * @param RentableProductItem $item
      * @return RentableProduct
      */
-    public function setParent(\Dywee\ProductBundle\Entity\Product $parent = null)
+    public function addItem(RentableProductItem $item)
     {
-        $this->parent = $parent;
-
+        $this->items[] = $item;
         return $this;
     }
 
     /**
-     * Get parent
-     *
-     * @return \Dywee\ProductBundle\Entity\Product 
+     * @return ArrayCollection
      */
-    public function getParent()
+    public function getItems()
     {
-        return $this->parent;
+        return $this->items;
+    }
+
+    /**
+     * @param RentableProductItem $item
+     * @return RentableProduct
+     */
+    public function removeItem(RentableProductItem $item)
+    {
+        $this->items->removeElement($item);
+        return $this;
     }
 }

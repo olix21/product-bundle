@@ -2,6 +2,7 @@
 
 namespace Dywee\ProductBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
@@ -13,7 +14,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductSubscriptionRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductSubscription  extends BaseProduct
+class ProductSubscription extends BaseProduct
 {
 
     /**
@@ -29,15 +30,15 @@ class ProductSubscription  extends BaseProduct
     private $recurrenceUnit;
 
     /**
-     * @ORM\OneToMany(targetEntity="PackElement", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="SubscriptionElement", mappedBy="productSubscription", cascade={"persist", "remove"})
      */
-    private $packElements;
+    private $subscriptionElements;
 
 
     public function __construct()
     {
         parent::__construct();
-        $this->packElements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subscriptionElements = new ArrayCollection();
     }
 
     /**
@@ -102,7 +103,7 @@ class ProductSubscription  extends BaseProduct
      */
     public function addSubscriptionElement(PackElement $packElements)
     {
-        $this->packElements[] = $packElements;
+        $this->subscriptionElements[] = $packElements;
         $packElements->setParent($this);
 
         return $this;
@@ -114,7 +115,7 @@ class ProductSubscription  extends BaseProduct
      * @return ProductSubscription
      */
     public function removeSubscriptionElement(PackElement $packElements){
-        $this->packElements->removeElement($packElements);
+        $this->subscriptionElements->removeElement($packElements);
         $packElements->setParent(null);
 
         return $this;
@@ -125,7 +126,7 @@ class ProductSubscription  extends BaseProduct
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getSubscriptionElements(){
-        return $this->packElements;
+        return $this->subscriptionElements;
     }
 
 }

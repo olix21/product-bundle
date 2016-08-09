@@ -2,9 +2,9 @@
 
 namespace Dywee\ProductBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Translatable\Translatable;
 
 /**
  * Product
@@ -17,7 +17,7 @@ class ProductPack  extends BaseProduct
 {
 
     /**
-     * @ORM\OneToMany(targetEntity="Dywee\ProductBundle\Entity\PackElement", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="PackElement", mappedBy="productPack", cascade={"persist", "remove"})
      */
     private $packElements;
 
@@ -25,7 +25,7 @@ class ProductPack  extends BaseProduct
     public function __construct()
     {
         parent::__construct();
-        $this->packElements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->packElements = new ArrayCollection();
     }
 
 

@@ -3,16 +3,17 @@
 namespace Dywee\ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Brand
  *
- * @ORM\Table(name="brands")
+ * @ORM\Table()
  * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\BrandRepository")
  * @Vich\Uploadable
  */
-class Brand
+class Brand implements BrandInterface
 {
     /**
      * @var integer
@@ -54,12 +55,8 @@ class Brand
     private $updatedAt;
 
 
-
-
     /**
-     * Get id
-     *
-     * @return integer 
+     * @inheritdoc
      */
     public function getId()
     {
@@ -67,10 +64,7 @@ class Brand
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return Brand
+     * @inheritdoc
      */
     public function setName($name)
     {
@@ -80,9 +74,7 @@ class Brand
     }
 
     /**
-     * Get name
-     *
-     * @return string 
+     * @inheritdoc
      */
     public function getName()
     {
@@ -90,17 +82,9 @@ class Brand
     }
 
     /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
-     *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
-     *
-     * @return Product
+     * @inheritdoc
      */
-    public function setImageFile(\Symfony\Component\HttpFoundation\File\File $image = null)
+    public function setImageFile(File $image = null)
     {
         $this->imageFile = $image;
 
@@ -114,7 +98,7 @@ class Brand
     }
 
     /**
-     * @return File
+     * @inheritdoc
      */
     public function getImageFile()
     {
@@ -122,9 +106,7 @@ class Brand
     }
 
     /**
-     * @param string $imageName
-     *
-     * @return Product
+     * @inheritdoc
      */
     public function setImageName($imageName)
     {
@@ -134,7 +116,7 @@ class Brand
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getImageName()
     {
