@@ -16,42 +16,43 @@ class ProductAdminSidebarHandler
     public function addSideBarMenuElementAction()
     {
         $ecommerceMenu = array(
+            'key' => 'product',
             'icon' => 'fa fa-beer',
-            'label' => 'Produits',
+            'label' => 'product.sidebar.label',
             'children' => array(
                 array(
                     'icon' => 'fa fa-beer',
-                    'label' => 'Liste des produits',
+                    'label' => 'product.list',
                     'route' => $this->router->generate('product_table')
                 ),
                 array(
                     'icon' => 'fa fa-beer',
-                    'label' => 'Liste des packs',
+                    'label' => 'pack.lists',
                     'route' => $this->router->generate('product_pack_table')
                 ),
                 array(
                     'icon' => 'fa fa-beer',
-                    'label' => 'Listes des abonnements',
+                    'label' => 'subscription.list',
                     'route' => $this->router->generate('product_subscription_table')
                 ),
                 array(
                     'icon' => 'fa fa-beer',
-                    'label' => 'Liste des services',
+                    'label' => 'service.list',
                     'route' => $this->router->generate('product_service_table')
                 ),
                 array(
                     'icon' => 'fa fa-beer',
-                    'label' => 'Liste des marques',
+                    'label' => 'brand.list',
                     'route' => $this->router->generate('product_brand_table')
                 ),
                 array(
                     'icon' => 'fa fa-beer',
-                    'label' => 'Liste des catégories',
+                    'label' => 'product_category.list',
                     'route' => $this->router->generate('product_category_table')
                 ),
                 array(
                     'icon' => 'fa fa-beer',
-                    'label' => 'Liste des caractéristiques',
+                    'label' => 'product_feature.list',
                     'route' => $this->router->generate('product_feature_table')
                 ),
                 /*array(

@@ -1,0 +1,32 @@
+product:
+    sidebar:
+        label: Produits
+
+    list: Liste des produits
+
+    state:
+        hidden: Non affiché
+        available: Disponible
+        not_available: Non disponible
+        available_soon: Bientôt disponible
+        only_store: Seulement en magasin
+        stock_empty: En rupture de stock
+        only_web: Exclusivité web
+
+pack:
+    list: Liste des packs
+
+subscription:
+    list: Liste des abonnements
+
+service:
+    list: Liste des services
+
+brand:
+    list: Liste des marques
+
+product_category:
+    list: Liste des catégories
+
+product_feature:
+    list: Liste des caractéristiques
