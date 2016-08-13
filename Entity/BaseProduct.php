@@ -255,7 +255,6 @@ abstract class BaseProduct implements Translatable
     public function __construct()
     {
         $this->categories = new ArrayCollection();
-        $this->packElements = new ArrayCollection();
         $this->pictures = new ArrayCollection();
         $this->relatedProducts = new ArrayCollection();
         $this->productStats = new ArrayCollection();

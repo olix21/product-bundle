@@ -1,0 +1,13 @@
+###############################
+#                             #
+#         NORMAL WAY          #
+#                             #
+###############################
+
+rentable_product_table:
+    path:     /admin/product/rentable
+    defaults: { _controller: DyweeProductBundle:RentableProduct:table }
+
+rentable_product_add:
+    path:     /admin/product/rentable/add
+    defaults: { _controller: DyweeProductBundle:RentableProduct:add }

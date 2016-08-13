@@ -27,7 +27,7 @@ class ProductAdminSidebarHandler
                 ),
                 array(
                     'icon' => 'fa fa-beer',
-                    'label' => 'pack.lists',
+                    'label' => 'pack.list',
                     'route' => $this->router->generate('product_pack_table')
                 ),
                 array(
@@ -39,6 +39,11 @@ class ProductAdminSidebarHandler
                     'icon' => 'fa fa-beer',
                     'label' => 'service.list',
                     'route' => $this->router->generate('product_service_table')
+                ),
+                array(
+                    'icon' => 'fa fa-beer',
+                    'label' => 'rentable_product.list',
+                    'route' => $this->router->generate('rentable_product_table')
                 ),
                 array(
                     'icon' => 'fa fa-beer',

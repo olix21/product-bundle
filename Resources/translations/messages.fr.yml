@@ -30,3 +30,6 @@ product_category:
 
 product_feature:
     list: Liste des caractéristiques
+
+rentable_product:
+    list: Liste des produits louables

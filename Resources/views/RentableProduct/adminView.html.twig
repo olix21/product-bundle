@@ -1,0 +1,180 @@
+{# Dywee\Product\Resources\View\BaseProduct\adminView.html.twig #}
+
+{%  extends "DyweeProductBundle::admin.html.twig" %}
+
+{% block title %} Coup d'oeil sur un {{ product.name }} - {{ parent() }} {% endblock %}
+
+{% block body %}
+    {% block alert %}
+        {% if product.stock == 0 %}
+            <div class="callout callout-danger">
+                <h4>Attention!</h4>
+                <p>Ce produit est en rupture de stock. <a href="{{ path('product_update', { id: product.id }) }}">Modifier le stock de ce produit</a></p>
+            </div>
+        {% elseif product.stock <= stockWarning %}
+            <div class="callout callout-warning">
+                <h4>Attention!</h4>
+                <p>Ce produit est bientôt en rupture de stock. <a href="{{ path('product_update', { id: product.id }) }}" >Modifier le stock de ce produit</a></p>
+            </div>
+        {% endif %}
+    {% endblock alert %}
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h1 class="box-title">Coup d'oeil sur {{ product.name }}</h1>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3">
+                    {% for picture in product.pictures %}
+                        <img src="{{ asset('images/products/' ~ picture.imageName) }}" alt="{{ product.name }}" class="img-responsive" />
+                    {% endfor %}
+                </div>
+                <div class="col-md-3">
+                    <h2>Général</h2>
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ product.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Prix</th>
+                            <td>{{ product.price|number_format(2) }}€</td>
+                        </tr>
+                        {#<tr>
+                            <th>Prix en promotion</th>
+                            <td>{{ product.promotionPrice|number_format(2) }}€</td>
+                        </tr>
+                        {% if stockEnabled == 1 %}
+                            <tr>
+                                <th>Stock</th>
+                                <td>
+                                    {% if product.stock == 0 %}
+                                        <b class="text-red">Rupture de stock</b>
+                                    {% elseif product.stock <= stockAlert %}
+                                        <b class="text-red">{{ product.stock }}</b>
+                                    {% elseif product.stock <= stockWarning %}
+                                        <span class="text-yellow">{{ product.stock }}</span>
+                                    {% else %}
+                                        {{ product.stock }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}#}
+                        <tr>
+                            <th>Statut</th>
+                            <td>{% include 'DyweeProductBundle:BaseProduct:state.html.twig' %}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p><a href="{{ path('product_update', {id: product.id}) }}" class="btn btn-default btn-block"><i class="fa fa-pencil"></i> Modifier le produit</a></p>
+                    <p><a href="{{ path('product_view', {id: product.id}) }}" target="_blank" class="btn btn-default btn-block"><i class="fa fa-eye"></i> Voir sur le site</a></p>
+                </div>
+                {#<div class="col-md-3">
+                    <h2>Déclinaisons</h2>
+                    {{ render(controller('DyweeProductBundle:ProductVariantAdmin:table', {idProduct: product.id})) }}
+                </div>#}
+                {#{% if product.sellType == 2 %}
+                <div class="col-md-3">
+                    <h2>Locations</h2>
+                    {{ render(controller('DyweeProductBundle:Product:renderLastRenting', {id: product.id})) }}
+                </div>
+                {% endif %}#}
+            </div>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h1 class="box-title">Stats pour {{ product.name }}</h1>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="product_stats"></div>
+                </div>
+            </div>
+            <div class="text-center">
+                <a class="btn btn-default disabled">Statistiques détaillées <i class="fa fa-angle-right"></i> </a>
+            </div>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart", "geochart"]});
+        google.setOnLoadCallback(drawChart);
+
+        var months = {month1: null, month2: null, month3: null, month4: null, month5: null};
+        var currentDate = new Date();
+
+        var options = { month: 'long' };
+
+        months['month0'] = new Intl.DateTimeFormat('fr', options).format(currentDate);
+
+        for(var i=1; i<5; i++)
+            months['month'+i] = new Intl.DateTimeFormat('fr', options).format(currentDate.setMonth(currentDate.getMonth() - 1));
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Mois', 'Vues', 'Ajout au panier', 'Achats']
+                {% if stats|length > 0 %}
+                {% for stat in stats %}
+                , ['{{ stat.createdAt }}', {{ stat.view }}, {{ stat.basket}}, {{ stat.sale }}]
+                        {% endfor %}
+                        {% else %}
+                        ['', 0, 0, 0]
+                {% endif %}
+                {#[months['month'+5],  1000,      400,        200],
+                [months['month'+4],  1170,      460,        50],
+                [months['month'+3],  660,       220,        1],
+                [months['month'+2],  1030,      540,        400],
+                [months['month'+1],  660,       110,        100],
+                [months['month'+0],  1030,      540,        200]#}
+            ]);
+
+            var options = {
+                title: 'En bref',
+                width: '100%',
+                height: 300,
+                curveType: 'function',
+                hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+                vAxis: {viewWindow: {min: 0}}
+            };
+
+            var chart = new google.visualization.AreaChart(document.getElementById('product_stats'));
+            chart.draw(data, options);
+        }
+
+
+        google.setOnLoadCallback(drawRegionsMap);
+
+        function drawRegionsMap() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Country', 'Popularity'],
+                ['BE',      5],
+                ['FR',      1]
+            ]);
+
+            var options = {};
+
+            var chart = new google.visualization.GeoChart(document.getElementById('map'));
+
+            chart.draw(data, options);
+        }
+
+    </script>
+
+{% endblock %}

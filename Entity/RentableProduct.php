@@ -22,6 +22,7 @@ class RentableProduct extends BaseProduct
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        parent::__construct();
     }
 
     /**

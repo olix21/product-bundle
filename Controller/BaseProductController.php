@@ -18,7 +18,12 @@ class BaseProductController extends Controller
 
     public function __construct()
     {
-        $this->childrenClassNameWithNamespace = str_replace('\\\\', '\Entity\\', str_replace(array('Controller'), '', get_class($this)));
+        $this->getObjectNames();
+    }
+
+    public function getObjectNames($object = null)
+    {
+        $this->childrenClassNameWithNamespace = str_replace('\\\\', '\Entity\\', str_replace(array('Controller'), '', get_class($object ?? $this)));
         $exploded = explode('\\', $this->childrenClassNameWithNamespace);
         $this->childrenClassName = $exploded[count($exploded)-1];
 
@@ -26,12 +31,14 @@ class BaseProductController extends Controller
         $split = str_split($this->childrenClassName);
         $return = '';
         foreach($split as $letter){
-            if(ctype_upper($letter) && sizeof($return) > 1)
+            if(ctype_upper($letter) && strlen($return) > 1){
                 $return .= '_';
+            }
             $return .= $letter;
         }
         $this->childrenClassNameUnderscored = strtolower($return);
     }
+
 
     public function dashboardAction(Request $request)
     {
@@ -111,7 +118,8 @@ class BaseProductController extends Controller
 
     public function updateAction(BaseProduct $baseProduct, Request $request)
     {
-        $formTypeName = str_replace('Entity', 'Form', get_class($baseProduct).'Type');
+        $this->getObjectNames($baseProduct);
+        $formTypeName = str_replace('Entity', 'Form', $this->childrenClassNameWithNamespace.'Type');
 
         $form = $this->createForm($formTypeName, $baseProduct);
 

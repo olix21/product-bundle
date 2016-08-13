@@ -37,7 +37,7 @@ class ProductPack  extends BaseProduct
     public function addPackElement(PackElement $packElements)
     {
         $this->packElements[] = $packElements;
-        $packElements->setParent($this);
+        $packElements->setProductPack($this);
 
         return $this;
     }
@@ -49,7 +49,6 @@ class ProductPack  extends BaseProduct
      */
     public function removePackElement(PackElement $packElements){
         $this->packElements->removeElement($packElements);
-        $packElements->setParent(null);
 
         return $this;
     }

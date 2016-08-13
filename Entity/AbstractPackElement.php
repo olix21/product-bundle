@@ -40,46 +40,46 @@ abstract class AbstractPackElement
      *
      * @ORM\Column(name="quantity", type="smallint")
      */
-    private $quantity = 1;
+    protected $quantity = 1;
 
     /**
      * @var float
      *
      * @ORM\Column(name="discountRate", type="float")
      */
-    private $discountRate = 0;
+    protected $discountRate = 0;
 
     /**
      * @var float
      *
      * @ORM\Column(name="discountValue", type="decimal", precision=10, scale=2)
      */
-    private $discountValue = 0;
+    protected $discountValue = 0;
 
     /**
      * @var float
      *
      * @ORM\Column(name="unitPrice", type="decimal", precision=10, scale=2)
      */
-    private $unitPrice = 0;
+    protected $unitPrice = 0;
 
     /**
      * @var float
      *
      * @ORM\Column(name="totalPrice", type="decimal", precision=10, scale=2)
      */
-    private $totalPrice = 0;
+    protected $totalPrice = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity="BaseProduct")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $product;
+    protected $product;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $state = self::STATE_WAITING;
+    protected $state = self::STATE_WAITING;
 
 
     /**

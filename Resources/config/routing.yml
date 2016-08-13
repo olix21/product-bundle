@@ -13,6 +13,9 @@ product_service_routing:
 product_subscription_routing:
     resource: "@DyweeProductBundle/Resources/config/routing/product_subscription.yml"
 
+product_rentable_routing:
+    resource: "@DyweeProductBundle/Resources/config/routing/product_rentable.yml"
+
 product_brand_routing:
     resource: "@DyweeProductBundle/Resources/config/routing/brand.yml"
 
