@@ -1,7 +1,7 @@
 {
   "name": "dywee/product-bundle",
   "type": "symfony-bundle",
-  "description": "Symfony2 bundle for easy management of eshop and products",
+  "description": "Symfony3 bundle for easy management of eshop and products",
   "keywords": ["product", "eshop", "commerce"],
   "license": "MIT",
   "authors": [
