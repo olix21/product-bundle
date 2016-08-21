@@ -40,7 +40,3 @@ services:
     dywee_product.session_manager:
         class: Dywee\ProductBundle\Service\SessionManager
         arguments: [ '@session' ]
-
-    dywee_product.stat_manager:
-        class: Dywee\ProductBundle\Service\ProductStatManager
-        arguments: [ '@doctrine.orm.entity_manager', '@dywee_product.session_manager' ]

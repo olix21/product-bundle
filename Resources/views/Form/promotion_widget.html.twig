@@ -1,0 +1,41 @@
+{% block collection_widget %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('collection_item_widget') }) %}
+        {% endif %}
+        {{ form_errors(form) }}
+        <table {{ block('widget_container_attributes') }} class="table table-stripped table-bordered">
+            <thead>
+            <tr>
+                <td>{{ 'promotion.form.type'|trans }}</td>
+                <td>{{ 'promotion.form.value'|trans }}</td>
+                <td>{{ 'promotion.form.beginAt'|trans }}</td>
+                <td>{{ 'promotion.form.endAt'|trans }}</td>
+                <td>{{ 'actions'|trans }}</td>
+            </tr>
+            </thead>
+            <tbody>
+                {% for rows in form %}
+                    <tr>
+                        <td>{{ form_widget(rows.type) }}</td>
+                        <td>{{ form_widget(rows.value) }}</td>
+                        <td>{{ form_widget(rows.beginAt) }}</td>
+                        <td>{{ form_widget(rows.endAt) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {{ form_rest(form) }}
+    {% endspaceless %}
+{% endblock collection_widget %}
+
+{% block collection_item_widget %}
+    {% spaceless %}
+        <tr>
+            <td>{{ form_widget(prototype.type) }}</td>
+            <td>{{ form_widget(prototype.value) }}</td>
+            <td>{{ form_widget(prototype.beginAt) }}</td>
+            <td>{{ form_widget(prototype.endAt) }}</td>
+        </tr>
+    {% endspaceless %}
+{% endblock collection_item_widget %}

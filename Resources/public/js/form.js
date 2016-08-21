@@ -1,4 +1,5 @@
-dywee_handle_form_collection("product_features");
+dywee_handle_form_collection("product_features", {auto_add: false});
+dywee_handle_form_collection("product_promotions", {container_type: 'table', auto_add: false});
 
 var indexPicture;
 var $containerPicture;

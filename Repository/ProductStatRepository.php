@@ -3,6 +3,7 @@
 namespace Dywee\ProductBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Dywee\ProductBundle\Entity\BaseProduct;
 
 /**
  * ProductStatRepository
@@ -16,18 +17,57 @@ class ProductStatRepository extends EntityRepository
     public function getStats($product, $type, $beginAt, $endAt, $detail = 'day')
     {
         $qb = $this->createQueryBuilder('s')
-            ->select('sum(s.quantity) as total, s.createdAt, SUBSTRING(s.createdAt, 0, 10) as dateForGroupBy, s.type')
-            ->where('s.product = :product and s.type = :type and s.createdAt between :beginAt and :endAt')
+            ->select('s.createdAt, s.type, YEAR(s.createdAt) as year, MONTH(s.createdAt) as month, DAY(s.createdAt) as day')
+            ->andWhere('s.createdAt between :beginAt and :endAt')
             ->setParameters(array(
-                'product' => $product,
-                'type' => $type,
-                'beginAt' => $beginAt,
-                'endAt' => $endAt)
+                    'beginAt' => $beginAt,
+                    'endAt' => $endAt)
             )
             ->orderBy('s.createdAt', 'asc');
 
+        $qb->groupBy('s.type, year, month');
+
+
+        if(is_string($type))
+            $qb->where('count(s.id) as total, s.type = :type')
+                ->setParameter('type', $type);
+
+        elseif(is_array($type))
+        {
+            $where = '(';
+            $i = 0;
+            foreach($type as $typeElement)
+            {
+                if($i > 0)
+                    $where .= ' or ';
+                $where .= 's.type = :type'.$i;
+                $qb->setParameter('type'.$i++, $typeElement);
+            }
+            $where .= ')';
+            $qb->addSelect('sum(s.quantity) as total');
+            $qb->andWhere($where);
+        }
+
+
         if($detail == 'day')
-            $qb->groupBy('dateForGroupBy');
+            $qb->addGroupBy('day');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function retrievedStatForProduct(BaseProduct $product, $event, $trackingKey)
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->select('s')
+            ->where('s.product = :product and s.type = :event and s.trackingKey = :key and s.createdAt between :start and :end')
+            ->setParameters(array(
+                'product' => $product,
+                'event' => $event,
+                'key' => $trackingKey,
+                'start' => new \DateTime('today'),
+                'end' => new \DateTime('tomorrow'),
+            ))
+        ;
 
         return $qb->getQuery()->getResult();
     }

@@ -24,8 +24,8 @@ class FeatureElementType extends AbstractType
                 'choice_label'  => 'name',
                 'required'      => false
             ))
+            ->add('customValue',    TextType::class,        array('label' => 'value', 'required' => false))
             ->add('position',       NumberType::class,      array('required' => false))
-            ->add('customValue',    TextType::class,        array('required' => false))
         ;
     }
     

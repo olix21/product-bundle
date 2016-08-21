@@ -61,6 +61,12 @@ class ProductStat
      */
     private $trackingKey;
 
+    /**
+     * @var int
+     * @ORM\Column(type="smallint")
+     */
+    private $attempts = 1;
+
 
 
     /**
@@ -181,5 +187,24 @@ class ProductStat
     {
         $this->trackingKey = $trackingKey;
     }
+
+    /**
+     * @return int
+     */
+    public function getAttempts()
+    {
+        return $this->attempts;
+    }
+
+    /**
+     * @param int $attempts
+     * @return ProductStat
+     */
+    public function setAttempts($attempts)
+    {
+        $this->attempts = $attempts;
+        return $this;
+    }
+
 
 }

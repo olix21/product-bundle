@@ -4,8 +4,12 @@ namespace Dywee\ProductBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Dywee\CoreBundle\Traits\NameableEntity;
 use Dywee\CoreBundle\Traits\Seo;
+use Dywee\CoreBundle\Traits\SizeableEntity;
+use Dywee\CoreBundle\Traits\WeighableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Translatable\Translatable;
 
 /**
@@ -33,6 +37,10 @@ use Gedmo\Translatable\Translatable;
 abstract class BaseProduct implements Translatable
 {
     use Seo;
+    use NameableEntity;
+    use SizeableEntity;
+    use WeighableEntity;
+    use TimestampableEntity;
 
     const STATE_HIDDEN = 'product.state.hidden';
     const STATE_AVAILABLE = 'product.state.available';
@@ -61,84 +69,46 @@ abstract class BaseProduct implements Translatable
 
     /**
      * @var string
-     * @ORM\Column(name="price", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $price = 0;
 
     /**
      * @var boolean
-     * @ORM\Column(name="isPriceTTC", type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isPriceTTC = true;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="length", type="decimal", scale=3, nullable=true)
-     */
-    private $length;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="width", type="decimal", scale=3, nullable=true)
-     */
-    private $width;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="height", type="decimal", scale=3, nullable=true)
-     */
-    private $height;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="sizeUnit", type="string", length=255)
-     */
-    private $sizeUnit = self::SIZE_UNIT_MM;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="weight", type="decimal", scale=3, nullable=true)
-     */
-    private $weight = 0;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="weightUnit", type="string", length=255)
-     */
-    private $weightUnit = self::WEIGHT_UNIT_GR;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="stock", type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $stock;
 
     /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $stockWarningTreshold = null;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $stockAlertTreshold = null;
+
+    /**
      * @var integer
      *
-     * @ORM\Column(name="state", type="string", length=25)
+     * @ORM\Column(type="string", length=25)
      */
     private $state = self::STATE_AVAILABLE;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
      * @Gedmo\Translatable
-     * @ORM\Column(name="shortDescription", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $shortDescription;
 
@@ -146,7 +116,7 @@ abstract class BaseProduct implements Translatable
      * @var string
      *
      * @Gedmo\Translatable
-     * @ORM\Column(name="mediumDescription", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $mediumDescription;
 
@@ -154,7 +124,7 @@ abstract class BaseProduct implements Translatable
      * @var string
      *
      * @Gedmo\Translatable
-     * @ORM\Column(name="longDescription", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $longDescription;
 
@@ -173,34 +143,9 @@ abstract class BaseProduct implements Translatable
      */
     private $features;
 
-    /**
-     * @ORM\Column(name="displayOrder", type="smallint", nullable = true)
-     */
-    //Retiens l'ordonnancement d'affichage des produits
-    private $displayOrder = 0;
 
     /**
-     * @ORM\Column(name="createdAt", type="datetime")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(name="updatedAt", type="datetime")
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\Column(name="stockWarningTreshold", type="smallint", nullable=true)
-     */
-    private $stockWarningTreshold = null;
-
-    /**
-     * @ORM\Column(name="stockAlertTreshold", type="smallint", nullable=true)
-     */
-    private $stockAlertTreshold = null;
-
-    /**
-     * @ORM\Column(name="availableAt", type="date", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $availableAt;
 
@@ -226,12 +171,6 @@ abstract class BaseProduct implements Translatable
      */
     private $pictures;
 
-    /*
-     * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(length=128, unique=true)
-     */
-    private $slug;
-
     /**
      * @ORM\ManyToOne(targetEntity="BaseProduct", inversedBy="relatedProducts")
      */
@@ -247,6 +186,11 @@ abstract class BaseProduct implements Translatable
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Promotion", mappedBy="product")
+     */
+    private $promotions;
+
 
 
     /**
@@ -261,6 +205,9 @@ abstract class BaseProduct implements Translatable
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->comments = new ArrayCollection();
+        $this->promotions = new ArrayCollection();
+        $this->sizeUnit = self::SIZE_UNIT_MM;
+        $this->weightUnit = self::WEIGHT_UNIT_GR;
     }
 
 
@@ -277,7 +224,7 @@ abstract class BaseProduct implements Translatable
     /**
      * Set price
      *
-     * @param decimal $price
+     * @param float $price
      * @return Product
      */
     public function setPrice($price)
@@ -290,7 +237,7 @@ abstract class BaseProduct implements Translatable
     /**
      * Get price
      *
-     * @return decimal
+     * @return float
      */
     public function getPrice()
     {
@@ -320,143 +267,6 @@ abstract class BaseProduct implements Translatable
         return $this->isPriceTTC;
     }
 
-    /**
-     * Set length
-     *
-     * @param string $length
-     * @return Product
-     */
-    public function setLength($length)
-    {
-        $this->length = $length;
-
-        return $this;
-    }
-
-    /**
-     * Get length
-     *
-     * @return string
-     */
-    public function getLength()
-    {
-        return $this->length;
-    }
-
-    /**
-     * Set width
-     *
-     * @param string $width
-     * @return Product
-     */
-    public function setWidth($width)
-    {
-        $this->width = $width;
-
-        return $this;
-    }
-
-    /**
-     * Get width
-     *
-     * @return string
-     */
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
-     * Set height
-     *
-     * @param string $height
-     * @return Product
-     */
-    public function setHeight($height)
-    {
-        $this->height = $height;
-
-        return $this;
-    }
-
-    /**
-     * Get height
-     *
-     * @return string
-     */
-    public function getHeight()
-    {
-        return $this->height;
-    }
-
-    /**
-     * Set sizeUnit
-     *
-     * @param string $sizeUnit
-     * @return Product
-     */
-    public function setSizeUnit($sizeUnit)
-    {
-        $this->sizeUnit = $sizeUnit;
-
-        return $this;
-    }
-
-    /**
-     * Get sizeUnit
-     *
-     * @return string
-     */
-    public function getSizeUnit()
-    {
-        return $this->sizeUnit;
-    }
-
-    /**
-     * Set weight
-     *
-     * @param string $weight
-     * @return Product
-     */
-    public function setWeight($weight)
-    {
-        $this->weight = $weight;
-
-        return $this;
-    }
-
-    /**
-     * Get weight
-     *
-     * @return string
-     */
-    public function getWeight()
-    {
-        return $this->weight;
-    }
-
-    /**
-     * Set weightUnit
-     *
-     * @param string $weightUnit
-     * @return Product
-     */
-    public function setWeightUnit($weightUnit)
-    {
-        $this->weightUnit = $weightUnit;
-
-        return $this;
-    }
-
-    /**
-     * Get weightUnit
-     *
-     * @return string
-     */
-    public function getWeightUnit()
-    {
-        return $this->weightUnit;
-    }
 
     /**
      * Set stock
@@ -502,29 +312,6 @@ abstract class BaseProduct implements Translatable
     public function getState()
     {
         return $this->state;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Product
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -673,29 +460,6 @@ abstract class BaseProduct implements Translatable
         return $this->features;
     }
 
-    /**
-     * Set displayOrder
-     *
-     * @param integer $displayOrder
-     *
-     * @return Product
-     */
-    public function setDisplayOrder($displayOrder)
-    {
-        $this->displayOrder = $displayOrder;
-
-        return $this;
-    }
-
-    /**
-     * Get displayOrder
-     *
-     * @return integer
-     */
-    public function getDisplayOrder()
-    {
-        return $this->displayOrder;
-    }
 
     /**
      * Add feature
@@ -736,53 +500,6 @@ abstract class BaseProduct implements Translatable
         }
     }
 
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return Product
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return Product
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
 
     /**
      * Set stockWarningTreshold
@@ -997,10 +714,6 @@ abstract class BaseProduct implements Translatable
         return $oClass->getConstants();
     }
 
-    public function getSlug()
-    {
-        return $this->slug;
-    }
 
     /**
      * Add related product
@@ -1094,6 +807,23 @@ abstract class BaseProduct implements Translatable
     {
         $this->comments->removeElement($comment);
         return $this;
+    }
+
+
+    public function addPromotion(Promotion $promotion)
+    {
+        $this->promotions[] = $promotion;
+        return $this;
+    }
+
+    public function getPromotions()
+    {
+        return $this->promotions;
+    }
+
+    public function removePromotion(Promotion $promotion)
+    {
+        $this->promotions->removeElement($promotion);
     }
 
 }

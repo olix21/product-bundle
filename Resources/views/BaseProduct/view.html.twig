@@ -119,8 +119,6 @@
         var months = {month1: null, month2: null, month3: null, month4: null, month5: null};
         var currentDate = new Date();
 
-        var options = { month: 'long' };
-
         months['month0'] = new Intl.DateTimeFormat('fr', options).format(currentDate);
 
         for(var i=1; i<5; i++)
@@ -131,7 +129,7 @@
                 ['Mois', 'Vues', 'Ajout au panier', 'Achats']
                 {% if stats|length > 0 %}
                 {% for stat in stats %}
-                , ['{{ stat.createdAt }}', {{ stat.view }}, {{ stat.basket}}, {{ stat.sale }}]
+                , ['{{ stat.createdAt }}', {{ stat.display }}, {{ stat.add_to_basket}}, {{ stat.buy }}]
                         {% endfor %}
                         {% else %}
                         ['', 0, 0, 0]
@@ -147,9 +145,9 @@
             var options = {
                 title: 'En bref',
                 width: '100%',
-                height: 300,
+                height: 400,
                 curveType: 'function',
-                hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+                hAxis: {title: 'Jours',  titleTextStyle: {color: '#333'}},
                 vAxis: {viewWindow: {min: 0}}
             };
 

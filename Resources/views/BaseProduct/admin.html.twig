@@ -131,7 +131,7 @@
                 ['Mois', 'Vues', 'Ajout au panier', 'Achats']
                 {% if stats|length > 0 %}
                     {% for stat in stats %}
-                    , ['{{ stat.createdAt }}', {{ stat.view }}, {{ stat.basket}}, {{ stat.sale }}]
+                    , [ '{{ stat.createdAt }}', {{ stat.display }}, {{ stat.add_to_basket}}, {{ stat.buy }} ]
                     {% endfor %}
                 {% else %}
                     ['', 0, 0, 0]
