@@ -4,6 +4,7 @@ namespace Dywee\ProductBundle\Form;
 
 use Dywee\CoreBundle\Form\Type\SeoType;
 use Dywee\ProductBundle\Entity\Product;
+use Dywee\TagBundle\Form\Type\TagType;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -80,6 +81,9 @@ class BaseProductType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false
             ))
+            /*->add('tags', TagType::class, array(
+                'type' => 'product'
+            ))*/
             ->add('relatedProducts', EntityType::class, array(
                 'required' => false,
                 'class' => 'DyweeProductBundle:Product',

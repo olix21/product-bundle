@@ -112,7 +112,7 @@ class BaseProductController extends Controller
     {
         return $this->render('DyweeProductBundle:'.$this->childrenClassName.':view.html.twig', array(
             'product' => $baseProduct,
-            'stats' => $this->get('dywee_product.stat_manager')->getForProduct($baseProduct)
+            'stats' => $this->get('dywee_product_cms.stat_manager')->getForProduct($baseProduct)
         ));
     }
 
