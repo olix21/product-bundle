@@ -14,7 +14,7 @@
 {% block footerJavascript %}
     <script src="{{ asset('bundles/dyweeproduct/js/form.js') }}"></script>
     <script>
-        dywee_handle_form_collection('product_subscription_subscriptionElements');
+        dywee_handle_form_collection('product_subscription_subscriptionElements', {auto_add: false});
     </script>
     {{ form_javascript(form) }}
 {% endblock %}

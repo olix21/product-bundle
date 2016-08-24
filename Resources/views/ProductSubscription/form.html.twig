@@ -5,17 +5,33 @@
     <li><a href="#pack" data-toggle="tab"><i class="fa fa-cog"></i> Contenu de l'abonnement</a></li>
 {% endblock %}
 
+{% block main_content_right %}
+
+    {{ form_row(form.maxShipment) }}
+
+    {{ form_row(form.recurrence) }}
+
+    {{ form_row(form.recurrenceUnit) }}
+
+    {{ form_row(form.priceByShipment) }}
+
+{% endblock %}
+
 {% block productFormTabContent %}
     {{ parent() }}
     <div class="tab-pane fade in" id="pack">
-        <div class="col-md-12">
 
-            {{ form_errors(form.subscriptionElements) }}
+        <div class="row">
+            <div class="col-md-12">
 
-            <div class="col-md-9">
-                {{ form_widget(form.subscriptionElements) }}
+                {{ form_errors(form.subscriptionElements) }}
+
+                <div class="col-md-9">
+                    {{ form_widget(form.subscriptionElements) }}
+                </div>
+
             </div>
-
         </div>
+
     </div>
 {% endblock %}

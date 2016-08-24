@@ -16,6 +16,16 @@ use Gedmo\Translatable\Translatable;
  */
 class ProductSubscription extends BaseProduct
 {
+    const RECURRENCE_UNIT_DAY = 'day';
+    const RECURRENCE_UNIT_WEEK = 'week';
+    const RECURRENCE_UNIT_MONTH = 'month';
+    const RECURRENCE_UNIT_YEAR = 'year';
+    
+    /**
+     * @var int
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $maxShipment;
 
     /**
      * @var string
@@ -27,12 +37,18 @@ class ProductSubscription extends BaseProduct
      * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $recurrenceUnit;
+    private $recurrenceUnit = self::RECURRENCE_UNIT_MONTH;
 
     /**
      * @ORM\OneToMany(targetEntity="SubscriptionElement", mappedBy="productSubscription", cascade={"persist", "remove"})
      */
     private $subscriptionElements;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $priceByShipment = false;
 
 
     public function __construct()
@@ -128,5 +144,42 @@ class ProductSubscription extends BaseProduct
     public function getSubscriptionElements(){
         return $this->subscriptionElements;
     }
+
+    /**
+     * @return int
+     */
+    public function getMaxShipment()
+    {
+        return $this->maxShipment;
+    }
+
+    /**
+     * @param int $maxShipment
+     * @return ProductSubscription
+     */
+    public function setMaxShipment($maxShipment)
+    {
+        $this->maxShipment = $maxShipment;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPriceByShipment()
+    {
+        return $this->priceByShipment;
+    }
+
+    /**
+     * @param boolean $priceByShipment
+     * @return ProductSubscription
+     */
+    public function setPriceByShipment($priceByShipment)
+    {
+        $this->priceByShipment = $priceByShipment;
+        return $this;
+    }
+
 
 }
