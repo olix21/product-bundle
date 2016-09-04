@@ -11,6 +11,7 @@ use Dywee\CoreBundle\Traits\WeighableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Translatable\Translatable;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * BaseProduct
@@ -64,12 +65,14 @@ abstract class BaseProduct implements Translatable
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"list"})
      */
     private $id;
 
     /**
      * @var string
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"list"})
      */
     private $price = 0;
 
@@ -84,6 +87,7 @@ abstract class BaseProduct implements Translatable
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"list"})
      */
     private $stock;
 
@@ -663,29 +667,6 @@ abstract class BaseProduct implements Translatable
         return $this->getName();
     }
 
-    /**
-     * @return array
-     */
-    public function getPackElements(){
-        return $this->packElements;
-    }
-
-    /**
-     * @param PackElement $packElement
-     * @return Product
-     */
-    public function addPackElement(PackElement $packElement)
-    {
-        $this->packElements[] = $packElement;
-        $packElement->setProduct($this);
-        return $this;
-    }
-
-    public function removePackElement(PackElement $packElement)
-    {
-        $this->packElements->removeElement($packElement);
-        return $this;
-    }
 
     public function getDeletedAt()
     {
@@ -855,7 +836,6 @@ abstract class BaseProduct implements Translatable
     {
         $this->tags->removeElement($tag);
     }
-
 
 
 }
