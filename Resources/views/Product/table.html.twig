@@ -14,7 +14,8 @@
                     <div class="box-header with-border">
                         <h3 class="box-title"><i class="fa fa-search"></i> Recherche de produit</h3>
                     </div><!-- /.box-header -->
-                    <div class="box-body" id="productForm">
+                    <div class="box-body">
+                        {% include 'DyweeProductBundle:Product:miniTable.html.twig' %}
                         {#{{ form(search) }}#}
                     </div>
                 </div>
@@ -26,8 +27,4 @@
         <p><a href="{{ path('product_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter un produit</a></p>
     {% endif %}
 
-{% endblock %}
-
-{% block footerJavascript %}
-    <script type="text/babel" src="{{ asset('bundles/dyweeproduct/js/table.js') }}" />
 {% endblock %}

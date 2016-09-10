@@ -47,6 +47,10 @@
                             <th>Prix</th>
                             <td>{{ product.price|number_format(2) }}€</td>
                         </tr>
+                        <tr>
+                            <th>Stock</th>
+                            <td>{{ product.stock }}</td>
+                        </tr>
                         {#<tr>
                             <th>Prix en promotion</th>
                             <td>{{ product.promotionPrice|number_format(2) }}€</td>
