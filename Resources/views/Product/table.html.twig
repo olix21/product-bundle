@@ -1,38 +1,7 @@
-{# Dywee\ProductBundle\Resources\View\Eshop\table.html.twig #}
+{%  extends "DyweeProductBundle:BaseProduct:table.html.twig" %}
 
-{%  extends "DyweeProductBundle::admin.html.twig" %}
+{% block tableContent %}
 
-{% block body %}
-
-    {% if products|length > 0 or filterActive is defined and filterActive == true %}
-        <div class="row" id="container">
-            <div class="col-md-9" id="table">
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <div class="box-tools">
-                            <a href="{{ path('product_add') }}" class="btn btn-success btn-box-tool"><i class="fa fa-plus"></i> Ajouter un produit</a>
-                        </div>
-                        <h2 class="box-title">Liste des produits</h2>
-                    </div>
-                    {% include 'DyweeProductBundle:Product:miniTable.html.twig' %}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><i class="fa fa-search"></i> Recherche de produit</h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-
-                        {#{{ form(search) }}#}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    {% else %}
-        <p>Vous n'avez pas encore ajouté de produit.</p>
-        <p><a href="{{ path('product_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter un produit</a></p>
-    {% endif %}
+    {% include 'DyweeProductBundle:Product:miniTable.html.twig' %}
 
 {% endblock %}

@@ -767,11 +767,6 @@ abstract class BaseProduct implements Translatable
         return $this->getPictures()[0];
     }
 
-    public function isInPromotion()
-    {
-        return false;
-    }
-
     /**
      * @return mixed
      */
@@ -813,6 +808,24 @@ abstract class BaseProduct implements Translatable
         $this->promotions->removeElement($promotion);
     }
 
+    public function getActivePromotion()
+    {
+        $activePromotions = array();
+
+        foreach($this->getPromotions() as $promotion)
+        {
+            if($promotion->isActive())
+                $activePromotions[] = $promotion;
+        }
+
+        return $activePromotions;
+    }
+
+    public function isInPromotion()
+    {
+        return count($this->getActivePromotion()) > 0;
+    }
+
     /**
      * @return mixed
      */
@@ -836,6 +849,7 @@ abstract class BaseProduct implements Translatable
     {
         $this->tags->removeElement($tag);
     }
+
 
 
 }

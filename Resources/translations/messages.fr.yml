@@ -14,6 +14,14 @@ product:
         stock_empty: En rupture de stock
         only_web: Exclusivité web
 
+    form:
+        images: Images
+        general: Général
+        seo: Référencement
+        tech: Caractéristiques
+        description: Description
+        promotions: Promotions
+        relatedProducts: Produits liés
 pack:
     list: Liste des packs
 
@@ -35,4 +43,11 @@ product_feature:
 rentable_product:
     list: Liste des produits louables
 
-no_preview: Pas d'image
+promotion:
+    form:
+        type: Type de promotion
+        value: Valeur
+        beginAt: Commence le
+        endAt: Fini le
+
+no_preview: Pas d'image #TODO a bouger dans le core bundle

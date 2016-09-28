@@ -1,36 +1,57 @@
 {# Dywee\ProductBundle\Resources\View\Eshop\table.html.twig #}
 
-{%  extends "DyweeProductBundle::admin.html.twig" %}
+{% extends "DyweeProductBundle::admin.html.twig" %}
 
 {% block body %}
-    <a href="{{ path('product_add') }}" class="btn btn-success action-right"><i class="fa fa-plus"></i> Ajouter</a>
 
-    <div class="title-heading">
-        <h1 class="text-center">Liste des Produits</h1>
-    </div>
+    <div class="row">
+        <div class="col-md-9">
 
-    {% if products|length > 0 or filterActive is defined and filterActive == true %}
-        <div class="row">
-            <div class="col-md-9">
-                <div class="box box-success">
-                {% include 'DyweeProductBundle:Product:miniTable.html.twig' %}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><i class="fa fa-search"></i> Recherche de produit</h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        {#{{ form(search) }}#}
+            {% if products|length > 0 or filterActive is defined and filterActive == true %}
+
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <div class="box-tools">
+                        <a href="{{ path('product_add') }}" class="btn btn-success btn-box-tool"><i class="fa fa-plus"></i> Ajouter</a>
                     </div>
+                    <h1 class="box-title">
+                        Liste des Produits
+                    </h1>
                 </div>
+                {% block tableContent %}
+                    {% include 'DyweeProductBundle:Product:miniTable.html.twig' %}
+                {% endblock %}
             </div>
         </div>
+        <div class="col-md-3">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-search"></i> Recherche de produit</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    {#{{ form(search) }}#}
+                </div>
+            </div>
 
-    {% else %}
-        <p>Vous n'avez pas encore ajouté de produit.</p>
-        <p><a href="{{ path('product_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter un produit</a></p>
-    {% endif %}
+            {% else %}
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <div class="box-tools">
+                            <a href="{{ path('product_add') }}" class="btn btn-success btn-box-tool"><i class="fa fa-plus"></i> Ajouter</a>
+                        </div>
+                        <h1 class="box-title">
+                            Liste des Produits
+                        </h1>
+                    </div>
+                    <div class="box-body">
+                        <p>Vous n'avez pas encore ajouté de produit.</p>
+                        <p><a href="{{ path('product_add') }}" class="btn btn-default"><i class="fa fa-plus"></i> Ajouter un
+                                produit</a></p>
+                    </div>
+                </div>
+
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}

@@ -31,198 +31,203 @@
 
     {{ form_errors(form) }}
 
-<button type="submit" id="product_sauvegarder" class="btn-success pull-right btn"
-        style="margin-top: 5px; margin-right: 5px"><i class="fa fa-save"></i> Sauvegarder
-</button>
+{% block productFormContent %}
 
-<div class="nav-tabs-custom">
-    <ul id="descriptions" class="nav nav-tabs">
-        {% block productFormNavTabs %}
-            <li class="active"><a href="#mainTab" data-toggle="tab"><i class="fa fa-font"></i> General</a></li>
-            <li><a href="#seoTab" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Référencement</a></li>
-            <li><a href="#tech" data-toggle="tab"><i class="fa fa-cog"></i> Caractéristiques</a></li>
-            <li><a href="#promotion" data-toggle="tab"><i class="fa fa-percent"></i> Promotions</a></li>
-            {#<li><a href="#declinaisons" data-toggle="tab"><i class="fa fa-cog"></i> Déclinaisons</a></li>#}
-            <li><a href="#descriptionsTab" data-toggle="tab"><i class="fa fa-cog"></i> Descriptions produit</a></li>
-            <li><a href="#relatedProducts" data-toggle="tab"><i class="fa fa-beer"></i> Produits associés</a></li>
-        {% endblock %}
-    </ul>
+    <div class="row">
 
-    <div class="tab-content">
-        {% block productFormTabContent %}
-            <div class="tab-pane fade in active" id="mainTab">
-                <p>&nbsp;</p>
-                <div class="row">
-                    <div class="col-md-3">
-                        {{ form_errors(form.pictures) }}
-                        <div class="col-sm-9">
-                            {{ form_widget(form.pictures) }}
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-
-                        <div class="form-group">
-                            {{ form_label(form.name, "Nom du produit") }}
-                            {{ form_errors(form.name) }}
-                            <div class="col-sm-9">
-                                {{ form_widget(form.name, {'attr': {'placeholder': 'Nom du produit'}}) }}
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_label(form.brand, "Marque du produit") }}
-                            {{ form_errors(form.brand) }}
-                            <div class="col-sm-9">
-                                {{ form_widget(form.brand) }}
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_label(form.price, "Prix") }}
-                            {{ form_errors(form.price) }}
-                            <div class="col-sm-9">
-                                {{ form_widget(form.price, {attr: {placeholder: 'Prix du produit'}}) }}
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                {{ form_label(form.isPriceTTC, "Prix TTC") }}
-                                {{ form_errors(form.isPriceTTC) }}
-
-                                {{ form_widget(form.isPriceTTC) }}
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_label(form.stock, "Stock") }}
-                            {{ form_errors(form.stock) }}
-                            <div class="col-sm-9">
-                                {{ form_widget(form.stock, {attr: {placeholder: 'Nombre de produit en stock'}}) }}
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            {{ form_label(form.state, "Statut") }}
-                            {{ form_errors(form.state) }}
-                            <div class="col-sm-9">
-                                {{ form_widget(form.state) }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        {% block main_content_right %}{% endblock %}
+        <div class="col-md-3">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h2 class="box-title">{{ 'product.form.images'|trans }}</h2>
+                </div>
+                <div class="box-body">
+                    {{ form_errors(form.pictures) }}
+                    <div class="col-sm-9">
+                        {{ form_widget(form.pictures) }}
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="tab-pane fade in" id="tech">
-                <div class="row">
-                    <div class="col-md-3">
-                        <h3>Général</h3>
+        <div class="col-md-9">
+            <div class="nav-tabs-custom">
+                <button type="submit" id="product_sauvegarder" class="btn-success pull-right btn"
+                        style="margin-top: 5px; margin-right: 5px"><i class="fa fa-save"></i> {{ 'save'|trans }}
+                </button>
+                <ul id="descriptions" class="nav nav-tabs">
+                    {%  block productFormNavTabs %}
+                        <li class="active"><a href="#mainTab" data-toggle="tab"><i class="fa fa-font"></i> {{ 'product.form.general'|trans }}</a></li>
+                        <li><a href="#seoTab" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> {{ 'product.form.seo'|trans }}</a></li>
+                        <li><a href="#tech" data-toggle="tab"><i class="fa fa-cog"></i> {{ 'product.form.tech'|trans }}</a></li>
+                        <li><a href="#descriptionsTab" data-toggle="tab"><i class="fa fa-cog"></i> {{ 'product.form.description'|trans }}</a></li>
+                    {% endblock %}
+                </ul>
 
-                        {{ form_row(form.length) }}
+                <div class="tab-content">
+                    {%  block productFormTabContent %}
+                        <div class="tab-pane fade in active" id="mainTab">
+                            <p>&nbsp;</p>
+                            <div class="row">
+                                <div class="col-md-8">
 
-                        {{ form_row(form.width) }}
+                                    <div class="form-group">
+                                        {{ form_label(form.name) }}
+                                        {{ form_errors(form.name) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.name) }}
+                                        </div>
+                                    </div>
 
-                        {{ form_row(form.height) }}
+                                    <div class="form-group">
+                                        {{ form_label(form.brand) }}
+                                        {{ form_errors(form.brand) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.brand) }}
+                                        </div>
+                                    </div>
 
-                        {{ form_row(form.weight) }}
+                                    <div class="form-group">
+                                        {{ form_label(form.price) }}
+                                        {{ form_errors(form.price) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.price) }}
+                                        </div>
+                                    </div>
 
-                    </div>
-                    <div class="col-md-3 col-md-offset-1">
-                        <div class="form-group">
-                            <h3>Catégories</h3>
-                            {{ form_errors(form.categories) }}
-                            {{ form_widget(form.categories) }}
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            {{ form_label(form.isPriceTTC) }}
+                                            {{ form_errors(form.isPriceTTC) }}
+
+                                            {{ form_widget(form.isPriceTTC) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        {{ form_label(form.stock) }}
+                                        {{ form_errors(form.stock) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.stock) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        {{ form_label(form.state) }}
+                                        {{ form_errors(form.state) }}
+                                        <div class="col-sm-9">
+                                            {{ form_widget(form.state) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    {% block main_content_right %}{% endblock %}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <h3>Caractéristiques</h3>
-                            {{ form_errors(form.features) }}
-                            {{ form_widget(form.features) }}
+
+                        <div class="tab-pane fade in" id="tech">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3>Général</h3>
+
+                                    {{ form_row(form.length) }}
+
+                                    {{ form_row(form.width) }}
+
+                                    {{ form_row(form.height) }}
+
+                                    {{ form_row(form.weight) }}
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <h3>Catégories</h3>
+                                        {{ form_errors(form.categories) }}
+                                        {{ form_widget(form.categories) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3>Caractéristiques</h3>
+                                    <div class="form-group">
+                                        {{ form_errors(form.features) }}
+                                        {{ form_widget(form.features) }}
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-                </div>
 
-            </div>
+                        <div class="tab-pane fade in" id="seoTab">
+                            <div class="row" style="margin-top: 20px">
+                                <div class="col-md-12">
 
+                                    {{ form_row(form.seo.metaTitle) }}
 
-            <div class="tab-pane fade in" id="seoTab">
-                <div class="row" style="margin-top: 20px">
-                    <div class="col-md-12">
+                                    {{ form_row(form.seo.metaDescription) }}
 
-                        {{ form_row(form.seo.metaTitle) }}
+                                    {{ form_row(form.seo.metaKeywords) }}
 
-                        {{ form_row(form.seo.metaDescription) }}
+                                    {{ form_row(form.seo.seoUrl) }}
 
-                        {{ form_row(form.seo.metaKeywords) }}
+                                </div>
+                            </div>
+                        </div>
 
-                        {{ form_row(form.seo.seoUrl) }}
+                        <div class="tab-pane fade in" id="descriptionsTab">
 
-                    </div>
-                </div>
-            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <p class="h4">Petite description</p>
+                                    {{ form_widget(form.shortDescription) }}
+                                </div>
 
-            <div class="tab-pane fade in" id="descriptionsTab">
+                                <div class="col-md-8">
+                                    <p class="h4">Description moyenne</p>
+                                    {{ form_widget(form.mediumDescription) }}
+                                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <p class="h4">Petite description</p>
-                        {{ form_widget(form.shortDescription) }}
-                    </div>
+                                <div class="col-md-12">
+                                    <p class="h4">Grande description</p>
+                                    {{ form_widget(form.longDescription) }}
+                                </div>
 
-                    <div class="col-md-8">
-                        <p class="h4">Description moyenne</p>
-                        {{ form_widget(form.mediumDescription) }}
-                    </div>
+                            </div>
+                        </div>
 
-                    <div class="col-md-12">
-                        <p class="h4">Grande description</p>
-                        {{ form_widget(form.longDescription) }}
-                    </div>
-
-                </div>
-            </div>
-
-
-            <div class="tab-pane fade in" id="relatedProducts">
-
-                <div class="row">
-
-                    <div class="col-md-6">
-                        {{ form_widget(form.relatedProducts) }}
-                    </div>
+                    {% endblock %}
 
                 </div>
             </div>
+        </div>
 
-            <div class="tab-pane fade in" id="promotion">
-
-                <div class="row">
-
-                    <div class="col-md-12">
-
-                        {{ form_widget(form.promotions) }}
-                    </div>
-
+        <div class="col-md-6">
+            <div class="box box-defaut">
+                <div class="box-header with-border">
+                    <h2 class="box-title">{{ 'product.form.promotions'|trans }}</h2>
+                </div>
+                <div class="box-body">
+                    {{ form_widget(form.promotions) }}
                 </div>
             </div>
+        </div>
 
-
-
-            {#<div class="tab-pane fade in" id="pack">
-
-                    {{ form_errors(form.packElements) }}
-                    {{ form_widget(form.packElements) }}
-
-            </div>#}
-
-        {% endblock %}
-
+        <div class="col-md-6">
+            <div class="box box-defaut">
+                <div class="box-header with-border">
+                    <h2 class="box-title">{{ 'product.form.relatedProducts'|trans }}</h2>
+                </div>
+                <div class="box-body">
+                    {{ form_widget(form.relatedProducts) }}
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+
+{% endblock productFormContent %}
+
 {{ form_rest(form) }}
 {{ form_end(form) }}

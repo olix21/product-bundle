@@ -2,14 +2,12 @@
 
 namespace Dywee\ProductBundle\Controller;
 
-use Dywee\ProductBundle\DyweeProductEvent;
 use Dywee\ProductBundle\Entity\BaseProduct;
-use Dywee\ProductBundle\Event\ProductStatEvent;
+use Dywee\ProductBundle\Form\BaseProductSearchType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Yaml\Yaml;
 
 class BaseProductController extends Controller
 {
@@ -84,29 +82,24 @@ class BaseProductController extends Controller
     public function tableAction(Request $request)
     {
         $repository = $this->getDoctrine()->getRepository('DyweeProductBundle:'.$this->childrenClassName);
-        $products = $repository->findAll();
+
+        $product = new $this->childrenClassNameWithNamespace();
+        $product->setState(null);
+
+        $searchForm = $this->createForm(BaseProductSearchType::class, $product);
+
+        if($searchForm->handleRequest($request)->isValid())
+        {
+            $products = $repository->findAll();
+        }
+        else $products = $repository->findAll();
 
         if($request->isXmlHttpRequest())
             return new Response(array('type' => 'success', 'products' => $products));
 
         return $this->render('DyweeProductBundle:'.$this->childrenClassName.':table.html.twig', array(
-            'products' => $products
-        ));
-    }
-
-    /**
-     * @deprecated will be removed soon
-     * @param BaseProduct $baseProduct
-     * @return Response
-     */
-    public function viewAction(BaseProduct $baseProduct)
-    {
-        $event = new ProductStatEvent($baseProduct);
-
-        $this->get('event_dispatcher')->dispatch(DyweeProductEvent::PRODUCT_PAGE_DISPLAY, $event);
-
-        return $this->render('DyweeProductBundle:'.$this->childrenClassName.':view.html.twig', array(
-            'product' => $baseProduct
+            'products' => $products,
+            'search' => $searchForm->createView()
         ));
     }
 
