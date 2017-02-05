@@ -195,12 +195,6 @@ abstract class BaseProduct implements Translatable
      */
     private $promotions;
 
-    /**
-     * @ORM\OneToMany(targetEntity="ProductTag", mappedBy="product", cascade={"persist"})
-     */
-    private $tags;
-
-
 
     /**
      * Constructor
@@ -833,23 +827,6 @@ abstract class BaseProduct implements Translatable
     {
         return $this->tags;
     }
-
-    /**
-     * @param ProductTag $tag
-     * @return BaseProduct
-     */
-    public function setTag(ProductTag $tag)
-    {
-        $this->tags[] = $tag;
-        $tag->setProduct($this);
-        return $this;
-    }
-
-    public function removeTag(ProductTag $tag)
-    {
-        $this->tags->removeElement($tag);
-    }
-
 
 
 }

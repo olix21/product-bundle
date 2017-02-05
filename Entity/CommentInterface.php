@@ -1,12 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Olivier
- * Date: 7/08/16
- * Time: 20:26
- */
+
 namespace Dywee\ProductBundle\Entity;
-use Dywee\UserBundle\Entity\User;
+
+use Dywee\UserBundle\Entity\UserInterface;
 
 interface CommentInterface
 {
@@ -29,33 +25,33 @@ interface CommentInterface
     /**
      * @return \DateTime
      */
-    public function getCreatedAt() : \DateTime;
+    public function getCreatedAt(): \DateTime;
 
     /**
      * @param $createdAt
      * @return Comment
      */
-    public function setCreatedAt($createdAt) : Comment;
+    public function setCreatedAt($createdAt): Comment;
 
     /**
      * @return BaseProduct
      */
-    public function getProduct() : BaseProduct;
+    public function getProduct(): BaseProduct;
 
     /**
      * @param $product
      * @return Comment
      */
-    public function setProduct($product) : Comment;
+    public function setProduct($product): Comment;
 
     /**
-     * @return User
+     * @return UserInterface
      */
-    public function getUser() : User;
+    public function getUser(): UserInterface;
 
     /**
      * @param $user
      * @return Comment
      */
-    public function setUser(User $user) : Comment;
+    public function setUser(UserInterface $user): Comment;
 }

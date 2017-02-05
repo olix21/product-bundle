@@ -3,7 +3,7 @@
 namespace Dywee\ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Dywee\UserBundle\Entity\User;
+use Dywee\UserBundle\Entity\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
@@ -45,7 +45,7 @@ class Comment implements CommentInterface
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dywee\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      */
     private $user;
 
@@ -77,7 +77,7 @@ class Comment implements CommentInterface
     /**
      * @inheritdoc
      */
-    public function getCreatedAt() : \DateTime
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
@@ -85,7 +85,7 @@ class Comment implements CommentInterface
     /**
      * @inheritdoc
      */
-    public function setCreatedAt($createdAt) : Comment
+    public function setCreatedAt($createdAt): Comment
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -94,7 +94,7 @@ class Comment implements CommentInterface
     /**
      * @inheritdoc
      */
-    public function getProduct() : BaseProduct
+    public function getProduct(): BaseProduct
     {
         return $this->product;
     }
@@ -102,7 +102,7 @@ class Comment implements CommentInterface
     /**
      * @inheritdoc
      */
-    public function setProduct($product) : Comment
+    public function setProduct($product): Comment
     {
         $this->product = $product;
         return $this;
@@ -111,7 +111,7 @@ class Comment implements CommentInterface
     /**
      * @inheritdoc
      */
-    public function getUser() : User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }
@@ -119,7 +119,7 @@ class Comment implements CommentInterface
     /**
      * @inheritdoc
      */
-    public function setUser(User $user) : Comment
+    public function setUser(UserInterface $user): Comment
     {
         $this->user = $user;
         return $this;
