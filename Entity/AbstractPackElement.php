@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
- *     "packElement" = "PackElement",
- *     "subscriptionElement" = "SubscriptionElement",
+ *     "packElement" = "Dywee\ProductBundle\Entity\PackElement",
+ *     "subscriptionElement" = "Dywee\ProductBundle\Entity\SubscriptionElement",
  * })
  *
  */

@@ -21,13 +21,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
- *     "product" = "Product",
- *     "productPack" = "ProductPack",
- *     "productSubscription" = "ProductSubscription",
- *     "productService" = "ProductService",
- *     "productDownloadable" = "ProductDownloadable",
- *     "rentableProduct" = "RentableProduct",
- *     "rentableProductItem" = "RentableProductItem",
+ *     "product" = "Dywee\ProductBundle\Entity\Product",
+ *     "productPack" = "Dywee\ProductBundle\Entity\ProductPack",
+ *     "productSubscription" = "Dywee\ProductBundle\Entity\ProductSubscription",
+ *     "productService" = "Dywee\ProductBundle\Entity\ProductService",
+ *     "productDownloadable" = "Dywee\ProductBundle\Entity\ProductDownloadable",
+ *     "rentableProduct" = "Dywee\ProductBundle\Entity\RentableProduct",
+ *     "rentableProductItem" = "Dywee\ProductBundle\Entity\RentableProductItem",
  * })
  *
  * @ORM\HasLifecycleCallbacks()
