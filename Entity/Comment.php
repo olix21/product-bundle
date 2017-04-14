@@ -3,6 +3,8 @@
 namespace Dywee\ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Dywee\CoreBundle\Model\CustomerInterface;
+use Dywee\CoreBundle\Model\ProductInterface;
 use Dywee\UserBundle\Entity\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -10,8 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * Brand
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\CommentRepository")
+ * @ORM\Entity
  * @Vich\Uploadable
  */
 class Comment implements CommentInterface
@@ -40,12 +41,12 @@ class Comment implements CommentInterface
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BaseProduct", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="Dywee\CoreBundle\Model\ProductInterface", inversedBy="comments")
      */
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Dywee\CoreBundle\Model\CustomerInterface")
      */
     private $user;
 
@@ -85,7 +86,7 @@ class Comment implements CommentInterface
     /**
      * @inheritdoc
      */
-    public function setCreatedAt($createdAt): Comment
+    public function setCreatedAt(\DateTime $createdAt): Comment
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -94,7 +95,7 @@ class Comment implements CommentInterface
     /**
      * @inheritdoc
      */
-    public function getProduct(): BaseProduct
+    public function getProduct(): ProductInterface
     {
         return $this->product;
     }
@@ -102,7 +103,7 @@ class Comment implements CommentInterface
     /**
      * @inheritdoc
      */
-    public function setProduct($product): Comment
+    public function setProduct(ProductInterface $product): Comment
     {
         $this->product = $product;
         return $this;
@@ -111,7 +112,7 @@ class Comment implements CommentInterface
     /**
      * @inheritdoc
      */
-    public function getUser(): UserInterface
+    public function getUser(): CustomerInterface
     {
         return $this->user;
     }
@@ -119,7 +120,7 @@ class Comment implements CommentInterface
     /**
      * @inheritdoc
      */
-    public function setUser(UserInterface $user): Comment
+    public function setUser(CustomerInterface $user): Comment
     {
         $this->user = $user;
         return $this;

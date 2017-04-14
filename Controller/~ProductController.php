@@ -173,8 +173,8 @@ class ProductController extends Controller
             $stockWarning = $pmr->findOneByName('stockWarningTreshold');
             $stockAlert = $pmr->findOneByName('stockAlertTreshold');
 
-            $product->setStockAlertTreshold($stockAlert->getValue());
-            $product->setStockWarningTreshold($stockWarning->getValue());
+            $product->setStockAlertThreshold($stockAlert->getValue());
+            $product->setStockWarningThreshold($stockWarning->getValue());
         }
 
         $form = $this->get('form.factory')->create(ProductType::class, $product);

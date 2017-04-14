@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ProductVariant
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductVariantRepository")
+ * @ORM\Entity()
  */
 class ProductVariant
 {
@@ -116,7 +116,7 @@ class ProductVariant
     private $mainVariation = true;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dywee\ProductBundle\Entity\Product", inversedBy="productVariants")
+     * @ORM\ManyToOne(targetEntity="Dywee\CoreBundle\Model\ProductInterface", inversedBy="productVariants")
      */
     private $product;
 

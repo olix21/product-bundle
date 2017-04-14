@@ -2,7 +2,8 @@
 
 namespace Dywee\ProductBundle\Entity;
 
-use Dywee\UserBundle\Entity\UserInterface;
+use Dywee\CoreBundle\Model\CustomerInterface;
+use Dywee\CoreBundle\Model\ProductInterface;
 
 interface CommentInterface
 {
@@ -13,6 +14,7 @@ interface CommentInterface
 
     /**
      * @param string $content
+     *
      * @return Comment
      */
     public function setContent($content);
@@ -25,33 +27,36 @@ interface CommentInterface
     /**
      * @return \DateTime
      */
-    public function getCreatedAt(): \DateTime;
+    public function getCreatedAt() : \DateTime;
 
     /**
-     * @param $createdAt
+     * @param \DateTime $createdAt
+     *
      * @return Comment
      */
-    public function setCreatedAt($createdAt): Comment;
+    public function setCreatedAt(\DateTime $createdAt) : Comment;
 
     /**
-     * @return BaseProduct
+     * @return ProductInterface
      */
-    public function getProduct(): BaseProduct;
+    public function getProduct() : ProductInterface;
 
     /**
-     * @param $product
+     * @param ProductInterface $product
+     *
      * @return Comment
      */
-    public function setProduct($product): Comment;
+    public function setProduct(ProductInterface $product) : Comment;
 
     /**
-     * @return UserInterface
+     * @return CustomerInterface
      */
-    public function getUser(): UserInterface;
+    public function getUser() : CustomerInterface;
 
     /**
      * @param $user
+     *
      * @return Comment
      */
-    public function setUser(UserInterface $user): Comment;
+    public function setUser(CustomerInterface $user) : Comment;
 }

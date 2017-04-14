@@ -79,7 +79,7 @@ class ProductSubscription extends BaseProduct
     /**
      * Set recurrence
      * @param integer $recurrence
-     * @return Product
+     * @return ProductSubscription
      */
     public function setRecurrence($recurrence){
         $this->recurrence = $recurrence;

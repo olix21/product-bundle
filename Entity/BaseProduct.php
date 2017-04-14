@@ -4,6 +4,7 @@ namespace Dywee\ProductBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Dywee\CoreBundle\Model\ProductInterface;
 use Dywee\CoreBundle\Traits\NameableEntity;
 use Dywee\CoreBundle\Traits\Seo;
 use Dywee\CoreBundle\Traits\SizeableEntity;
@@ -34,30 +35,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-
-abstract class BaseProduct implements Translatable
+abstract class BaseProduct implements Translatable, ProductInterface
 {
     use Seo;
     use NameableEntity;
     use SizeableEntity;
     use WeighableEntity;
     use TimestampableEntity;
-
-    const STATE_HIDDEN = 'product.state.hidden';
-    const STATE_AVAILABLE = 'product.state.available';
-    const STATE_NOT_AVAILABLE_ANYMORE = 'product.state.not_available';
-    const STATE_AVAILABLE_SOON = 'product.state.available_soon';
-    const STATE_ONLY_IN_STORE = 'product.state.only_store';
-    const STATE_STOCK_EMPTY = 'product.state.stock_empty';
-    const STATE_ONLY_ON_WEB = 'product.state.only_web';
-
-    const SIZE_UNIT_MM = 'mm';
-    const SIZE_UNIT_CM = 'cm';
-    const SIZE_UNIT_METER = 'm';
-
-    const WEIGHT_UNIT_GR = 'gr';
-    const WEIGHT_UNIT_KG = 'kg';
-
 
     /**
      * @var integer
@@ -82,7 +66,6 @@ abstract class BaseProduct implements Translatable
      */
     private $isPriceTTC = true;
 
-
     /**
      * @var integer
      *
@@ -94,12 +77,12 @@ abstract class BaseProduct implements Translatable
     /**
      * @ORM\Column(type="smallint", nullable=true)
      */
-    private $stockWarningTreshold = null;
+    private $stockWarningThreshold = null;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
      */
-    private $stockAlertTreshold = null;
+    private $stockAlertThreshold = null;
 
     /**
      * @var integer
@@ -211,14 +194,12 @@ abstract class BaseProduct implements Translatable
         $this->promotions = new ArrayCollection();
         $this->sizeUnit = self::SIZE_UNIT_MM;
         $this->weightUnit = self::WEIGHT_UNIT_GR;
-        $this->tags = new ArrayCollection();
+        $this->features = new ArrayCollection();
     }
 
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @inheritdoc
      */
     public function getId()
     {
@@ -226,10 +207,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Set price
-     *
-     * @param float $price
-     * @return Product
+     * @inheritdoc
      */
     public function setPrice($price)
     {
@@ -239,9 +217,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Get price
-     *
-     * @return float
+     * @inheritdoc
      */
     public function getPrice()
     {
@@ -249,10 +225,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Set isPriceTTC
-     *
-     * @param boolean $isPriceTTC
-     * @return Product
+     * @inheritdoc
      */
     public function setIsPriceTTC($isPriceTTC)
     {
@@ -262,9 +235,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Get isPriceTTC
-     *
-     * @return boolean
+     * @inheritdoc
      */
     public function getIsPriceTTC()
     {
@@ -273,10 +244,7 @@ abstract class BaseProduct implements Translatable
 
 
     /**
-     * Set stock
-     *
-     * @param integer $stock
-     * @return Product
+     * @inheritdoc
      */
     public function setStock($stock)
     {
@@ -286,9 +254,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Get stock
-     *
-     * @return integer
+     * @inheritdoc
      */
     public function getStock()
     {
@@ -296,10 +262,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Set state
-     *
-     * @param integer $state
-     * @return Product
+     * @inheritdoc
      */
     public function setState($state)
     {
@@ -309,9 +272,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Get state
-     *
-     * @return integer
+     * @inheritdoc
      */
     public function getState()
     {
@@ -319,10 +280,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Set shortDescription
-     *
-     * @param string $shortDescription
-     * @return Product
+     * @inheritdoc
      */
     public function setShortDescription($shortDescription)
     {
@@ -332,9 +290,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Get shortDescription
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getShortDescription()
     {
@@ -342,10 +298,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Set mediumDescription
-     *
-     * @param string $mediumDescription
-     * @return Product
+     * @inheritdoc
      */
     public function setMediumDescription($mediumDescription)
     {
@@ -355,9 +308,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Get mediumDescription
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getMediumDescription()
     {
@@ -365,10 +316,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Set longDescription
-     *
-     * @param string $longDescription
-     * @return Product
+     * @inheritdoc
      */
     public function setLongDescription($longDescription)
     {
@@ -378,9 +326,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Get longDescription
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getLongDescription()
     {
@@ -388,10 +334,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Set brand
-     *
-     * @param Brand $brand
-     * @return Product
+     * @inheritdoc
      */
     public function setBrand(Brand $brand = null)
     {
@@ -401,9 +344,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Get brand
-     *
-     * @return Brand
+     * @inheritdoc
      */
     public function getBrand()
     {
@@ -411,10 +352,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Add categories
-     *
-     * @param Category $category
-     * @return Product
+     * @inheritdoc
      */
     public function addCategory(Category $category)
     {
@@ -425,9 +363,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Remove categories
-     *
-     * @param Category $category
+     * @inheritdoc
      */
     public function removeCategory(Category $category)
     {
@@ -435,42 +371,40 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Get categories
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @inheritdoc
      */
     public function getCategories()
     {
         return $this->categories;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
     }
 
+    /**
+     * @inheritdoc
+     * @deprecated
+     */
     public function displayPrice()
     {
-        return number_format($this->getPrice(), 2).' €';
+        return number_format($this->getPrice(), 2) . ' €';
     }
 
     /**
-     * Get features
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @inheritdoc
      */
     public function getFeatures()
     {
         return $this->features;
     }
 
-
     /**
-     * Add feature
-     *
-     * @param FeatureElement $feature
-     *
-     * @return Product
+     * @inheritdoc
      */
     public function addFeature(FeatureElement $feature)
     {
@@ -481,76 +415,66 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Remove feature
-     *
-     * @param FeatureElement $feature
+     * @inheritdoc
      */
     public function removeFeature(FeatureElement $feature)
     {
         $this->features->removeElement($feature);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function countCategories()
     {
         return count($this->getCategories());
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getCategory($data)
     {
-        foreach($this->getCategories() as $category)
-        {
-            if($category->getParent()->getId() == $data)
+        foreach ($this->getCategories() as $category) {
+            if ($category->getParent()->getId() === $data)
                 return $category;
         }
     }
 
-
     /**
-     * Set stockWarningTreshold
-     *
-     * @param integer $stockWarningTreshold
-     *
-     * @return Product
+     * @inheritdoc
      */
-    public function setStockWarningTreshold($stockWarningTreshold)
+    public function setStockWarningThreshold($stockWarningThreshold)
     {
-        $this->stockWarningTreshold = $stockWarningTreshold;
+        $this->stockWarningThreshold = $stockWarningThreshold;
 
         return $this;
     }
 
     /**
-     * Get stockWarningTreshold
-     *
-     * @return integer
+     * @inheritdoc
      */
-    public function getStockWarningTreshold()
+    public function getStockWarningThreshold()
     {
-        return $this->stockWarningTreshold;
+        return $this->stockWarningThreshold;
     }
 
     /**
-     * Set stockAlertTreshold
-     *
-     * @param integer $stockAlertTreshold
-     *
-     * @return Product
+     * @inheritdoc
      */
-    public function setStockAlertTreshold($stockAlertTreshold)
+    public function setStockAlertThreshold($stockAlertThreshold)
     {
-        $this->stockAlertTreshold = $stockAlertTreshold;
+        $this->stockAlertThreshold = $stockAlertThreshold;
 
         return $this;
     }
 
     /**
-     * Get stockAlertTreshold
-     *
-     * @return integer
+     * @inheritdoc
      */
-    public function getStockAlertTreshold()
+    public function getStockAlertThreshold()
     {
-        return $this->stockAlertTreshold;
+        return $this->stockAlertThreshold;
     }
 
     /**
@@ -562,11 +486,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Set availableAt
-     *
-     * @param \DateTime $availableAt
-     *
-     * @return Product
+     * @inheritdoc
      */
     public function setAvailableAt($availableAt)
     {
@@ -576,21 +496,15 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Get availableAt
-     *
-     * @return \DateTime
+     * @inheritdoc
      */
     public function getAvailableAt()
     {
         return $this->availableAt;
     }
 
-
     /**
-     * Add productStat
-     *
-     * @param ProductStat $productStat
-     * @return Product
+     * @inheritdoc
      */
     public function addProductStat(ProductStat $productStat)
     {
@@ -600,9 +514,7 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Remove productStat
-     *
-     * @param ProductStat $productStat
+     * @inheritdoc
      */
     public function removeProductStat(ProductStat $productStat)
     {
@@ -610,48 +522,40 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Get productStats
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @inheritdoc
      */
     public function getProductStats()
     {
         return $this->productStats;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function decreaseStock($quantity)
     {
         return $this->stockOperation($quantity, 'decrease');
     }
 
+    /**
+     * @inheritdoc
+     */
     public function refundStock($quantity)
     {
         return $this->stockOperation($quantity, 'refund');
     }
 
+    /**
+     * @inheritdoc
+     */
     public function stockOperation($quantity, $operation = 'decrease')
     {
-        if($this->getProductType() == 1)
-            if($operation == 'decrease')
-                $this->setStock($this->getStock() - $quantity);
-            elseif($operation == 'refund')
-                $this->setStock($this->getStock() + $quantity);
-        else{
-            // Si la gestion du stock est activée pour le produit ( != null)
-            if(is_numeric($this->getStock()))
-                if($operation == 'decrease')
-                    $this->setStock($this->getStock() - $quantity);
-                elseif($operation == 'refund')
-                    $this->setStock($this->getStock() + $quantity);
-
-            // Puis on gère le stock pour les produits contenus dans l'abonnement ou le pack
-            foreach($this->getPackElements() as $element)
-            {
-                $productFromPack = $element->getProduct();
-                $productFromPack->stockOperation($quantity*$element->getQuantity(), $operation);
-            }
-
+        if ($operation === 'decrease') {
+            $this->setStock($this->getStock() - $quantity);
+        } elseif ($operation === 'refund') {
+            $this->setStock($this->getStock() + $quantity);
         }
+
         return $this;
     }
 
@@ -661,48 +565,64 @@ abstract class BaseProduct implements Translatable
         return $this->getName();
     }
 
-
+    /**
+     * @inheritdoc
+     */
     public function getDeletedAt()
     {
         return $this->deletedAt;
     }
 
-    public function setDeletedAt($deletedAt)
+    /**
+     * @inheritdoc
+     */
+    public function setDeletedAt(\DateTime $deletedAt)
     {
         $this->deletedAt = $deletedAt;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function addPicture(ProductPicture $picture)
     {
         $this->pictures[] = $picture;
         $picture->setProduct($this);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getPictures()
     {
         return $this->pictures;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removePicture(ProductPicture $picture)
     {
         $this->pictures->removeElement($picture);
+
         return $this;
     }
 
-    static function getConstantList()
+    /**
+     * @inheritdoc
+     */
+    public static function getConstantList()
     {
         $oClass = new \ReflectionClass(__CLASS__);
+
         return $oClass->getConstants();
     }
 
 
     /**
-     * Add related product
-     *
-     * @param BaseProduct $product
-     * @return Product
+     * @inheritdoc
      */
-    public function addRelatedProduct(BaseProduct $product)
+    public function addRelatedProduct(ProductInterface $product)
     {
         $this->relatedProducts[] = $product;
         $product->setRelatedToProduct($this);
@@ -711,19 +631,15 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * Remove related product
-     *
-     * @param BaseProduct $product
+     * @inheritdoc
      */
-    public function removeRelatedProduct(BaseProduct $product)
+    public function removeRelatedProduct(ProductInterface $product)
     {
         $this->relatedProducts->removeElement($product);
     }
 
     /**
-     * Get related products
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @inheritdoc
      */
     public function getRelatedProducts()
     {
@@ -731,23 +647,26 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * @param BaseProduct $product
-     * @return $this
+     * @inheritdoc
      */
-    public function setRelatedToProduct(BaseProduct $product)
+    public function setRelatedToProduct(ProductInterface $product)
     {
         $this->relatedToProduct = $product;
+
         return $this;
     }
 
     /**
-     * @return BaseProduct
+     * @inheritdoc
      */
     public function getRelatedToProduct()
     {
         return $this->relatedToProduct;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getUrl()
     {
         //if($this->getSeoUrl())
@@ -756,6 +675,9 @@ abstract class BaseProduct implements Translatable
         return $this->getId();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getMainPicture()
     {
         return $this->getPictures()[0];
@@ -770,62 +692,73 @@ abstract class BaseProduct implements Translatable
     }
 
     /**
-     * @param Comment $comment
-     * @return BaseProduct
+     * @inheritdoc
      */
-    public function addComment(Comment $comment)
+    public function addComment(CommentInterface $comment)
     {
         $this->comments[] = $comment;
+
         return $this;
     }
 
-    public function removeComment(Comment $comment)
+    /**
+     * @inheritdoc
+     */
+    public function removeComment(CommentInterface $comment)
     {
         $this->comments->removeElement($comment);
+
         return $this;
     }
 
-
+    /**
+     * @inheritdoc
+     */
     public function addPromotion(Promotion $promotion)
     {
         $this->promotions[] = $promotion;
+
         return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getPromotions()
     {
         return $this->promotions;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function removePromotion(Promotion $promotion)
     {
         $this->promotions->removeElement($promotion);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getActivePromotion()
     {
-        $activePromotions = array();
+        $activePromotions = [];
 
-        foreach($this->getPromotions() as $promotion)
-        {
-            if($promotion->isActive())
+        foreach ($this->getPromotions() as $promotion) {
+            if ($promotion->isActive()){
                 $activePromotions[] = $promotion;
+            }
         }
 
         return $activePromotions;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function isInPromotion()
     {
         return count($this->getActivePromotion()) > 0;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTags()
-    {
-        return $this->tags;
     }
 
 

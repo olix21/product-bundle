@@ -3,6 +3,7 @@
 namespace Dywee\ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Dywee\CoreBundle\Model\ProductInterface;
 
 /**
  * ProductStat
@@ -28,7 +29,7 @@ class ProductStat
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BaseProduct", inversedBy="productStats")
+     * @ORM\ManyToOne(targetEntity="Dywee\CoreBundle\Model\ProductInterface", inversedBy="productStats")
      */
     private $product;
 
@@ -136,10 +137,10 @@ class ProductStat
     /**
      * Set product
      *
-     * @param BaseProduct $product
+     * @param ProductInterface $product
      * @return ProductStat
      */
-    public function setProduct(BaseProduct $product = null)
+    public function setProduct(ProductInterface $product = null)
     {
         $this->product = $product;
 
@@ -149,7 +150,7 @@ class ProductStat
     /**
      * Get product
      *
-     * @return BaseProduct
+     * @return ProductInterface
      */
     public function getProduct()
     {

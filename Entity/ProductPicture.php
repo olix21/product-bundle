@@ -3,13 +3,15 @@
 namespace Dywee\ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Dywee\CoreBundle\Model\ProductInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * ProductPicture
  *
  * @ORM\Table(name="product_picture")
- * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductPictureRepository")
+ * @ORM\Entity
  * @Vich\Uploadable
  */
 class ProductPicture
@@ -31,7 +33,7 @@ class ProductPicture
     private $displayOrder;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BaseProduct", inversedBy="pictures")
+     * @ORM\ManyToOne(targetEntity="Dywee\CoreBundle\Model\ProductInterface", inversedBy="pictures")
      */
     private $product;
 
@@ -105,7 +107,7 @@ class ProductPicture
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
      *
-     * @return Product
+     * @return ProductPicture
      */
     public function setImageFile(\Symfony\Component\HttpFoundation\File\File $image = null)
     {
@@ -131,7 +133,7 @@ class ProductPicture
     /**
      * @param string $imageName
      *
-     * @return Product
+     * @return ProductPicture
      */
     public function setImageName($imageName)
     {
@@ -148,12 +150,20 @@ class ProductPicture
         return $this->imageName;
     }
 
-    public function setProduct(BaseProduct $product)
+    /**
+     * @param ProductInterface $product
+     *
+     * @return $this
+     */
+    public function setProduct(ProductInterface $product)
     {
         $this->product = $product;
         return $this;
     }
 
+    /**
+     * @return ProductInterface
+     */
     public function getProduct()
     {
         return $this->product;

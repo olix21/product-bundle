@@ -45,7 +45,7 @@ class Promotion
     private $value;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BaseProduct", inversedBy="promotions")
+     * @ORM\ManyToOne(targetEntity="Dywee\CoreBundle\Model\ProductInterface", inversedBy="promotions")
      */
     private $product;
 

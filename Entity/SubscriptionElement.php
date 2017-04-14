@@ -48,10 +48,18 @@ final class SubscriptionElement
 
 
     /**
+     * @return int
+     */
+    public function getId() : int
+    {
+        return $this->id;
+    }
+
+    /**
      * Set product
      *
      * @param BaseProduct $product
-     * @return PackElement
+     * @return SubscriptionElement
      */
     public function setProduct(BaseProduct $product)
     {

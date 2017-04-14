@@ -50,7 +50,7 @@ class StockManagerService
                 $this->em->persist($alert);
             }
             //Sinon on créé une notification fonction du treshold fixé dans l'admin
-            else if($product->getStock() <= $product->getStockAlertTreshold())
+            else if($product->getStock() <= $product->getStockAlertThreshold())
             {
                 $notification = new Notification();
                 $notification->setBundle('product');
@@ -66,7 +66,7 @@ class StockManagerService
                 if($alert)
                     $this->em->remove($alert);
             }
-            else if($product->getStock() <= $product->getStockWarningTreshold())
+            else if($product->getStock() <= $product->getStockWarningThreshold())
             {
                 $notification = new Notification();
                 $notification->setBundle('product');
