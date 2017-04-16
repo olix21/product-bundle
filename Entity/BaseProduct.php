@@ -22,6 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
+ *     "customProduct" = "Dywee\CoreBundle\Model\ProductInterface",
  *     "product" = "Dywee\ProductBundle\Entity\Product",
  *     "productPack" = "Dywee\ProductBundle\Entity\ProductPack",
  *     "productSubscription" = "Dywee\ProductBundle\Entity\ProductSubscription",
@@ -761,5 +762,11 @@ abstract class BaseProduct implements Translatable, ProductInterface
         return count($this->getActivePromotion()) > 0;
     }
 
-
+    /**
+     * @return bool
+     */
+    public function isVirtual()
+    {
+        return false;
+    }
 }
