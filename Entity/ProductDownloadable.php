@@ -3,6 +3,8 @@
 namespace Dywee\ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Dywee\ProductBundle\Model\VirtualProduct;
+use Dywee\ProductBundle\Model\VirtualProductInterface;
 
 /**
  * Product
@@ -11,8 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductDownloadableRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductDownloadable extends BaseProduct
+class ProductDownloadable extends BaseProduct implements VirtualProductInterface
 {
+    use VirtualProduct;
 
     /**
      * @ORM\Column(name="externalDownloadLink", type="string", length=255, nullable=true)
