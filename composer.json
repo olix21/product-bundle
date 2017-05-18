@@ -1,5 +1,5 @@
 {
-  "name": "olix21/product-bundle",
+  "name": "dywee/product-bundle",
   "type": "symfony-bundle",
   "description": "Symfony3 bundle for easy management of eshop and products",
   "keywords": ["product", "eshop", "commerce"],
@@ -20,14 +20,14 @@
   ],
   "require": {
     "php": ">=7.1.0",
-    "olix21/core-bundle": "dev-master",
+    "dywee/core-bundle": "dev-master",
     "stof/doctrine-extensions-bundle": "^1.2",
     "friendsofsymfony/rest-bundle": "^1.8",
     "vich/uploader-bundle": "^1.0"
   },
   "autoload": {
     "psr-4": {
-      "Olix21\\ProductBundle\\": ""
+      "Dywee\\ProductBundle\\": ""
     }
   }
 }
