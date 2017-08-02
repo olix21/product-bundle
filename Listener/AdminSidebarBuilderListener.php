@@ -3,7 +3,7 @@
 namespace Dywee\ProductBundle\Listener;
 
 use Dywee\CoreBundle\DyweeCoreEvent;
-use Dywee\CoreBundle\Event\AdminSidebarBuilderEvent;
+use Dywee\CoreBundle\Event\SidebarBuilderEvent;
 use Dywee\ProductBundle\Service\ProductAdminSidebarHandler;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -24,8 +24,8 @@ class AdminSidebarBuilderListener implements EventSubscriberInterface{
         );
     }
 
-    public function addElementToSidebar(AdminSidebarBuilderEvent $adminSidebarBuilderEvent)
+    public function addElementToSidebar(SidebarBuilderEvent $adminSidebarBuilderEvent)
     {
-        $adminSidebarBuilderEvent->addAdminElement($this->productAdminSidebarHandler->addSideBarMenuElementAction());
+        $adminSidebarBuilderEvent->addElement($this->productAdminSidebarHandler->addSideBarMenuElementAction());
     }
 }
