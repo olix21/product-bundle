@@ -10,17 +10,11 @@
       "email": "olivier.delbruyere@hotmail.com",
       "homepage": "http://dywee.com",
       "role": "Developer"
-    },
-    {
-      "name": "POITIER Johan",
-      "email": "poitierjohan@gmail.com",
-      "homepage": "http://dywee.com",
-      "role": "Developer"
     }
   ],
   "require": {
     "php": ">=7.1.0",
-    "dywee/core-bundle": "dev-master",
+    "dywee/core-bundle": "0.1-dev",
     "stof/doctrine-extensions-bundle": "^1.2",
     "friendsofsymfony/rest-bundle": "^1.8",
     "vich/uploader-bundle": "^1.0"
@@ -28,6 +22,11 @@
   "autoload": {
     "psr-4": {
       "Dywee\\ProductBundle\\": ""
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1-dev"
     }
   }
 }
