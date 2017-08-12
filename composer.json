@@ -20,7 +20,7 @@
   ],
   "require": {
     "php": ">=7.1.0",
-    "dywee/core-bundle": "dev-master",
+    "dywee/core-bundle": "^0.1",
     "stof/doctrine-extensions-bundle": "^1.2",
     "friendsofsymfony/rest-bundle": "^1.8",
     "vich/uploader-bundle": "^1.0"
