@@ -179,6 +179,13 @@ abstract class BaseProduct implements Translatable, ProductInterface
      */
     private $promotions;
 
+    /**
+     * @var Amount
+     *
+     * @ORM\OneToOne(targetEntity="Dywee\ProductBundle\Entity\Amount", cascade={"persist", "remove"})
+     */
+    private $amount;
+
 
     /**
      * Constructor
@@ -196,6 +203,7 @@ abstract class BaseProduct implements Translatable, ProductInterface
         $this->sizeUnit = self::SIZE_UNIT_MM;
         $this->weightUnit = self::WEIGHT_UNIT_GR;
         $this->features = new ArrayCollection();
+        $this->amount = new Amount();
     }
 
 
@@ -209,10 +217,12 @@ abstract class BaseProduct implements Translatable, ProductInterface
 
     /**
      * @inheritdoc
+     * @deprecated
      */
     public function setPrice($price)
     {
         $this->price = $price;
+        $this->getAmount()->setValue($price);
 
         return $this;
     }
@@ -222,7 +232,7 @@ abstract class BaseProduct implements Translatable, ProductInterface
      */
     public function getPrice()
     {
-        return $this->price;
+        return $this->getAmount()->getValue() ?? $this->price;
     }
 
     /**
@@ -769,4 +779,26 @@ abstract class BaseProduct implements Translatable, ProductInterface
     {
         return false;
     }
+
+    /**
+     * @return Amount
+     */
+    public function getAmount() : Amount
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param Amount $amount
+     *
+     * @return BaseProduct
+     */
+    public function setAmount(Amount $amount) : BaseProduct
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+
 }

@@ -4,6 +4,7 @@ namespace Dywee\ProductBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Dywee\ProductBundle\Entity\BaseProduct;
+use Dywee\ProductBundle\Entity\ProductStat;
 
 /**
  * ProductStatRepository
@@ -55,6 +56,13 @@ class ProductStatRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param BaseProduct $product
+     * @param             $event
+     * @param             $trackingKey
+     *
+     * @return array|ProductStat[]
+     */
     public function retrievedStatForProduct(BaseProduct $product, $event, $trackingKey)
     {
         $qb = $this->createQueryBuilder('s')
