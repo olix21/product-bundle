@@ -24,7 +24,7 @@ product:
         relatedProducts: Produits liés
 
     free: Gratuit
-
+    
 pack:
     list: Liste des packs
 
