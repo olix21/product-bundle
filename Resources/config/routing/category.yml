@@ -1,12 +1,12 @@
 product_category_table:
     path:     /admin/product/category/table/{page}
-    defaults: { _controller: DyweeProductBundle:Category:table, page:1 }
+    defaults: { _controller: DyweeProductBundle:Category:table, page: 1 }
     requirements:
         page: \d*
 
 product_parentCategory_table:
     path:     /admin/product/category/{id}/{page}
-    defaults: { _controller: DyweeProductBundle:Category:table, page:1 }
+    defaults: { _controller: DyweeProductBundle:Category:table, page: 1 }
     requirements:
         page: \d*
         id: \d*
