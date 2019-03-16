@@ -2,13 +2,13 @@
 
 namespace Dywee\ProductBundle\Service;
 
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 class ProductAdminSidebarHandler
 {
     private $router;
 
-    public function __construct(Router $router)
+    public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }
