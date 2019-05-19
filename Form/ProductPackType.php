@@ -14,7 +14,7 @@ class ProductPackType extends AbstractType
     {
         // add your custom field
         $builder
-            ->add('packElements',         CollectionType::class,      array(
+            ->add('packElements', CollectionType::class, array(
                 'entry_type' => PackElementType::class,
                 'allow_add' => true,
                 'allow_delete' => true,

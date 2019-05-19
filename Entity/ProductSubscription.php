@@ -63,7 +63,8 @@ class ProductSubscription extends BaseProduct
      * @param string $recurrenceFreq
      * @return Product
      */
-    public function setRecurrenceFreq($recurrenceFreq){
+    public function setRecurrenceFreq($recurrenceFreq)
+    {
         return $this->setRecurrenceUnit($recurrenceFreq);
     }
 
@@ -72,7 +73,8 @@ class ProductSubscription extends BaseProduct
      * Get recurrenceFreq
      * @return string
      */
-    public function getRecurrenceFreq(){
+    public function getRecurrenceFreq()
+    {
         return $this->recurrenceUnit;
     }
 
@@ -81,7 +83,8 @@ class ProductSubscription extends BaseProduct
      * @param integer $recurrence
      * @return ProductSubscription
      */
-    public function setRecurrence($recurrence){
+    public function setRecurrence($recurrence)
+    {
         $this->recurrence = $recurrence;
         return $this;
     }
@@ -90,7 +93,8 @@ class ProductSubscription extends BaseProduct
      * Get recurrence
      * @return integer
      */
-    public function getRecurrence(){
+    public function getRecurrence()
+    {
         return $this->recurrence;
     }
 
@@ -99,7 +103,8 @@ class ProductSubscription extends BaseProduct
      * @param string $recurrenceUnit
      * @return Product
      */
-    public function setRecurrenceUnit($recurrenceUnit){
+    public function setRecurrenceUnit($recurrenceUnit)
+    {
         $this->recurrenceUnit = $recurrenceUnit;
         return $this;
     }
@@ -108,7 +113,8 @@ class ProductSubscription extends BaseProduct
      * Get recurrenceUnit
      * @return string
      */
-    public function getRecurrenceUnit(){
+    public function getRecurrenceUnit()
+    {
         return $this->recurrenceUnit;
     }
 
@@ -130,7 +136,8 @@ class ProductSubscription extends BaseProduct
      * @param \Dywee\ProductBundle\Entity\PackElement $packElements
      * @return ProductSubscription
      */
-    public function removeSubscriptionElement(PackElement $packElements){
+    public function removeSubscriptionElement(PackElement $packElements)
+    {
         $this->subscriptionElements->removeElement($packElements);
         $packElements->setParent(null);
 
@@ -141,7 +148,8 @@ class ProductSubscription extends BaseProduct
      * Get packElements
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSubscriptionElements(){
+    public function getSubscriptionElements()
+    {
         return $this->subscriptionElements;
     }
 
@@ -180,6 +188,4 @@ class ProductSubscription extends BaseProduct
         $this->priceByShipment = $priceByShipment;
         return $this;
     }
-
-
 }

@@ -93,7 +93,8 @@ class ProductOptionValue
         return $this->productOption;
     }
 
-    public function getIndentedName() {
-        return $this->getProductOption()->getName()." > " . $this->name;
+    public function getIndentedName()
+    {
+        return $this->getProductOption()->getName() . " > " . $this->name;
     }
 }

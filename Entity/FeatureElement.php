@@ -55,7 +55,7 @@ class FeatureElement
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -78,7 +78,7 @@ class FeatureElement
     /**
      * Get customValue
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue()
     {
@@ -101,7 +101,7 @@ class FeatureElement
     /**
      * Get isCustomValue
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsCustomValue()
     {
@@ -124,7 +124,7 @@ class FeatureElement
     /**
      * Get feature
      *
-     * @return \Dywee\ProductBundle\Entity\Feature 
+     * @return \Dywee\ProductBundle\Entity\Feature
      */
     public function getFeature()
     {
@@ -147,7 +147,7 @@ class FeatureElement
     /**
      * Get value
      *
-     * @return \Dywee\productBundle\Entity\FeatureValue 
+     * @return \Dywee\productBundle\Entity\FeatureValue
      */
     public function getValue()
     {

@@ -447,8 +447,9 @@ abstract class BaseProduct implements Translatable, ProductInterface
     public function getCategory($data)
     {
         foreach ($this->getCategories() as $category) {
-            if ($category->getParent()->getId() === $data)
+            if ($category->getParent()->getId() === $data) {
                 return $category;
+            }
         }
     }
 
@@ -756,7 +757,7 @@ abstract class BaseProduct implements Translatable, ProductInterface
         $activePromotions = [];
 
         foreach ($this->getPromotions() as $promotion) {
-            if ($promotion->isActive()){
+            if ($promotion->isActive()) {
                 $activePromotions[] = $promotion;
             }
         }
@@ -799,6 +800,4 @@ abstract class BaseProduct implements Translatable, ProductInterface
 
         return $this;
     }
-
-
 }

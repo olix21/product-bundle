@@ -22,21 +22,21 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('enableMulti',    CheckboxType::class, array('required' => false))
-            ->add('parent',    EntityType::class,          array(
+            ->add('enableMulti', CheckboxType::class, array('required' => false))
+            ->add('parent', EntityType::class, array(
                 'class'         => 'DyweeProductBundle:Category',
                 'choice_label'  => 'name',
                 'required'      => false
             ))
-            ->add('position',       NumberType::class,   array('required' => false))
-            ->add('enabled',        CheckboxType::class, array('required' => false))
+            ->add('position', NumberType::class, array('required' => false))
+            ->add('enabled', CheckboxType::class, array('required' => false))
             ->add('seoUrl')
-            ->add('imageFile',       VichImageType::class, array(
+            ->add('imageFile', VichImageType::class, array(
                 'required'      => false,
                 'allow_delete'  => true, // not mandatory, default is true
                 'download_link' => true, // not mandatory, default is true
             ))
-            ->add('sauvegarder',    SubmitType::class)
+            ->add('sauvegarder', SubmitType::class)
         ;
     }
     

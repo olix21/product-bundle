@@ -81,7 +81,7 @@ class ProductStat
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -104,7 +104,7 @@ class ProductStat
     /**
      * Get type
      *
-     * @return integer 
+     * @return integer
      */
     public function getType()
     {
@@ -127,7 +127,7 @@ class ProductStat
     /**
      * Get quantity
      *
-     * @return integer 
+     * @return integer
      */
     public function getQuantity()
     {
@@ -206,6 +206,4 @@ class ProductStat
         $this->attempts = $attempts;
         return $this;
     }
-
-
 }

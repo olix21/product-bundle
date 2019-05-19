@@ -4,7 +4,7 @@ dywee_handle_form_collection("product_promotions", {container_type: 'table', aut
 var indexPicture;
 var $containerPicture;
 
-$(document).ready(function() {
+$(document).ready(function () {
 
 
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
@@ -17,7 +17,7 @@ $(document).ready(function() {
     var $addPictureLink = $('<a href="#" id="add_picture" class="btn btn-default btn-block""><i class="fa fa-plus"></i> Ajouter une photo</a>');
 
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-    $addPictureLink.click(function(e) {
+    $addPictureLink.click(function (e) {
         addPicture($containerPicture);
         e.preventDefault(); // évite qu'un # apparaisse dans l'URL
         return false;
@@ -28,7 +28,7 @@ $(document).ready(function() {
 
 
     // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
-    $containerPicture.children('div').each(function() {
+    $containerPicture.children('div').each(function () {
         handleDeleteLinkForImage($(this));
     });
 
@@ -39,7 +39,8 @@ $(document).ready(function() {
 
 
     // La fonction qui ajoute un formulaire Categorie
-    function addPicture(url) {
+    function addPicture(url)
+    {
         // Dans le contenu de l'attribut « data-prototype », on remplace :
         // - le texte "__name__label__" qu'il contient par le label du champ
         // - le texte "__name__" qu'il contient par le numéro du champ
@@ -63,7 +64,7 @@ $(document).ready(function() {
     // La fonction qui ajoute un lien de suppression d'une image
     function handleDeleteLinkForImage($prototype)
     {
-        $prototype.find('.fileinput-remove').click(function(e) {
+        $prototype.find('.fileinput-remove').click(function (e) {
             $prototype.remove();
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
             return false;

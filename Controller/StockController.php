@@ -36,11 +36,10 @@ class StockController extends Controller
             ->add('Valider', 'submit')
             ->getForm();
 
-        if($form->handleRequest($request)->isValid())
-        {
+        if ($form->handleRequest($request)->isValid()) {
             $formData = $form->getData();
 
-            $stockEnabled->setValue($formData['stockEnabled']?1:0);
+            $stockEnabled->setValue($formData['stockEnabled'] ? 1 : 0);
             $stockWarning->setValue($formData['stockWarning']);
             $stockAlert->setValue($formData['stockAlert']);
 
@@ -49,12 +48,10 @@ class StockController extends Controller
             $em->persist($stockAlert);
 
             //Si on décide d'écraser les paramètres déjà existant
-            if($formData['eraseConfig'])
-            {
+            if ($formData['eraseConfig']) {
                 $pr = $em->getRepository('DyweeProductBundle:Product');
                 $ps = $pr->findAll();
-                foreach($ps as $product)
-                {
+                foreach ($ps as $product) {
                     $product->setStockAlertTreshold($stockAlert->getValue());
                     $product->setStockWarningTreshold($stockWarning->getValue());
                     $em->persist($product);
@@ -65,10 +62,11 @@ class StockController extends Controller
 
             $stockManager = $this->get('dywee.stock_manager');
 
-            if($stockEnabled->getValue())
+            if ($stockEnabled->getValue()) {
                 $stockManager->checkAll();
-            else
+            } else {
                 $stockManager->removeNotifications();
+            }
 
             $this->get('session')->getFlashBag()->add('success', 'Paramètres de stock correctement mis à jour');
         }

@@ -17,7 +17,7 @@ class FeatureType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('save',   SubmitType::class)
+            ->add('save', SubmitType::class)
         ;
     }
     

@@ -37,7 +37,7 @@ class FeatureValue
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -60,7 +60,7 @@ class FeatureValue
     /**
      * Get value
      *
-     * @return string 
+     * @return string
      */
     public function getValue()
     {
@@ -83,7 +83,7 @@ class FeatureValue
     /**
      * Get feature
      *
-     * @return \Dywee\ProductBundle\Entity\Feature 
+     * @return \Dywee\ProductBundle\Entity\Feature
      */
     public function getFeature()
     {

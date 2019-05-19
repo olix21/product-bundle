@@ -13,7 +13,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductServiceRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductService  extends BaseProduct
+class ProductService extends BaseProduct
 {
 
 }

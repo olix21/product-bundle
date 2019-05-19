@@ -18,7 +18,7 @@ class BrandType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('imageFile',   VichImageType::class, array(
+            ->add('imageFile', VichImageType::class, array(
                 'required'      => false,
                 'allow_delete'  => true, // not mandatory, default is true
                 'download_link' => true, // not mandatory, default is true

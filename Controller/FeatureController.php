@@ -36,7 +36,6 @@ class FeatureController extends Controller
         $form = $this->get('form.factory')->create(FeatureType::class, $feature);
 
         if ($form->handleRequest($request)->isValid()) {
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($feature);
             $em->flush();
@@ -63,7 +62,6 @@ class FeatureController extends Controller
         $form = $this->get('form.factory')->create(FeatureType::class, $feature);
 
         if ($form->handleRequest($request)->isValid()) {
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($feature);
             $em->flush();

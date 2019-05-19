@@ -85,7 +85,7 @@ abstract class AbstractPackElement
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -108,7 +108,7 @@ abstract class AbstractPackElement
     /**
      * Get quantity
      *
-     * @return integer 
+     * @return integer
      */
     public function getQuantity()
     {
@@ -131,7 +131,7 @@ abstract class AbstractPackElement
     /**
      * Get discountRate
      *
-     * @return float 
+     * @return float
      */
     public function getDiscountRate()
     {
@@ -154,7 +154,7 @@ abstract class AbstractPackElement
     /**
      * Get discountValue
      *
-     * @return float 
+     * @return float
      */
     public function getDiscountValue()
     {
@@ -177,7 +177,7 @@ abstract class AbstractPackElement
     /**
      * Get unitPrice
      *
-     * @return float 
+     * @return float
      */
     public function getUnitPrice()
     {
@@ -200,7 +200,7 @@ abstract class AbstractPackElement
     /**
      * Get totalPrice
      *
-     * @return float 
+     * @return float
      */
     public function getTotalPrice()
     {

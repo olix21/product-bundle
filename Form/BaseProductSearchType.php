@@ -26,8 +26,8 @@ class BaseProductSearchType extends AbstractType
     {
         $stateChoices = array();
 
-        foreach (Product::getConstantList() as $constant){
-            if(strpos($constant, 'state.')){
+        foreach (Product::getConstantList() as $constant) {
+            if (strpos($constant, 'state.')) {
                 $stateChoices[$constant] = strtolower($constant);
             }
         }

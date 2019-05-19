@@ -23,9 +23,7 @@ class ProductOptionType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
                 'label' => 'valeurs possibles'
-                )
-            )
-        ;
+                ));
     }
     
     /**

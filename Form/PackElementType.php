@@ -31,29 +31,26 @@ class PackElementType extends AbstractType
                 'choice_label' => 'name'
             ));
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $entity = $event->getData();
             $form = $event->getForm();
 
             // Dans le cas où c'est la page d'accueil
-            if ($entity instanceof ProductSubscription){
+            if ($entity instanceof ProductSubscription) {
                 $form->add('product', EntityType::class, array(
                     'class' => 'DyweeProductBundle:BaseProduct',
                     'choice_label' => 'name',
-                    'query_builder' => function(BaseProductRepository $repo)
-                    {
+                    'query_builder' => function (BaseProductRepository $repo) {
                         $repo->findAllWithoutSubscription();
                     }
                 ));
-            }
-            elseif($entity instanceof ProductPack){
+            } elseif ($entity instanceof ProductPack) {
                 $form->add('product', EntityType::class, array(
                     'class' => 'DyweeProductBundle:BaseProduct',
                     'choice_label' => 'name'
                 ));
             }
         });
-
     }
     
     /**

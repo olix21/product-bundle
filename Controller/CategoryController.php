@@ -53,7 +53,7 @@ class CategoryController extends ParentController
 
         $request = $this->container->get('request');
 
-        if($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
             $em = $this->getDoctrine()->getManager();
             $pr = $em->getRepository('DyweeProductBundle:Product');
 
@@ -63,14 +63,15 @@ class CategoryController extends ParentController
             $page = $this->get('request')->get('page');
 
             $limit = $productByPage * $page;
-            $offset = ($page-1)*$productByPage;
+            $offset = ($page - 1) * $productByPage;
 
             //Si aucune sélection on affiche tout, sinon on normalise les id et on findByCategoriesid
-            if(empty($categories))
+            if (empty($categories)) {
                 $pl = $pr->findByCategoriesId(array(), 1, $limit, $offset);
-            else {
-                foreach ($categories as $id => $name)
+            } else {
+                foreach ($categories as $id => $name) {
                     $categoriesId[] = ltrim($id, 'id_');
+                }
 
                 $pl = $pr->findByCategoriesId($categoriesId, 1, $limit, $offset);
             }
@@ -82,12 +83,10 @@ class CategoryController extends ParentController
             $html = '<div class="row">';
 
             //Mise en page
-            foreach($pl as $product)
-            {
+            foreach ($pl as $product) {
                 $html .= '<div class="col-lg-4 col-sm-6 col-xs-12">';
                 $html .= $this->renderView('DyweeProductBundle:Eshop:preview-product.html.twig', array('product' => $product));
                 $html .= '</div>';
-
             }
             $html .= '</div>';
 
@@ -98,7 +97,7 @@ class CategoryController extends ParentController
                         'type' => 'success',
                         'html' => $html,
                         'page' => (int) $page,
-                        'nbrePages' => ceil($pr->countByCategoriesId($categoriesId)/$productByPage)
+                        'nbrePages' => ceil($pr->countByCategoriesId($categoriesId) / $productByPage)
                     )
                 )
             );

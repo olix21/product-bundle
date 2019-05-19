@@ -19,13 +19,13 @@ class FeatureElementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('feature',        EntityType::class,      array(
+            ->add('feature', EntityType::class, array(
                 'class'         => 'DyweeProductBundle:Feature',
                 'choice_label'  => 'name',
                 'required'      => false
             ))
-            ->add('customValue',    TextType::class,        array('label' => 'value', 'required' => false))
-            ->add('position',       NumberType::class,      array('required' => false))
+            ->add('customValue', TextType::class, array('label' => 'value', 'required' => false))
+            ->add('position', NumberType::class, array('required' => false))
         ;
     }
     

@@ -233,19 +233,18 @@ class Category implements Translatable, CategoryInterface, TreeInterface
     {
         $sorted = array();
         $return = array();
-        foreach($this->getChildren() as $child)
-        {
-            $sorted[$child->getPosition() > 0 ?$child->getPosition():$child->getName()] = $child;
+        foreach ($this->getChildren() as $child) {
+            $sorted[$child->getPosition() > 0 ? $child->getPosition() : $child->getName()] = $child;
         }
 
 
         ksort($sorted);
 
-        foreach($sorted as $key => $value)
+        foreach ($sorted as $key => $value) {
             $return[] = $value;
+        }
 
         return $return;
-
     }
 
     /**
@@ -297,9 +296,11 @@ class Category implements Translatable, CategoryInterface, TreeInterface
      */
     public function getUrl()
     {
-        if($this->getSeoUrl() != '')
+        if ($this->getSeoUrl() != '') {
             return $this->getSeoUrl();
-        else return $this->getId();
+        } else {
+            return $this->getId();
+        }
     }
 
     /**
@@ -323,10 +324,12 @@ class Category implements Translatable, CategoryInterface, TreeInterface
     /**
      * @inheritdoc
      */
-    public function getIndentedName() {
-        if($this->lvl > 0)
-            return str_repeat($this->parent->name." > ", $this->lvl) . $this->name;
-        else return $this->name;
+    public function getIndentedName()
+    {
+        if ($this->lvl > 0) {
+            return str_repeat($this->parent->name . " > ", $this->lvl) . $this->name;
+        } else {
+            return $this->name;
+        }
     }
-
 }

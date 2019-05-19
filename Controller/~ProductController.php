@@ -21,16 +21,18 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
         $pr = $em->getRepository('DyweeProductBundle:Product');
         $or = $em->getRepository('DyweeOrderBundle:BaseOrder');
-        if(is_numeric($data))
+        if (is_numeric($data)) {
             $product = $pr->findOneById($data);
-        else $product = $pr->findBySeoUrl($data);
+        } else {
+            $product = $pr->findBySeoUrl($data);
+        }
 
 
 
-        if($product != null)
-        {
-            if($product->getWebsite()->getId() != $this->container->getParameter('website.id'))
+        if ($product != null) {
+            if ($product->getWebsite()->getId() != $this->container->getParameter('website.id')) {
                 throw $this->createNotFoundException('Ce produit est introuvable');
+            }
 
             $productStat = new ProductStat();
 
@@ -39,24 +41,23 @@ class ProductController extends Controller
             $productStat->setType(1);
 
 
-            if($product->getState() != 2)
-            {
+            if ($product->getState() != 2) {
                 $defaultData = array('quantity' => 1);
                 $form = $this->createFormBuilder($defaultData)
-                ->add('quantity',   'number')
-                ->add('Ajouter au panier',     'submit')
+                ->add('quantity', 'number')
+                ->add('Ajouter au panier', 'submit')
                 ->getForm();
 
-                if($form->handleRequest($request)->isValid())
-                {
+                if ($form->handleRequest($request)->isValid()) {
                     $formData = $form->getData();
-                    if(is_numeric($formData['quantity']))
-                    {
+                    if (is_numeric($formData['quantity'])) {
                         $order = $request->getSession()->get('order');
 
-                        if($order->getId() != null)
+                        if ($order->getId() != null) {
                             $order = $or->findOneById($order->getId());
-                        else $order = new BaseOrder();
+                        } else {
+                            $order = new BaseOrder();
+                        }
                         $order->addProduct($product, $formData['quantity']);
 
                         $productStat->setQuantity($formData['quantity']);
@@ -69,14 +70,13 @@ class ProductController extends Controller
                         $this->get('session')->set('order', $order);
 
                         return $this->redirect($this->generateUrl('dywee_basket_view'));
+                    } else {
+                        $this->get('session')->getFlashBag()->set('warning', 'Vous devez entrer un nombre');
                     }
-                    else $this->get('session')->getFlashBag()->set('warning', 'Vous devez entrer un nombre');
                 }
 
                 $data = array('product' => $product, 'form' => $form->createView());
-            }
-            else
-            {
+            } else {
                 $data = array('product' => $product, 'message' => 'Ce produit est actuellement en rupture de stock');
             }
 
@@ -84,8 +84,7 @@ class ProductController extends Controller
             $em->flush();
 
 
-            if($product->getProductType() == 1)
-            {
+            if ($product->getProductType() == 1) {
                 $fr = $em->getRepository('DyweeProductBundle:FeatureElement');
 
                 $fer = $em->getRepository('DyweeProductBundle:FeatureElement');
@@ -93,20 +92,20 @@ class ProductController extends Controller
                 $data['strong'] = $fer->findOneBy(array('product' => $product, 'feature' => $fr->findOneById(1)));
 
                 return $this->render('DyweeProductBundle:Eshop:viewProduct.html.twig', $data);
-            }
-            else if($product->getProductType() == 2)
+            } elseif ($product->getProductType() == 2) {
                 return $this->render('DyweeProductBundle:Eshop:viewPack.html.twig', $data);
-            else if($product->getProductType() == 3)
+            } elseif ($product->getProductType() == 3) {
                 return $this->render('DyweeProductBundle:Eshop:viewAbonnement.html.twig', $data);
+            }
         }
         throw $this->createNotFoundException('Produit sélectionné introuvable');
-
     }
 
     public function adminViewAction(Product $product, Request $request)
     {
-        if($product->getWebsite()->getId() != $request->getSession()->get('activeWebsite')->getId())
+        if ($product->getWebsite()->getId() != $request->getSession()->get('activeWebsite')->getId()) {
             throw $this->createNotFoundException('Ce produit est introuvable');
+        }
 
         $em = $this->getDoctrine()->getManager();
         $psr = $em->getRepository('DyweeProductBundle:ProductStat');
@@ -119,21 +118,23 @@ class ProductController extends Controller
 
         $date = new \DateTime("previous week");
 
-        for($i = 0; $i <= 6; $i++)
-        {
+        for ($i = 0; $i <= 6; $i++) {
             $key = $date->modify('+1 day')->format('d/m/Y');
             $stats[$key] = array('createdDate' => $key, 'vues' => 0, 'basket' => 0, 'ventes' => 0);
         }
 
         //On organise les données des stats
-        foreach($vues as $vue)
+        foreach ($vues as $vue) {
             $stats[$vue['createdDate']->format('d/m/Y')]['vues'] = $vue['total'];
+        }
 
-        foreach($baskets as $basket)
+        foreach ($baskets as $basket) {
             $stats[$basket['createdDate']->format('d/m/Y')]['basket'] = $basket['total'];
+        }
 
-        foreach($ventes as $vente)
+        foreach ($ventes as $vente) {
             $stats[$vente['createdDate']->format('d/m/Y')]['ventes'] = $vente['total'];
+        }
 
         //On instancie les données à transmettre à la vue
         $data = array('product' => $product, 'stats' => $stats);
@@ -145,8 +146,7 @@ class ProductController extends Controller
         $data['stockEnabled'] = $stockEnabled->getValue();
 
 
-        if($stockEnabled->getValue() == 1)
-        {
+        if ($stockEnabled->getValue() == 1) {
             $stockWarning = $pmr->findOneByName('stockWarningTreshold');
             $stockAlert = $pmr->findOneByName('stockAlertTreshold');
 
@@ -168,8 +168,7 @@ class ProductController extends Controller
 
         $stockEnabled = $pmr->findOneByName('stockManagementEnabled');
 
-        if($stockEnabled->getValue() == 1)
-        {
+        if ($stockEnabled->getValue() == 1) {
             $stockWarning = $pmr->findOneByName('stockWarningTreshold');
             $stockAlert = $pmr->findOneByName('stockAlertTreshold');
 
@@ -179,9 +178,7 @@ class ProductController extends Controller
 
         $form = $this->get('form.factory')->create(ProductType::class, $product);
 
-        if($form->handleRequest($request)->isValid())
-        {
-
+        if ($form->handleRequest($request)->isValid()) {
             $em->persist($product);
             $em->flush();
 
@@ -195,13 +192,13 @@ class ProductController extends Controller
 
     public function updateAction(Product $product, Request $request)
     {
-        if($product->getWebsite()->getId() != $request->getSession()->get('activeWebsite')->getId())
+        if ($product->getWebsite()->getId() != $request->getSession()->get('activeWebsite')->getId()) {
             throw $this->createNotFoundException('Ce produit est introuvable');
+        }
 
         $form = $this->get('form.factory')->create(ProductType::class, $product);
 
-        if($form->handleRequest($request)->isValid()){
-
+        if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -226,8 +223,7 @@ class ProductController extends Controller
 
         $filterActive = false;
 
-        if($form->handleRequest($request)->isValid())
-        {
+        if ($form->handleRequest($request)->isValid()) {
             // Le filtrage ne marche, sûrement du à la traduction
 
             /*$filterBuilder = $pr->createQueryBuilder('p');
@@ -241,8 +237,9 @@ class ProductController extends Controller
                 ->getResult();
             $filterActive = true;*/
             $productList = $pr->findBy(array('productType' => $type), array('name' => 'asc'));
+        } else {
+            $productList = $pr->findBy(array('productType' => $type), array('name' => 'asc'));
         }
-        else $productList = $pr->findBy(array('productType' => $type), array('name' => 'asc'));
 
         return $this->render('DyweeProductBundle:Product:table.html.twig', array(
             'productList' => $productList,
@@ -252,7 +249,7 @@ class ProductController extends Controller
         ));
     }
 
-    public function listAction($type = 1, $orderBy = null, $limit = null, $offset =0)
+    public function listAction($type = 1, $orderBy = null, $limit = null, $offset = 0)
     {
         $em = $this->getDoctrine()->getManager();
         $pr = $em->getRepository('DyweeProductBundle:Product');
@@ -278,8 +275,9 @@ class ProductController extends Controller
 
     public function deleteAction(Product $product)
     {
-        if($product->getWebsite()->getId() != $this->get('session')->get('activeWebsite')->getId())
+        if ($product->getWebsite()->getId() != $this->get('session')->get('activeWebsite')->getId()) {
             throw $this->createNotFoundException('Ce produit est introuvable');
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($product);

@@ -26,8 +26,7 @@ class StockManagerService
         //$stockEnabled = $pmr->findOneByName('stockManagementEnabled');
 
         //Si la gestion des stocks est activée
-        if(false/*$stockEnabled->getValue() == 1*/)
-        {
+        if (false/*$stockEnabled->getValue() == 1*/) {
             $stockWarning = $pmr->findOneByName('stockWarningTreshold');
             $stockAlert = $pmr->findOneByName('stockAlertTreshold');
 
@@ -36,8 +35,7 @@ class StockManagerService
             $alert = $ar->findOneBy(array('type' => 'product.stock.empty', 'argument1' => $product->getId()));
 
             //On créé une alerte si le stock est vide
-            if($product->getStock() == 0)
-            {
+            if ($product->getStock() == 0) {
                 //$product->setState(5);
                 $alert = new Alert();
                 $alert->setBundle('product');
@@ -46,12 +44,11 @@ class StockManagerService
                 $alert->setArgument1($product->getId());
                 $alert->setArgument2($product->getName());
                 $alert->setRoutingPath('dywee_product_admin_view');
-                $alert->setRoutingArguments('{"id": '.$product->getId().'}');
+                $alert->setRoutingArguments('{"id": ' . $product->getId() . '}');
                 $this->em->persist($alert);
             }
             //Sinon on créé une notification fonction du treshold fixé dans l'admin
-            else if($product->getStock() <= $product->getStockAlertThreshold())
-            {
+            elseif ($product->getStock() <= $product->getStockAlertThreshold()) {
                 $notification = new Notification();
                 $notification->setBundle('product');
                 $notification->setType('product.stock.alert');
@@ -59,15 +56,14 @@ class StockManagerService
                 $notification->setArgument1($product->getId());
                 $notification->setArgument2($product->getName());
                 $notification->setRoutingPath('dywee_product_admin_view');
-                $notification->setRoutingArguments('{"id": '.$product->getId().'}');
+                $notification->setRoutingArguments('{"id": ' . $product->getId() . '}');
                 $this->em->persist($notification);
 
                 //Si une alert existe on la supprime
-                if($alert)
+                if ($alert) {
                     $this->em->remove($alert);
-            }
-            else if($product->getStock() <= $product->getStockWarningThreshold())
-            {
+                }
+            } elseif ($product->getStock() <= $product->getStockWarningThreshold()) {
                 $notification = new Notification();
                 $notification->setBundle('product');
                 $notification->setType('product.stock.warning');
@@ -75,18 +71,19 @@ class StockManagerService
                 $notification->setArgument1($product->getId());
                 $notification->setArgument2($product->getName());
                 $notification->setRoutingPath('dywee_product_admin_view');
-                $notification->setRoutingArguments('{"id": '.$product->getId().'}');
+                $notification->setRoutingArguments('{"id": ' . $product->getId() . '}');
                 $this->em->persist($notification);
 
                 //Si une alert existe on la supprime
-                if($alert)
+                if ($alert) {
                     $this->em->remove($alert);
-            }
-            else if($alert)
+                }
+            } elseif ($alert) {
                 $this->em->remove($alert);
+            }
         }
         //Si la gestion des stocks est désactivée on supprime tout
-        else{
+        else {
             //Récup des alertes relatives au stock et suppression
             /*$ar = $this->em->getRepository('DyweeNotificationBundle:Alert');
             $as = $ar->findByType('product.stock.empty');
@@ -103,12 +100,10 @@ class StockManagerService
         }
 
         $this->em->flush();
-
     }
 
     public function checkProductContent(Product $product)
     {
-
     }
 
     public function checkAll()
@@ -118,11 +113,13 @@ class StockManagerService
         $stockEnabled = $pmr->findOneByName('stockManagementEnabled');
 
         //Si la gestion des stocks est activée
-        if($stockEnabled->getValue() == 1) {
+        if ($stockEnabled->getValue() == 1) {
             $ps = $pr->findAll();
-            foreach($ps as $product)
-                if($product->getSellType() < 3)
+            foreach ($ps as $product) {
+                if ($product->getSellType() < 3) {
                     $this->checkProduct($product);
+                }
+            }
         }
     }
 
@@ -132,35 +129,41 @@ class StockManagerService
         $ar = $this->em->getRepository('DyweeNotificationBundle:Alert');
 
         $data = array('type' => 'product.stock.empty');
-        if($product)
+        if ($product) {
             $data['argument1'] = $product->getId();
+        }
         $as = $ar->findBy($data);
 
 
-        foreach($as as $alert)
+        foreach ($as as $alert) {
             $this->em->remove($alert);
+        }
 
         //Récup des notifications relatives au stock et suppression
         $nr = $this->em->getRepository('DyweeNotificationBundle:Notification');
         $data = array();
-        if($product)
+        if ($product) {
             $data['argument1'] = $product->getId();
+        }
         $ns = array_merge(
             $nr->findBy(array_merge(
                 array(
                     'type' => 'product.stock.alert',
                 ),
-                $data)
-            ),
-            $nr->findBy(array_merge(
-                array(
+                $data
+            )),
+            $nr->findBy(
+                array_merge(
+                    array(
                     'type' => 'product.stock.warning')
                 ),
-                $data)
-            );
+                $data
+            )
+        );
 
-        foreach($ns as $notification)
+        foreach ($ns as $notification) {
             $this->em->remove($notification);
+        }
 
         $this->em->flush();
     }

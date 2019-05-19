@@ -24,12 +24,12 @@ class PromotionType extends AbstractType
 
         $builder
             //->add('name',       TextType::class)
-            ->add('type',       ChoiceType::class, array(
+            ->add('type', ChoiceType::class, array(
                 'choices' => $choices
             ))
-            ->add('value',      NumberType::class)
-            ->add('beginAt',    DateType::class, array('required' => false, 'widget' => 'single_text'))
-            ->add('endAt',      DateType::class, array('required' => false, 'widget' => 'single_text'));
+            ->add('value', NumberType::class)
+            ->add('beginAt', DateType::class, array('required' => false, 'widget' => 'single_text'))
+            ->add('endAt', DateType::class, array('required' => false, 'widget' => 'single_text'));
     }
 
     public function configureOptions(OptionsResolver $resolver)

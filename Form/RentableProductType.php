@@ -12,7 +12,6 @@ class RentableProductType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
     }
 
     public function getParent()

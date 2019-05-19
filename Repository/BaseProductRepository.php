@@ -28,7 +28,8 @@ class BaseProductRepository extends EntityRepository
         return $query->getResult();*/
     }
 
-    public function findByCategory($category){
+    public function findByCategory($category)
+    {
         $query = $this->createQueryBuilder('p')
             ->select('p')
             ->leftJoin('p.categories', 'c')
@@ -53,21 +54,21 @@ class BaseProductRepository extends EntityRepository
 
         $params = array();
 
-        if($type != null)
-        {
+        if ($type != null) {
             $qb->where('p.productType = :type');
             $params['type'] = $type;
         }
 
         $i = 1;
 
-        foreach($categoriesId as $key => $value)
-        {
-            $qb->innerjoin('p.categories', 'c'.$i);
-            if($i == 1)
-                $qb->where('c'.$i.'.id = :cat1');
-            else $qb->andWhere('c'.$i.'.id = :cat'.$i);
-            $params['cat'.$i] = $value;
+        foreach ($categoriesId as $key => $value) {
+            $qb->innerjoin('p.categories', 'c' . $i);
+            if ($i == 1) {
+                $qb->where('c' . $i . '.id = :cat1');
+            } else {
+                $qb->andWhere('c' . $i . '.id = :cat' . $i);
+            }
+            $params['cat' . $i] = $value;
             $i++;
         }
         $qb->setParameters($params);
@@ -84,8 +85,7 @@ class BaseProductRepository extends EntityRepository
 
         $params = array();
 
-        if($type != null)
-        {
+        if ($type != null) {
             $qb->where('p.productType = :type');
             $params['type'] = $type;
         }
@@ -93,11 +93,10 @@ class BaseProductRepository extends EntityRepository
 
         $i = 1;
 
-        foreach($categoriesId as $key => $value)
-        {
-            $qb->innerjoin('p.categories', 'c'.$i);
-            $qb->andWhere('c'.$i.'.id = :cat'.$i);
-            $params['cat'.$i] = $value;
+        foreach ($categoriesId as $key => $value) {
+            $qb->innerjoin('p.categories', 'c' . $i);
+            $qb->andWhere('c' . $i . '.id = :cat' . $i);
+            $params['cat' . $i] = $value;
             $i++;
         }
         $qb->setParameters($params);
@@ -123,9 +122,11 @@ class BaseProductRepository extends EntityRepository
             ->addselect('i')
             ->where('p.productType = :productType and p.state = 1');
 
-        if($order == 'db')
+        if ($order == 'db') {
             $qb->andWhere('p.displayOrder >= 1');
-        else $qb->orderBy($order, 'desc');
+        } else {
+            $qb->orderBy($order, 'desc');
+        }
 
         $qb->setParameters(
             array(
@@ -135,7 +136,9 @@ class BaseProductRepository extends EntityRepository
 
         $qb->orderBy('p.name');
 
-        if(is_numeric($limit)) $qb->setMaxResults($limit);
+        if (is_numeric($limit)) {
+            $qb->setMaxResults($limit);
+        }
 
         $query = $qb->getQuery();
 
@@ -172,10 +175,11 @@ class BaseProductRepository extends EntityRepository
             ->join('p.images', 'i')
             ->addselect('i');
 
-        if(is_numeric($id))
+        if (is_numeric($id)) {
             $qb->where('p.id = :id')->setParameter('id', $id);
-        else
+        } else {
             $qb->where('p.id in (:id)')->setParameter('id', $id);
+        }
 
         $query = $qb->getQuery();
 
@@ -192,9 +196,10 @@ class BaseProductRepository extends EntityRepository
         $qb = $this->createQueryBuilder('p')
             ->select('COUNT(p)');
 
-        if($state != null)
+        if ($state != null) {
             $qb->where('p.state = :state')
                 ->setParameter('state', $state);
+        }
 
         return $qb->getQuery()->getSingleScalarResult();
     }

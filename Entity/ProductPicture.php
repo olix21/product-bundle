@@ -169,4 +169,3 @@ class ProductPicture
         return $this->product;
     }
 }
-

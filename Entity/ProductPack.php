@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="Dywee\ProductBundle\Repository\ProductPackRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductPack  extends BaseProduct
+class ProductPack extends BaseProduct
 {
 
     /**
@@ -47,7 +47,8 @@ class ProductPack  extends BaseProduct
      * @param \Dywee\ProductBundle\Entity\PackElement $packElements
      * @return ProductPack
      */
-    public function removePackElement(PackElement $packElements){
+    public function removePackElement(PackElement $packElements)
+    {
         $this->packElements->removeElement($packElements);
 
         return $this;
@@ -57,7 +58,8 @@ class ProductPack  extends BaseProduct
      * Get packElements
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPackElements(){
+    public function getPackElements()
+    {
         return $this->packElements;
     }
 }

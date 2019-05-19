@@ -22,13 +22,13 @@ class BaseProductRestController extends Controller
     {
         $this->childrenClassNameWithNamespace = str_replace('\\\\', '\Entity\\', str_replace(array('Controller', 'Rest'), '', get_class($object ?? $this)));
         $exploded = explode('\\', $this->childrenClassNameWithNamespace);
-        $this->childrenClassName = $exploded[count($exploded)-1];
+        $this->childrenClassName = $exploded[count($exploded) - 1];
 
         //To underscore
         $split = str_split($this->childrenClassName);
         $return = '';
-        foreach($split as $letter){
-            if(ctype_upper($letter) && strlen($return) > 1){
+        foreach ($split as $letter) {
+            if (ctype_upper($letter) && strlen($return) > 1) {
                 $return .= '_';
             }
             $return .= $letter;
@@ -39,9 +39,8 @@ class BaseProductRestController extends Controller
 
     public function tableAction(Request $request)
     {
-        if($request->isXmlHttpRequest())
-        {
-            $repository = $this->getDoctrine()->getRepository('DyweeProductBundle:'.$this->childrenClassName);
+        if ($request->isXmlHttpRequest()) {
+            $repository = $this->getDoctrine()->getRepository('DyweeProductBundle:' . $this->childrenClassName);
 
             $products = $repository->findAll();
 

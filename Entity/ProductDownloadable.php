@@ -22,12 +22,14 @@ class ProductDownloadable extends BaseProduct implements VirtualProductInterface
      */
     private $externalDownloadLink;
 
-    public function setExternalDownloadLink($link){
+    public function setExternalDownloadLink($link)
+    {
         $this->externalDownloadLink = $link;
         return $this;
     }
 
-    public function getExternalDownloadLink(){
+    public function getExternalDownloadLink()
+    {
         return $this->externalDownloadLink;
     }
 }

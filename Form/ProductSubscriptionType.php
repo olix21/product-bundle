@@ -27,7 +27,7 @@ class ProductSubscriptionType extends AbstractType
             ->add('recurrence')
             ->add('recurrenceUnit', ChoiceType::class, array('choices' => $choices))
             ->add('maxShipment')
-            ->add('subscriptionElements',         CollectionType::class,      array(
+            ->add('subscriptionElements', CollectionType::class, array(
                 'entry_type' => PackElementType::class,
                 'allow_add' => true,
                 'allow_delete' => true,

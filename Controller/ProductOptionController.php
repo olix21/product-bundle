@@ -17,18 +17,16 @@ class ProductOptionController extends Controller
 
     public function viewAction($data, Request $request)
     {
-
     }
 
     public function addAction(Request $request)
     {
         $productOption = new ProductOption();
 
-        $form = $this->get('form.factory')->create(new ProductOptionType, $productOption);
+        $form = $this->get('form.factory')->create(new ProductOptionType(), $productOption);
         $form->add('Valider', 'submit');
 
-        if($form->handleRequest($request)->isValid())
-        {
+        if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($productOption);
             $em->flush();
@@ -67,7 +65,6 @@ class ProductOptionController extends Controller
             return $this->render('DyweeProductBundle:Eshop:edit.html.twig', array('form' => $form->createView()));
         }
         throw $this->createNotFoundException('Ce produit n\'existe pas');*/
-
     }
 
     public function tableAction()

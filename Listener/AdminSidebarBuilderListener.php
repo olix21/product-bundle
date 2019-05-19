@@ -8,7 +8,8 @@ use Dywee\ProductBundle\Service\ProductAdminSidebarHandler;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 
-class AdminSidebarBuilderListener implements EventSubscriberInterface{
+class AdminSidebarBuilderListener implements EventSubscriberInterface
+{
     private $productAdminSidebarHandler;
 
     public function __construct(ProductAdminSidebarHandler $productAdminSidebarHandler)

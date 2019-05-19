@@ -24,13 +24,13 @@ class BaseProductController extends Controller
     {
         $this->childrenClassNameWithNamespace = str_replace('\\\\', '\Entity\\', str_replace(array('Controller'), '', get_class($object ?? $this)));
         $exploded = explode('\\', $this->childrenClassNameWithNamespace);
-        $this->childrenClassName = $exploded[count($exploded)-1];
+        $this->childrenClassName = $exploded[count($exploded) - 1];
 
         //To underscore
         $split = str_split($this->childrenClassName);
         $return = '';
-        foreach($split as $letter){
-            if(ctype_upper($letter) && strlen($return) > 1){
+        foreach ($split as $letter) {
+            if (ctype_upper($letter) && strlen($return) > 1) {
                 $return .= '_';
             }
             $return .= $letter;
@@ -44,59 +44,62 @@ class BaseProductController extends Controller
         $baseProductRepository = $this->getDoctrine()->getRepository('DyweeProductBundle:BaseProduct');
         $products = $baseProductRepository->findAll();
 
-        if($request->isXmlHttpRequest())
+        if ($request->isXmlHttpRequest()) {
             return new Response(json_encode(array('products' => $products)));
+        }
 
         return $this->render('DyweeProductBundle:BaseProduct:dashboard.html.twig', array('products' => $products));
     }
 
     public function addAction(Request $request)
     {
-        $formTypeName = str_replace('Entity', 'Form', $this->childrenClassNameWithNamespace.'Type');
+        $formTypeName = str_replace('Entity', 'Form', $this->childrenClassNameWithNamespace . 'Type');
 
         $product = new $this->childrenClassNameWithNamespace();
 
         $form = $this->createForm($formTypeName, $product);
 
-        if($form->handleRequest($request)->isValid())
-        {
+        if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
 
-            if($request->isXmlHttpRequest())
-                return new Response(array('type' => 'success', 'redirectTo' => $this->generateUrl(strtolower($this->childrenClassNameUnderscored).'_table')));
+            if ($request->isXmlHttpRequest()) {
+                return new Response(array('type' => 'success', 'redirectTo' => $this->generateUrl(strtolower($this->childrenClassNameUnderscored) . '_table')));
+            }
 
-            return $this->redirectToRoute(strtolower($this->childrenClassNameUnderscored).'_table');
+            return $this->redirectToRoute(strtolower($this->childrenClassNameUnderscored) . '_table');
         }
 
-        if($request->isXmlHttpRequest())
+        if ($request->isXmlHttpRequest()) {
             return new Response(array('form' => $form->createView()));
+        }
 
-        return $this->render('DyweeProductBundle:'.$this->childrenClassName.':add.html.twig', array(
+        return $this->render('DyweeProductBundle:' . $this->childrenClassName . ':add.html.twig', array(
             'form' => $form->createView()
         ));
     }
 
     public function tableAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository('DyweeProductBundle:'.$this->childrenClassName);
+        $repository = $this->getDoctrine()->getRepository('DyweeProductBundle:' . $this->childrenClassName);
 
         $product = new $this->childrenClassNameWithNamespace();
         $product->setState(null);
 
         $searchForm = $this->createForm(BaseProductSearchType::class, $product);
 
-        if($searchForm->handleRequest($request)->isValid())
-        {
+        if ($searchForm->handleRequest($request)->isValid()) {
+            $products = $repository->findAll();
+        } else {
             $products = $repository->findAll();
         }
-        else $products = $repository->findAll();
 
-        if($request->isXmlHttpRequest())
+        if ($request->isXmlHttpRequest()) {
             return new Response(array('type' => 'success', 'products' => $products));
+        }
 
-        return $this->render('DyweeProductBundle:'.$this->childrenClassName.':table.html.twig', array(
+        return $this->render('DyweeProductBundle:' . $this->childrenClassName . ':table.html.twig', array(
             'products' => $products,
             'search' => $searchForm->createView()
         ));
@@ -104,7 +107,7 @@ class BaseProductController extends Controller
 
     public function adminViewAction(BaseProduct $baseProduct)
     {
-        return $this->render('DyweeProductBundle:'.$this->childrenClassName.':view.html.twig', array(
+        return $this->render('DyweeProductBundle:' . $this->childrenClassName . ':view.html.twig', array(
             'product' => $baseProduct,
             'stats' => $this->get('dywee_product_cms.stat_manager')->getForProduct($baseProduct)
         ));
@@ -113,20 +116,19 @@ class BaseProductController extends Controller
     public function updateAction(BaseProduct $baseProduct, Request $request)
     {
         $this->getObjectNames($baseProduct);
-        $formTypeName = str_replace('Entity', 'Form', $this->childrenClassNameWithNamespace.'Type');
+        $formTypeName = str_replace('Entity', 'Form', $this->childrenClassNameWithNamespace . 'Type');
 
         $form = $this->createForm($formTypeName, $baseProduct);
 
-        if($form->handleRequest($request)->isValid())
-        {
+        if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($baseProduct);
             $em->flush();
 
-            return $this->redirectToRoute(strtolower($this->childrenClassNameUnderscored).'_table');
+            return $this->redirectToRoute(strtolower($this->childrenClassNameUnderscored) . '_table');
         }
 
-        return $this->render('DyweeProductBundle:'.$this->childrenClassName.':add.html.twig', array(
+        return $this->render('DyweeProductBundle:' . $this->childrenClassName . ':add.html.twig', array(
             'form' => $form->createView()
         ));
     }
@@ -137,6 +139,6 @@ class BaseProductController extends Controller
         $em->remove($baseProduct);
         $em->flush();
 
-        return $this->redirectToRoute(strtolower($this->childrenClassName).'_table');
+        return $this->redirectToRoute(strtolower($this->childrenClassName) . '_table');
     }
 }

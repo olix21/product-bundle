@@ -111,7 +111,4 @@ class Promotion
         $this->product = $product;
         return $this;
     }
-
-
-
 }
