@@ -1,10 +1,11 @@
 <?php
+// src/Dywee/ProductBundle/Service/StockManagerService.php
 
 namespace Dywee\ProductBundle\Service;
 
 
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\EntityManager;
 use Dywee\NotificationBundle\Entity\Alert;
 use Dywee\NotificationBundle\Entity\Notification;
 use Dywee\ProductBundle\Entity\Product;
@@ -13,7 +14,7 @@ class StockManagerService
 {
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }

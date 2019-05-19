@@ -4,7 +4,6 @@ namespace Dywee\ProductBundle\Controller;
 
 use Dywee\ProductBundle\Entity\BaseProduct;
 use Dywee\ProductBundle\Form\BaseProductSearchType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

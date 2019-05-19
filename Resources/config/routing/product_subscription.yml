@@ -6,8 +6,8 @@
 
 product_subscription_table:
     path:     /admin/product/subscription
-    defaults: { _controller: DyweeProductBundle:ProductSubscription:table }
+    defaults: { _controller: Dywee\ProductBundle\Controller\ProductSubscriptionController::tableAction }
 
 product_subscription_add:
     path:     /admin/product/subscription/add
-    defaults: { _controller: DyweeProductBundle:ProductSubscription:add }
+    defaults: { _controller: Dywee\ProductBundle\Controller\ProductSubscriptionController::addAction }

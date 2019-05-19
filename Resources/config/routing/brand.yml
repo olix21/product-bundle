@@ -1,21 +1,21 @@
 product_brand_table:
     path: /admin/product/brand/{page}
-    defaults: {_controller: DyweeProductBundle:Brand:table, page: 1}
+    defaults: {_controller: Dywee\ProductBundle\Controller\BrandController::tableAction, page: 1}
     requirements:
         page: \d*
 
 product_brand_add:
     path: /admin/product/brand/add
-    defaults: { _controller: DyweeProductBundle:Brand:add }
+    defaults: { _controller: Dywee\ProductBundle\Controller\BrandController::addAction }
 
 product_brand_update:
     path: /admin/product/brand/{id}/update
-    defaults: { _controller: DyweeProductBundle:Brand:update }
+    defaults: { _controller: Dywee\ProductBundle\Controller\BrandController::updateAction }
     requirements:
         id: \d+
 
 product_brand_delete:
     path: /admin/product/brand/{id}/delete
-    defaults: { _controller: DyweeProductBundle:Brand:delete }
+    defaults: { _controller: Dywee\ProductBundle\Controller\BrandController::deleteAction }
     requirements:
         id: \d+

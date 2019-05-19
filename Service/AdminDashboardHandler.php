@@ -1,20 +1,20 @@
 <?php
 
-namespace Dywee\ProductBundle\Service;
+namespace Dywee\OrderBundle\Service;
 
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Routing\Router;
 
 class AdminDashboardHandler
 {
-    /** @var RouterInterface */
+    /** @var Router */
     private $router;
 
     /**
      * AdminDashboardHandler constructor.
      *
-     * @param RouterInterface $router
+     * @param Router $router
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(Router $router)
     {
         $this->router = $router;
     }

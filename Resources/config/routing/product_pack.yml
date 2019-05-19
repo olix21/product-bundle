@@ -6,8 +6,8 @@
 
 product_pack_table:
     path:     /admin/product/pack
-    defaults: { _controller: DyweeProductBundle:ProductPack:table }
+    defaults: { _controller: Dywee\ProductBundle\Controller\ProductPackController::tableAction }
 
 product_pack_add:
     path:     /admin/product/pack/add
-    defaults: { _controller: DyweeProductBundle:ProductPack:add }
+    defaults: { _controller: Dywee\ProductBundle\Controller\ProductPackController::addAction }

@@ -1,42 +1,42 @@
 product_category_table:
     path:     /admin/product/category/table/{page}
-    defaults: { _controller: DyweeProductBundle:Category:table, page: 1 }
+    defaults: { _controller: Dywee\ProductBundle\Controller\CategoryController::tableAction, page: 1 }
     requirements:
         page: \d*
 
 product_parentCategory_table:
     path:     /admin/product/category/{id}/{page}
-    defaults: { _controller: DyweeProductBundle:Category:table, page: 1 }
+    defaults: { _controller: Dywee\ProductBundle\Controller\CategoryController::tableAction, page: 1 }
     requirements:
         page: \d*
         id: \d*
 
 product_category_add:
     path:     /admin/product/category/add
-    defaults: { _controller: DyweeProductBundle:Category:add }
+    defaults: { _controller: Dywee\ProductBundle\Controller\CategoryController::addAction }
 
 product_category_update:
     path:     /admin/product/category/{id}/update
-    defaults: { _controller: DyweeProductBundle:Category:update }
+    defaults: { _controller: Dywee\ProductBundle\Controller\CategoryController::updateAction }
     requirements:
         id: \d+
 
 product_category_delete:
     path:     /admin/product/category/{id}/delete
-    defaults: { _controller: DyweeProductBundle:Category:delete }
+    defaults: { _controller: Dywee\ProductBundle\Controller\CategoryController::deleteAction }
     requirements:
         id: \d+
 
 product_category_view:
     path:     /eshop/category/{data}
-    defaults: { _controller: DyweeProductBundle:Category:view }
+    defaults: { _controller: Dywee\ProductBundle\Controller\CategoryController::viewAction }
 
 product_category_filterAjax:
     path:     /eshop/categoryFilter
-    defaults: { _controller: DyweeProductBundle:Category:filterAjax }
+    defaults: { _controller: Dywee\ProductBundle\Controller\CategoryController::filterAjaxAction }
     requirements:
         _methods: POST
 
 product_category_view_brandFilter:
     path:     /eshop/category/{data}/{category}
-    defaults: { _controller: DyweeProductBundle:Category:viewByBrand }
+    defaults: { _controller: Dywee\ProductBundle\Controller\CategoryController::viewByBrandAction }

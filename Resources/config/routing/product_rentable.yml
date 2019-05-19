@@ -6,8 +6,8 @@
 
 rentable_product_table:
     path:     /admin/product/rentable
-    defaults: { _controller: DyweeProductBundle:RentableProduct:table }
+    defaults: { _controller: Dywee\ProductBundle\Controller\RentableProductController::tableAction }
 
 rentable_product_add:
     path:     /admin/product/rentable/add
-    defaults: { _controller: DyweeProductBundle:RentableProduct:add }
+    defaults: { _controller: Dywee\ProductBundle\Controller\RentableProductController::addAction }

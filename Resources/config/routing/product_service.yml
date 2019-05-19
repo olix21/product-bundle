@@ -6,8 +6,8 @@
 
 product_service_table:
     path:     /admin/product/service
-    defaults: { _controller: DyweeProductBundle:ProductService:table }
+    defaults: { _controller: Dywee\ProductBundle\Controller\ProductServiceController::tableAction }
 
 product_service_add:
     path:     /admin/product/service/add
-    defaults: { _controller: DyweeProductBundle:ProductService:add }
+    defaults: { _controller: Dywee\ProductBundle\Controller\ProductServiceController::addAction }

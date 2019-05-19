@@ -25,4 +25,4 @@ product_categories_routing:
 
 base_product_dashboard:
     path:     /admin/product/dashboard
-    defaults: { _controller: DyweeProductBundle:BaseProduct:dashboard }
+    defaults: { _controller: Dywee\ProductBundle\Controller\BaseProductController::dashboardAction }

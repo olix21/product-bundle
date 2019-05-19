@@ -6,8 +6,8 @@
 
 product_downloadable_table:
     path:     /admin/product/downlodable
-    defaults: { _controller: DyweeProductBundle:ProductDownloadable:table }
+    defaults: { _controller: Dywee\ProductBundle\Controller\ProductDownloadableController::tableAction }
 
 product_downloadable_add:
     path:     /admin/product/downlodable/add
-    defaults: { _controller: DyweeProductBundle:ProductDownloadable:add }
+    defaults: { _controller: Dywee\ProductBundle\Controller\ProductDownloadableController::addAction }
