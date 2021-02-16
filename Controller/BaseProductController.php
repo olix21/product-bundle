@@ -4,11 +4,12 @@ namespace Dywee\ProductBundle\Controller;
 
 use Dywee\ProductBundle\Entity\BaseProduct;
 use Dywee\ProductBundle\Form\BaseProductSearchType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class BaseProductController extends Controller
+class BaseProductController extends AbstractController
 {
     protected $childrenClassNameWithNamespace;
     protected $childrenClassName;

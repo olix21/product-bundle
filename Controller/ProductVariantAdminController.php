@@ -4,11 +4,12 @@ namespace Dywee\ProductBundle\Controller;
 
 use Dywee\ProductBundle\Entity\ProductOption;
 use Dywee\ProductBundle\Form\ProductOptionType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProductVariantAdminController extends Controller
+class ProductVariantAdminController extends AbstractController
 {
     public function tableAction($idProduct)
     {

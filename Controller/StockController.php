@@ -6,11 +6,12 @@ use Dywee\NotificationBundle\Entity\Alert;
 use Dywee\NotificationBundle\Entity\Notification;
 use Dywee\ProductBundle\Entity\ProductOption;
 use Dywee\ProductBundle\Form\ProductOptionType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class StockController extends Controller
+class StockController extends AbstractController
 {
     public function tableAction(Request $request)
     {

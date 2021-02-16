@@ -9,6 +9,7 @@ use Dywee\ProductBundle\Entity\ProductStat;
 use Dywee\ProductBundle\Entity\ProductSubscription;
 use Dywee\ProductBundle\Filter\ProductFilterType;
 use Dywee\ProductBundle\Form\ProductType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @package Dywee\ProductBundle\Controller
  * @deprecated
  */
-class DeprecatedProductController extends Controller
+class DeprecatedProductController extends AbstractController
 {
     public function viewAction($data, Request $request)
     {

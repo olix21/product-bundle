@@ -4,11 +4,12 @@ namespace Dywee\ProductBundle\Controller;
 
 use Dywee\ProductBundle\Entity\Feature;
 use Dywee\ProductBundle\Form\FeatureType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-class FeatureController extends Controller
+class FeatureController extends AbstractController
 {
     /**
      * @Route(name="product_feature_table", path="admin/product/feature")

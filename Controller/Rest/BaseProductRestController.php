@@ -2,11 +2,12 @@
 
 namespace Dywee\ProductBundle\Controller\Rest;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class BaseProductRestController extends Controller
+class BaseProductRestController extends AbstractController
 {
     protected $childrenClassNameWithNamespace;
     protected $childrenClassName;
