@@ -37,7 +37,7 @@ class ProductOptionController extends AbstractController
             return $this->redirect($this->generateUrl('dywee_product_option_table'));
         }
 
-        return $this->render('DyweeProductBundle:ProductOption:add.html.twig', array('form' => $form->createView()));
+        return $this->render('@DyweeProductBundle/ProductOption/add.html.twig', array('form' => $form->createView()));
     }
 
     public function updateAction($id, Request $request)
@@ -63,7 +63,7 @@ class ProductOptionController extends AbstractController
                 return $this->redirect($this->generateUrl('dywee_product_table', array('type' => $product->getProductType())));
             }
 
-            return $this->render('DyweeProductBundle:Eshop:edit.html.twig', array('form' => $form->createView()));
+            return $this->render('@DyweeProductBundle/Eshop/edit.html.twig', array('form' => $form->createView()));
         }
         throw $this->createNotFoundException('Ce produit n\'existe pas');*/
     }
@@ -74,7 +74,7 @@ class ProductOptionController extends AbstractController
 
         $por = $em->getRepository('DyweeProductBundle:ProductOption');
         $productOptionList = $por->findAll();
-        return $this->render('DyweeProductBundle:ProductOption:table.html.twig', array('productOptionList' => $productOptionList));
+        return $this->render('@DyweeProductBundle/ProductOption/table.html.twig', array('productOptionList' => $productOptionList));
     }
 
     public function deleteAction(ProductOption $productOption)

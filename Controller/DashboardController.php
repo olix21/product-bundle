@@ -27,7 +27,7 @@ class DashboardController
 
         $query = $or->FindAllForPagination($state);
 
-        return $this->render('DyweeProductBundle:Dashboard:miniTable.html.twig', ['pagination' => $pagination]);
+        return $this->render('@DyweeProductBundle/Dashboard/miniTable.html.twig', ['pagination' => $pagination]);
     }
 
     /**
@@ -37,6 +37,6 @@ class DashboardController
     {
         $count = $this->getDoctrine()->getManager()->getRepository(BaseProduct::class)->countActive();
 
-        return $this->render('DyweeProductBundle:Dashboard:card.html.twig', ['count' => $count]);
+        return $this->render('@DyweeProductBundle/Dashboard/card.html.twig', ['count' => $count]);
     }
 }

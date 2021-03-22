@@ -1,6 +1,6 @@
 {# Dywee\Product\Resources\View\BaseProduct\adminView.html.twig #}
 
-{%  extends "DyweeProductBundle::admin.html.twig" %}
+{% extends '@DyweeProductBundle/admin.html.twig' %}
 
 {% block metaTitle %} Coup d'oeil sur un {{ product.name }} - {{ parent() }} {% endblock %}
 
@@ -69,7 +69,7 @@
                         {% endif %}#}
                         <tr>
                             <th>Statut</th>
-                            <td>{% include 'DyweeProductBundle:BaseProduct:state.html.twig' %}</td>
+                            <td>{% include '@DyweeProductBundle/BaseProduct/state.html.twig' %}</td>
                         </tr>
                         </tbody>
                     </table>

@@ -41,7 +41,7 @@ class CategoryController extends ParentController
         if($category != null)
         {
             $data = array('productList' => $productList, 'category' => $category);
-            return $this->render('DyweeProductBundle:Eshop:browseByCategory.html.twig', $data);
+            return $this->render('@DyweeProductBundle/Eshop/browseByCategory.html.twig', $data);
         }
         throw $this->createNotFoundException('Catégorie introuvable');
     }*/

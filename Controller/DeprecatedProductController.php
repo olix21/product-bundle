@@ -98,11 +98,11 @@ class DeprecatedProductController extends AbstractController
 
                 $data['strong'] = $fer->findOneBy(array('product' => $product, 'feature' => $fr->findOneById(1)));
 
-                return $this->render('DyweeProductBundle:Eshop:viewProduct.html.twig', $data);
+                return $this->render('@DyweeProductBundle/Eshop/viewProduct.html.twig', $data);
             } elseif ($product->getProductType() == 2) {
-                return $this->render('DyweeProductBundle:Eshop:viewPack.html.twig', $data);
+                return $this->render('@DyweeProductBundle/Eshop/viewPack.html.twig', $data);
             } elseif ($product->getProductType() == 3) {
-                return $this->render('DyweeProductBundle:Eshop:viewAbonnement.html.twig', $data);
+                return $this->render('@DyweeProductBundle/Eshop/viewAbonnement.html.twig', $data);
             }
         }
         throw $this->createNotFoundException('Produit sélectionné introuvable');
@@ -161,7 +161,7 @@ class DeprecatedProductController extends AbstractController
             $data['stockAlert'] = $stockAlert->getValue();
         }
 
-        return $this->render('DyweeProductBundle:Product:adminView.html.twig', $data);
+        return $this->render('@DyweeProductBundle/Product/adminView.html.twig', $data);
     }
 
     public function addAction($type, Request $request)
@@ -194,7 +194,7 @@ class DeprecatedProductController extends AbstractController
             return $this->redirect($this->generateUrl('dywee_product_table', array('type' => $product->getProductType())));
         }
 
-        return $this->render('DyweeProductBundle:Product:add.html.twig', array('form' => $form->createView()));
+        return $this->render('@DyweeProductBundle/Product/add.html.twig', array('form' => $form->createView()));
     }
 
     public function updateAction(Product $product, Request $request)
@@ -215,7 +215,7 @@ class DeprecatedProductController extends AbstractController
             return $this->redirect($this->generateUrl('dywee_product_table', array('type' => $product->getProductType())));
         }
 
-        return $this->render('DyweeProductBundle:Product:edit.html.twig', array('form' => $form->createView()));
+        return $this->render('@DyweeProductBundle/Product/edit.html.twig', array('form' => $form->createView()));
     }
 
     public function tableAction($type, $page, Request $request)
@@ -248,7 +248,7 @@ class DeprecatedProductController extends AbstractController
             $productList = $pr->findBy(array('productType' => $type), array('name' => 'asc'));
         }
 
-        return $this->render('DyweeProductBundle:Product:table.html.twig', array(
+        return $this->render('@DyweeProductBundle/Product/table.html.twig', array(
             'productList' => $productList,
             'type' => $type,
             'search' => $form->createView(),
@@ -263,7 +263,7 @@ class DeprecatedProductController extends AbstractController
 
         $productList = $pr->getByDisplayOrder($type, $limit, $orderBy);
 
-        return $this->render('DyweeProductBundle:Eshop:roughList.html.twig', array('productList' => $productList));
+        return $this->render('@DyweeProductBundle/Eshop/roughList.html.twig', array('productList' => $productList));
     }
 
     public function getListAction($type)
@@ -277,7 +277,7 @@ class DeprecatedProductController extends AbstractController
                 'state' => 1,
             )
         );
-        return $this->render('DyweeProductBundle:Eshop:roughList.html.twig', array('productList' => $productList));
+        return $this->render('@DyweeProductBundle/Eshop/roughList.html.twig', array('productList' => $productList));
     }
 
     public function deleteAction(Product $product)
@@ -302,6 +302,6 @@ class DeprecatedProductController extends AbstractController
 
         $os = $or->findLastRentingByProduct($product);
 
-        return $this->render('DyweeProductBundle:Product:rentMiniTable.html.twig', array('orderElementList' => $os));
+        return $this->render('@DyweeProductBundle/Product/rentMiniTable.html.twig', array('orderElementList' => $os));
     }
 }

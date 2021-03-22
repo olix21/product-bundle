@@ -18,7 +18,7 @@ class FeatureController extends AbstractController
      */
     public function tableAction()
     {
-        return $this->render('DyweeProductBundle:Feature:table.html.twig', [
+        return $this->render('@DyweeProductBundle/Feature/table.html.twig', [
             'featureList' => $this->getDoctrine()->getRepository('DyweeProductBundle:Feature')->findAll(),
         ]);
     }
@@ -46,7 +46,7 @@ class FeatureController extends AbstractController
             return $this->redirect($this->generateUrl('product_feature_table'));
         }
 
-        return $this->render('DyweeProductBundle:Feature:add.html.twig', ['form' => $form->createView()]);
+        return $this->render('@DyweeProductBundle/Feature/add.html.twig', ['form' => $form->createView()]);
     }
 
 
@@ -72,7 +72,7 @@ class FeatureController extends AbstractController
             return $this->redirect($this->generateUrl('product_feature_table'));
         }
 
-        return $this->render('DyweeProductBundle:Feature:edit.html.twig', ['form' => $form->createView()]);
+        return $this->render('@DyweeProductBundle/Feature/edit.html.twig', ['form' => $form->createView()]);
     }
 
     /**

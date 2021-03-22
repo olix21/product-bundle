@@ -1,13 +1,13 @@
 {# Dywee\EshopBundle\Resources\View\Product\add.html.twig #}
 
-{%  extends "DyweeProductBundle::admin.html.twig" %}
+{% extends '@DyweeProductBundle/admin.html.twig' %}
 
 {% block metaTitle %} Creation d'un abonnement - {{ parent() }} {% endblock %}
 
 {% block body %}
     <h1>Nouveau pack</h1>
 
-    {% include "DyweeProductBundle:ProductSubscription:form.html.twig" %}
+    {% include '@DyweeProductBundle/ProductSubscription/form.html.twig' %}
 
 {% endblock %}
 

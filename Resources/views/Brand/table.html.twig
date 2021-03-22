@@ -1,6 +1,6 @@
 {# Dywee\ProductBundle\Resources\View\Brand\table.html.twig #}
 
-{%  extends "DyweeProductBundle::admin.html.twig" %}
+{% extends '@DyweeProductBundle/admin.html.twig' %}
 
 {% block body %}
 
@@ -8,5 +8,5 @@
         <a href="{{ path('product_brand_add') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Ajouter</a>
         <h1 class="text-center">Liste des Marques de produit</h1>
     </div>
-    {% include 'DyweeProductBundle:Brand:miniTable.html.twig' %}
+    {% include '@DyweeProductBundle/Brand/miniTable.html.twig' %}
 {% endblock %}

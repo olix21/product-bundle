@@ -1,7 +1,7 @@
-{%  extends "DyweeProductBundle:BaseProduct:table.html.twig" %}
+{% extends '@DyweeProductBundle/BaseProduct/table.html.twig' %}
 
 {% block tableContent %}
 
-    {% include 'DyweeProductBundle:Product:miniTable.html.twig' %}
+    {% include '@DyweeProductBundle/Product/miniTable.html.twig' %}
 
 {% endblock %}

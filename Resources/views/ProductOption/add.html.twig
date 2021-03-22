@@ -1,6 +1,6 @@
 {# Dywee\EshopBundle\Resources\View\ProductOption\add.html.twig #}
 
-{% extends "DyweeProductBundle::admin.html.twig" %}
+{% extends '@DyweeProductBundle/admin.html.twig' %}
 
 {% block metaTitle %} Nouveau critère de variation de produit - {{ parent() }} {% endblock %}
 
@@ -11,7 +11,7 @@
     </div>
 
     <div class="col-md-12">
-        {% include "DyweeProductBundle:ProductOption:form.html.twig" %}
+        {% include '@DyweeProductBundle/ProductOption/form.html.twig' %}
     </div>
 
 {% endblock %}

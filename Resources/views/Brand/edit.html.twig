@@ -1,6 +1,6 @@
 {# Dywee\EshopBundle\Resources\View\Brand\update.html.twig #}
 
-{%  extends "DyweeProductBundle::admin.html.twig" %}
+{% extends '@DyweeProductBundle/admin.html.twig' %}
 
 {% block metaTitle %} Edition d'une marque produit - {{ parent() }} {% endblock %}
 
@@ -9,7 +9,7 @@
         <h1>Edition d'une marque</h1>
     </div>
 
-    {% include "DyweeProductBundle:Brand:form.html.twig" %}
+    {% include '@DyweeProductBundle/Brand/form.html.twig' %}
 
 {% endblock %}
 

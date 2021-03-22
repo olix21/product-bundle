@@ -49,7 +49,7 @@ class BaseProductController extends AbstractController
             return new Response(json_encode(array('products' => $products)));
         }
 
-        return $this->render('DyweeProductBundle:BaseProduct:dashboard.html.twig', array('products' => $products));
+        return $this->render('@DyweeProductBundle/BaseProduct/dashboard.html.twig', array('products' => $products));
     }
 
     public function addAction(Request $request)
@@ -76,7 +76,7 @@ class BaseProductController extends AbstractController
             return new Response(array('form' => $form->createView()));
         }
 
-        return $this->render('DyweeProductBundle:' . $this->childrenClassName . ':add.html.twig', array(
+        return $this->render('@DyweeProductBundle/' . $this->childrenClassName . '/add.html.twig', array(
             'form' => $form->createView()
         ));
     }
@@ -100,7 +100,7 @@ class BaseProductController extends AbstractController
             return new Response(array('type' => 'success', 'products' => $products));
         }
 
-        return $this->render('DyweeProductBundle:' . $this->childrenClassName . ':table.html.twig', array(
+        return $this->render('@DyweeProductBundle/' . $this->childrenClassName . '/table.html.twig', array(
             'products' => $products,
             'search' => $searchForm->createView()
         ));
@@ -108,7 +108,7 @@ class BaseProductController extends AbstractController
 
     public function adminViewAction(BaseProduct $baseProduct)
     {
-        return $this->render('DyweeProductBundle:' . $this->childrenClassName . ':view.html.twig', array(
+        return $this->render('@DyweeProductBundle/' . $this->childrenClassName . '/view.html.twig', array(
             'product' => $baseProduct,
             'stats' => $this->get('dywee_product_cms.stat_manager')->getForProduct($baseProduct)
         ));
@@ -129,7 +129,7 @@ class BaseProductController extends AbstractController
             return $this->redirectToRoute(strtolower($this->childrenClassNameUnderscored) . '_table');
         }
 
-        return $this->render('DyweeProductBundle:' . $this->childrenClassName . ':add.html.twig', array(
+        return $this->render('@DyweeProductBundle/' . $this->childrenClassName . '/add.html.twig', array(
             'form' => $form->createView()
         ));
     }

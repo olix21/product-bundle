@@ -1,6 +1,6 @@
 {# Dywee\ProductBundle\Resources\View\Category\table.html.twig #}
 
-{%  extends "DyweeProductBundle::admin.html.twig" %}
+{% extends '@DyweeProductBundle/admin.html.twig' %}
 
 {% block body %}
 
@@ -9,6 +9,6 @@
         <h1 class="text-center">Liste des Catégories de produit</h1>
     </div>
 
-    {% include 'DyweeProductBundle:Category:miniTable.html.twig' %}
+    {% include '@DyweeProductBundle/Category/miniTable.html.twig' %}
 
 {% endblock %}

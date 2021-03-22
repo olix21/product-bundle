@@ -72,6 +72,6 @@ class StockController extends AbstractController
             $this->get('session')->getFlashBag()->add('success', 'Paramètres de stock correctement mis à jour');
         }
 
-        return $this->render('DyweeProductBundle:Stock:dashboard.html.twig', array('form' => $form->createView()));
+        return $this->render('@DyweeProductBundle/Stock/dashboard.html.twig', array('form' => $form->createView()));
     }
 }

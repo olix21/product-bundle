@@ -1,6 +1,6 @@
 {# Dywee\ProductBundle\Resources\View\Eshop\table.html.twig #}
 
-{%  extends "DyweeProductBundle::admin.html.twig" %}
+{% extends '@DyweeProductBundle/admin.html.twig' %}
 
 {% block body %}
     <a href="{{ path('product_service_add') }}" class="btn btn-success action-right"><i class="fa fa-plus"></i> Ajouter</a>
@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="box box-success">
-                {% include 'DyweeProductBundle:ProductService:miniTable.html.twig' %}
+                {% include '@DyweeProductBundle/ProductService/miniTable.html.twig' %}
                 </div>
             </div>
             <div class="col-md-3">

@@ -19,6 +19,6 @@ class ProductVariantAdminController extends AbstractController
 
         $pvs = $pvr->findBy(array('product' => $idProduct));
 
-        return $this->render('DyweeProductBundle:ProductVariant:admin_table.html.twig', array('productVariants' => $pvs));
+        return $this->render('@DyweeProductBundle/ProductVariant/admin_table.html.twig', array('productVariants' => $pvs));
     }
 }

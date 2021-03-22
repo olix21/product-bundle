@@ -1,13 +1,13 @@
 {# Dywee\EshopBundle\Resources\View\Product\add.html.twig #}
 
-{%  extends "DyweeProductBundle::admin.html.twig" %}
+{% extends '@DyweeProductBundle/admin.html.twig' %}
 
 {% block metaTitle %} Creation d'un produit louable - {{ parent() }} {% endblock %}
 
 {% block body %}
     <h1>Nouveau produit louable</h1>
 
-    {% include "DyweeProductBundle:RentableProduct:form.html.twig" %}
+    {% include '@DyweeProductBundle/RentableProduct/form.html.twig' %}
 
 {% endblock %}
 
