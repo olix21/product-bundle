@@ -36,8 +36,9 @@ class StockController extends AbstractController
             ->add('eraseConfig', 'checkbox', array('required' => false, 'label' => 'Mettre à jour les produits existants (écrasement des paramètres existants)'))
             ->add('Valider', 'submit')
             ->getForm();
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
             $stockEnabled->setValue($formData['stockEnabled'] ? 1 : 0);

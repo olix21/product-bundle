@@ -55,7 +55,9 @@ class DeprecatedProductController extends AbstractController
                 ->add('Ajouter au panier', 'submit')
                 ->getForm();
 
-                if ($form->handleRequest($request)->isValid()) {
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
                     $formData = $form->getData();
                     if (is_numeric($formData['quantity'])) {
                         $order = $request->getSession()->get('order');
@@ -184,8 +186,9 @@ class DeprecatedProductController extends AbstractController
         }
 
         $form = $this->get('form.factory')->create(ProductType::class, $product);
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($product);
             $em->flush();
 
@@ -204,8 +207,9 @@ class DeprecatedProductController extends AbstractController
         }
 
         $form = $this->get('form.factory')->create(ProductType::class, $product);
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -227,10 +231,11 @@ class DeprecatedProductController extends AbstractController
         $form = $this->get('form.factory')->create(ProductFilterType::class)
             ->add('chercher', SubmitType::class)
         ;
+        $form->handleRequest($request);
 
         $filterActive = false;
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // Le filtrage ne marche, sûrement du à la traduction
 
             /*$filterBuilder = $pr->createQueryBuilder('p');

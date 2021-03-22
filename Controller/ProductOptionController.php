@@ -26,8 +26,9 @@ class ProductOptionController extends AbstractController
 
         $form = $this->get('form.factory')->create(new ProductOptionType(), $productOption);
         $form->add('Valider', 'submit');
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($productOption);
             $em->flush();

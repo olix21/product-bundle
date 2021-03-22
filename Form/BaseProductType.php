@@ -3,9 +3,11 @@
 namespace Dywee\ProductBundle\Form;
 
 use Dywee\CoreBundle\Form\Type\SeoType;
+use Dywee\ProductBundle\Entity\BaseProduct;
+use Dywee\ProductBundle\Entity\Category;
 use Dywee\ProductBundle\Entity\Product;
 use Dywee\TagBundle\Form\Type\TagType;
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -42,7 +44,7 @@ class BaseProductType extends AbstractType
             ->add('price', MoneyType::class, ['required' => false])
             ->add('isPriceTTC', CheckboxType::class, ['required' => false, 'label' => 'Prix TTC'])
             ->add('seo', SeoType::class, [
-                'data_class' => 'Dywee\ProductBundle\Entity\BaseProduct'
+                'data_class' => BaseProduct::class
             ])
             ->add('shortDescription', CKEditorType::class, ['required' => false])
             ->add('mediumDescription', CKEditorType::class, ['required' => false])
@@ -55,7 +57,7 @@ class BaseProductType extends AbstractType
             ->add('state', ChoiceType::class, ['choices' => $stateChoices])
             ->add('categories', EntityType::class, [
                 'required'      => false,
-                'class'         => 'DyweeProductBundle:Category',
+                'class'         => Category::class,
                 'choice_label'  => 'indentedName',
                 'multiple'      => true,
                 'expanded'      => true,
@@ -88,7 +90,7 @@ class BaseProductType extends AbstractType
             ))*/
             ->add('relatedProducts', EntityType::class, [
                 'required'     => false,
-                'class'        => 'DyweeProductBundle:Product',
+                'class'        => Product::class,
                 'choice_label' => 'name',
                 'multiple'     => true,
                 'expanded'     => true
@@ -101,7 +103,7 @@ class BaseProductType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'Dywee\ProductBundle\Entity\BaseProduct'
+            'data_class' => BaseProduct::class
         ]);
     }
 }

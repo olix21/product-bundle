@@ -23,8 +23,8 @@
     </div>#}
 {% endset %}
 
-{% form_theme form.pictures 'DyweeProductBundle:Form:picture_collection_widget.html.twig' %}
-{% form_theme form.promotions 'DyweeProductBundle:Form:promotion_widget.html.twig' %}
+{% form_theme form.pictures '@DyweeProductBundle/Form/picture_collection_widget.html.twig' %}
+{% form_theme form.promotions '@DyweeProductBundle/Form/promotion_widget.html.twig' %}
 
 
 {{ form_start(form) }}

@@ -59,8 +59,9 @@ class BaseProductController extends AbstractController
         $product = new $this->childrenClassNameWithNamespace();
 
         $form = $this->createForm($formTypeName, $product);
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -89,8 +90,10 @@ class BaseProductController extends AbstractController
         $product->setState(null);
 
         $searchForm = $this->createForm(BaseProductSearchType::class, $product);
+        $searchForm->handleRequest($request);
 
-        if ($searchForm->handleRequest($request)->isValid()) {
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            // TODO search the product
             $products = $repository->findAll();
         } else {
             $products = $repository->findAll();
@@ -120,8 +123,9 @@ class BaseProductController extends AbstractController
         $formTypeName = str_replace('Entity', 'Form', $this->childrenClassNameWithNamespace . 'Type');
 
         $form = $this->createForm($formTypeName, $baseProduct);
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($baseProduct);
             $em->flush();

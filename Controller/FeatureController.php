@@ -35,8 +35,9 @@ class FeatureController extends AbstractController
         $feature = new Feature();
 
         $form = $this->get('form.factory')->create(FeatureType::class, $feature);
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($feature);
             $em->flush();
@@ -61,8 +62,9 @@ class FeatureController extends AbstractController
     public function updateAction(Feature $feature, Request $request)
     {
         $form = $this->get('form.factory')->create(FeatureType::class, $feature);
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($feature);
             $em->flush();

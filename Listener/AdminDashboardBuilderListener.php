@@ -10,14 +10,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AdminDashboardBuilderListener implements EventSubscriberInterface
 {
-    /** @var AdminDashboardHandler */
-    private $productAdminDashboardHandler;
+    private AdminDashboardHandler $productAdminDashboardHandler;
 
-    /**
-     * AdminDashboardBuilderListener constructor.
-     *
-     * @param AdminDashboardHandler $adminDashboardHandler
-     */
     public function __construct(AdminDashboardHandler $adminDashboardHandler)
     {
         $this->productAdminDashboardHandler = $adminDashboardHandler;
